@@ -8,7 +8,7 @@
             <v-card-title class="justify-center">
                 <h3>Naval Storm - Register</h3>
                 <v-flex>
-                  <v-img class="ml-0" contain height="200px" position="center" src="https://cdn.dribbble.com/users/1085463/screenshots/3316114/ships-15.png"></v-img>
+                  <v-img class="ml-0" contain height="200px" position="center" src="../assets/logo-register.png"></v-img>
                 </v-flex>
             </v-card-title>
             <v-divider></v-divider>
@@ -26,7 +26,7 @@
                               label="Username"
                               type="text"
                               v-model="username"
-                              :rules="emailRule"></v-text-field>
+                              :rules="usernameRule"></v-text-field>
                 <v-text-field
                               outline
                               hide-details

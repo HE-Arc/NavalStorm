@@ -8,7 +8,7 @@
             <v-card-title class="justify-center">
                 <h3>Naval Storm</h3>
                 <v-flex>
-                  <v-img class="ml-0" contain height="200px" position="center" src="https://cdn.dribbble.com/users/25990/screenshots/3364653/screen_shot_2017-03-15_at_10.43.24_am.png"></v-img>
+                  <v-img class="ml-0" contain height="200px" position="center" src="../assets/logo-login.png"></v-img>
                 </v-flex>
             </v-card-title>
             <v-divider></v-divider>
