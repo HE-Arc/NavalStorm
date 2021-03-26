@@ -26,7 +26,7 @@ SECRET_KEY = config('SECURITY_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['navalstorm.srvz-webapp.he-arc.ch']
+ALLOWED_HOSTS = ['navalstorm.srvz-webapp.he-arc.ch','127.0.0.1']
 
 
 # Application definition
