@@ -78,11 +78,29 @@ WSGI_APPLICATION = 'navalstorm.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+  'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME':config('GROUPNAME'),
+    'USER': config('GROUPNAME', 'root'),
+    'PASSWORD': config('PASSWORD', ''),
+    'HOST': config('MYSQL_HOST', 'localhost'),
+    'PORT': config('MYSQL_PORT', '3306'),
+    'OPTIONS': {
+      'charset': 'utf8mb4'
     }
+  }
 }
+
+# DATABASES = {
+#   'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'navalstorm',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#   }
+# }
 
 
 # Password validation
