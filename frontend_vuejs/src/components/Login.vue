@@ -6,11 +6,10 @@
         <v-flex sm12 md6 offset-md3>
           <v-card elevation="4" light tag="section">
             <v-card-title class="justify-center">
-                <h3>{{ platformName }}</h3>
+                <h3>Naval Storm</h3>
                 <v-flex>
-                  <v-img :alt="platformName" class="ml-0" contain height="200px" position="center" src="https://cdn.dribbble.com/users/25990/screenshots/3364653/screen_shot_2017-03-15_at_10.43.24_am.png"></v-img>
+                  <v-img class="ml-0" contain height="200px" position="center" src="https://cdn.dribbble.com/users/25990/screenshots/3364653/screen_shot_2017-03-15_at_10.43.24_am.png"></v-img>
                 </v-flex>
-           
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -31,13 +30,9 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
-              <v-btn color="info" flat>
-                Forgot password?
-              </v-btn>
+              <v-btn color="error"  v-on:click="fnRegister">Register</v-btn >
               <v-spacer></v-spacer>
-              <v-btn color="info" :large="$vuetify.breakpoint.smAndUp">
-                Login
-              </v-btn>
+              <v-btn color="info"  v-on:click="fnLogin">Login</v-btn >
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -58,26 +53,25 @@ export default Vue.extend({
     name: "Login",
     data ()  { 
         return  { 
-          darkTheme: true,
-          platformName: 'Naval Storm',
           password: null,
-         username: null
-    } 
-  } , 
-    mounted () {
-    },
+          username: null
+        }    
+    }, 
     methods: {
-    },
-    validate () {
-      if(this.$refs.form.validate()) {
-        let payload = { }
-        let res = axios
-                      .post('http://localhost:8000/biereapi/biere/', payload)
-                      .then(response => console.log(response.data))
-                      .catch(error => console.log(error))
-        let data = res.data;
-        console.log(data);
-      }
+      fnLogin () {
+        if(this.$refs.form.validate()) {
+          let payload = { username: this.username, password: this.password }
+          let res = axios
+                        .post('http://localhost:8000/login', payload)
+                        .then(response => console.log(response.data))
+                        .catch(error => console.log(error))
+          let data = res.data;
+          console.log(data);
+        }
+      },
+      fnRegister () {
+         this.$router.push({ name: "Register" });
+      },
     },
 });
 </script>

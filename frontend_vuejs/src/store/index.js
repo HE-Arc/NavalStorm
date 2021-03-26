@@ -1,14 +1,26 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-/* eslint-disable no-new */
-const store = new Vuex.Store({
-  plugins: [createPersistedState()],
+export default new Vuex.Store({
+  state: {
+     bieres: [],
+  },
+  mutations: {
+    ADD_BIERE:(state, nom, alcool) => {
+      state.bieres.push({
+        nom : nom,
+        alcool : alcool,
+        brasserie : 1,
+      })
+    },
+  },
+  actions: {
+    addBiere : (store, nom, alcool) => {
+      store.commit('ADD_BIERE', nom, alcool)
+    }
+  },
   modules: {
   }
 })
-
-export default store
