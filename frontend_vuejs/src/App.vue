@@ -8,6 +8,19 @@
   </div>
 </template>
 
+
+
+<script>
+import Vue from "vue";
+import "@/assets/styles/main.css";
+export default Vue.extend({
+    name: "App",
+    components: { 
+      
+    }
+});
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

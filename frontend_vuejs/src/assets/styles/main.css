@@ -1,0 +1,41 @@
+body {
+  font-family: Helvetica Neue, Arial, sans-serif;
+  font-size: 14px;
+  color: #444;
+}
+
+table {
+  border-radius: 3px;
+  background-color: rgb(228, 222, 222);
+  border-collapse: collapse;
+  table-layout: fixed;
+  width:400px; /* or whatever width you want. */
+  max-width:400px; /* or whatever width you want. */
+  height:400px; /* or whatever width you want. */
+  max-height:400px; /* or whatever width you want. */
+}
+
+th {
+  background-color: #ffffff;
+  color: rgba(19, 7, 7, 0.66);
+  border: 1px solid #cac8c8;
+  cursor: pointer;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+td {
+  background-color: #1E90FF;
+  border: 1px solid #cac8c8;
+}
+
+th,
+td {
+  min-width: 1px;
+  padding: 0px 0px;
+}
+
