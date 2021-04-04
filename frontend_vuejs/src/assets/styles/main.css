@@ -1,13 +1,13 @@
 body {
   font-family: Helvetica Neue, Arial, sans-serif;
   font-size: 14px;
-  color: #444;
+  color: #ffffff;
 }
 
 table {
   border-radius: 3px;
   margin: 10px 50px;
-  background-color: rgb(228, 222, 222);
+  background-color: #ffffff;
   border-collapse: collapse;
   table-layout: fixed;
   width:400px; /* or whatever width you want. */
@@ -31,7 +31,7 @@ th {
 
 
 td {
-  background-color: #1e8fff21;
+  background-color: #ffffff00;
   border: 1px solid #cac8c8;
 }
 
@@ -54,8 +54,9 @@ td {
 }
 
 img {
-    max-width:200px;
-    max-height:200px;
+    max-width:100px;
+    max-height:100px;
     width:auto;
     height:auto;
 }
+
