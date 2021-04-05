@@ -1,65 +1,25 @@
+<!-- TEMPLATE -->
 <template>
 <div id="app">
 <v-app>
-
-<h3 v-if="currentShip == null">
-  Please Selecte a ship
-</h3>
-<h3 v-else>
-  Selected: {{ currentShip.type }} 
-</h3>
- 
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-3">
-          <!-- BOARD -->
-        <table :background="getImgUrl('lands/sea.gif')">
-            <!-- header board -->
-          <tr >
-            <td rowspan="2"></td>
-          </tr>
-          <tr>
-            <th v-for="y in boardHeader" :key="y">{{y}}</th>
-          </tr>
-          <!-- BATTLEFIELD board -->
-           <tr  v-for="x in boardSize" :key="x" >
-            <th>{{x}}</th>
-            <td v-for="y in boardHeader" :key="y" :id="y+x" @click="putShipInBattleField($event)" @mouseleave="onAreaMouseLeave($event)" @mouseover="onAreaMouseOver($event)"></td>
-          </tr>
-        </table>
-      </div>
-        <div></div>
-        <!-- SHIPS in Harbor -->
-        <div class="col-xs-3">
-             <table>
-            <tr v-for="ship in this.$store.getters.getShips" :key="ship" @click="selectShip(ship)">
-              <th >{{ship.type}}</th>
-              <td>
-                <img :src="getImgUrl(ship.imgFront)" alt="" width="200" height="40">
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" v-if="ship.isPlaced" disabled="true"/>
-                  <input type="checkbox" v-else @click="onClickToggleVertical(ship)" v-model="ship.isVertical"/>
-                  Vertical
-                </label>
-              <td :id="ship.id">
-               <label>
-                  <input type="checkbox" v-if="!ship.isPlaced" disabled="true" />
-                  <input type="checkbox" v-else @click="onClickTogglePlaced(ship)" v-model="ship.isPlaced"/>
-                  Placed
-               </label>
-              </td>
-            </tr>
-          </table>
-        </div>
-    </div>
-</div>
+  <!-- BOARD -->
+  <table :background="getImgUrl('lands/sea.gif')">
+    <!-- header board -->
+    <tr >
+      <td rowspan="2"></td>
+    </tr>
+    <tr>
+      <th v-for="y in boardHeader" :key="y">{{y}}</th>
+    </tr>
+    <!-- BATTLEFIELD board -->
+    <tr  v-for="x in boardSize" :key="x" >
+      <th>{{x}}</th>
+      <td v-for="y in boardHeader" :key="y" :id="y+x" @click="putShipInBattleField($event)" @mouseleave="onAreaMouseLeave($event)" @mouseover="onAreaMouseOver($event)"></td>
+    </tr>
+  </table>
 </v-app>
 </div>
 </template>
-
-
 
 <!-- SCRIPT -->
 <script>
@@ -71,9 +31,11 @@ export default Vue.extend({
     return  {
         boardSize : 10,
         boardHeader : "",
-        currentShip : null,
       }    
-    }, 
+    },
+    created() {
+        this.$root.$refs.Board = this;
+    },
     mounted(){
       //init board
       for (let i = 65; i < 65+this.boardSize; i++) {
@@ -97,7 +59,7 @@ export default Vue.extend({
       },
       putShipInBattleField(event) {
         //controle if current ship is valide
-        if(this.currentShip === null) {
+        if(this.$store.getters.getCurrentShip === null) {
           let h3 = document.getElementsByTagName("h3")[0]
           h3.style.background = 'pink'
           setTimeout(()=>{
@@ -107,14 +69,13 @@ export default Vue.extend({
         }
           
         //controle if the current ship already in the battelfield
-        if(this.currentShip.isPlaced) {
-         // alert(this.currentShip.type+" already on the battlefield")
-         let el = document.getElementById(this.currentShip.id)
+        if(this.$store.getters.getCurrentShip.isPlaced) {
+          let el = document.getElementById(this.$store.getters.getCurrentShip.id)
           el.style.background = 'pink'
           setTimeout(()=>{
             el.style.background = 'white'
           },1000)
-          this.currentShip = null
+         this.$store.dispatch('updateCurrentShip', null);
           return null
         }
 
@@ -122,10 +83,9 @@ export default Vue.extend({
         var currentId = event.target.id;
         var chars = currentId.slice(0, currentId.search(/\d/));
         var numbs = currentId.replace(chars, '');
-        var l = parseInt(this.currentShip.length)
+        var l = parseInt(this.$store.getters.getCurrentShip.length)
 
-        if(this.currentShip.isVertical)
-        { 
+        if(this.$store.getters.getCurrentShip.isVertical){ 
           var n = parseInt(numbs)
           //controle if one of them is busy
           for (let i = n; i < (n + l); i++) {
@@ -137,20 +97,19 @@ export default Vue.extend({
           //update Area + ship
           for (let i = n; i < (n + l); i++) {
             let coord = chars + i.toString();
-            this.currentShip.coord.push(coord)
+            this.$store.getters.getCurrentShip.coord.push(coord)
             let area = { 
               id : coord,
               isTouch : false,
               isBusy : true,
-              whoIsThere : this.currentShip.id,
+              whoIsThere : this.$store.getters.getCurrentShip.id,
             }
             this.$store.dispatch('updateAreaInBoard', area);
             let el = document.getElementById(coord)
-            el.style.backgroundColor = this.currentShip.color
+            el.style.backgroundColor = this.$store.getters.getCurrentShip.color
           }
         }
-        else
-        {
+        else{
           var c = chars.charCodeAt(0)
           for (let i = c; i < (c + l); i++) {
             let coord = String.fromCharCode(i) + numbs;
@@ -160,29 +119,30 @@ export default Vue.extend({
           }
           for (let i = c; i < (c + l); i++) {
             let coord = String.fromCharCode(i) + numbs;
-            this.currentShip.coord.push(coord)
+            this.$store.getters.getCurrentShip.coord.push(coord)
             let area = { 
               id : coord,
               isTouch : false,
               isBusy : true,
-              whoIsThere : this.currentShip.id,
+              whoIsThere : this.$store.getters.getCurrentShip.id,
             }
             this.$store.dispatch('updateAreaInBoard', area);
             let el = document.getElementById(coord)
-            el.style.backgroundColor = this.currentShip.color
+            el.style.backgroundColor = this.$store.getters.getCurrentShip.color
           }
         }
-        this.currentShip.isPlaced = true;
-        this.$store.dispatch('updateShipInShips', this.currentShip)
-        this.currentShip = null
+        let currentShip = this.$store.getters.getCurrentShip
+        currentShip.isPlaced = true;
+        this.$store.dispatch('updateShipInShips', currentShip)
+        this.$store.dispatch('updateCurrentShip', null);
       },
       selectShip (ship) {
-        this.currentShip = this.$store.getters.getShipById(ship.id);
+        let currentShip = this.$store.getters.getShipById(ship.id);
+        this.$store.dispatch('updateCurrentShip', currentShip);
       },
       onClickTogglePlaced(ship){
         ship.isPlaced = !ship.isPlaced
-        if(!ship.isPlaced)
-        {
+        if(!ship.isPlaced){
           ship.coord.forEach((co) => { 
             let currentArea = this.$store.getters.getBoardAreaById(co)
             currentArea.isBusy = false
@@ -191,28 +151,25 @@ export default Vue.extend({
           })
           ship.coord = []
           this.$store.dispatch('updateShipInShips', ship)
-
           this.updateBoardHTML()
         }
-
       },
       onClickToggleVertical(ship){
         ship.isVertical = !ship.isVertical;
       },
       onAreaMouseOver(event) {
          //controle if current ship is valide
-        if(this.currentShip === null)
+        if(this.$store.getters.getCurrentShip === null)
           return null;
         
-        if(this.currentShip.isPlaced)
+        if(this.$store.getters.getCurrentShip.isPlaced)
           return null;
 
         var currentId = event.target.id;
         var chars = currentId.slice(0, currentId.search(/\d/));
         var numbs = currentId.replace(chars, '');
-        var l = parseInt(this.currentShip.length)
-        if(this.currentShip.isVertical)
-        { 
+        var l = parseInt(this.$store.getters.getCurrentShip.length)
+        if(this.$store.getters.getCurrentShip.isVertical){ 
           var n = parseInt(numbs)
           if((l + n) > (this.boardSize+1))
             return null;
@@ -223,8 +180,7 @@ export default Vue.extend({
             el.style.backgroundColor = "green"
           }
         }
-        else
-        {
+        else{
           var c = chars.charCodeAt(0)
           if((c-65 +1 +l) > (this.boardSize +1))
             return null;

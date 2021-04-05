@@ -58,8 +58,12 @@ export default new Vuex.Store({
         color : "DarkOrchid",
       },
     ],
+    currentShip : null,
   },
   getters: {
+    getCurrentShip: (state) => {
+      return state.currentShip;
+    },
     getShips: (state) => {
       return state.ships;
     },
@@ -77,6 +81,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    UPDATE_CURRENT_SHIP:(state, currentShip) => {
+      state.currentShip = currentShip;
+    },
     PUSH_BOARD_AREA:(state, area) => {
       state.board.push(area);
     },
@@ -97,6 +104,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    updateCurrentShip : (store, currentShip) => {
+      store.commit('UPDATE_CURRENT_SHIP', currentShip);
+    },
     pushAreaInBoard : (store, area) => {
       store.commit('PUSH_BOARD_AREA', area);
     },
