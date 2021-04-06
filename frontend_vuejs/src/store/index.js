@@ -14,7 +14,7 @@ export default new Vuex.Store({
         type : "carrier",
         length : 5,
         coord : [],
-        imgFront : "ships/carrier/Carrier.png",
+        img : "ships/carrier/Carrier.png",
         color : "Coral",
       },
       {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
         type : "battleship ",
         length : 4,
         coord : [],
-        imgFront : "ships/battleship/Battleship.png",
+        img : "ships/battleship/Battleship.png",
         color : "Sienna",
       },
       {
@@ -34,7 +34,7 @@ export default new Vuex.Store({
         type : "destroyer ",
         length : 3,
         coord : [],
-        imgFront : "ships/destroyer/Destroyer.png",
+        img : "ships/destroyer/Destroyer.png",
         color : "Peru",
       },
       {
@@ -44,7 +44,7 @@ export default new Vuex.Store({
         type : "submarine",
         length : 3,
         coord : [],
-        imgFront : "ships/submarine/Submarine.png",
+        img : "ships/submarine/Submarine.png",
         color : "MediumAquaMarine",
       },
       {
@@ -54,7 +54,7 @@ export default new Vuex.Store({
         type : "patrolboat",
         length : 2,
         coord : [],
-        imgFront : "ships/patrolBoat/PatrolBoat.png",
+        img : "ships/patrolBoat/PatrolBoat.png",
         color : "DarkOrchid",
       },
     ],

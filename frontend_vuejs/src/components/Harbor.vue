@@ -13,7 +13,7 @@
         <tr v-for="ship in this.$store.getters.getShips" :key="ship" @click="selectShip(ship)">
         <th >{{ship.type}}</th>
         <td>
-            <img :src="getImgUrl(ship.imgFront)" alt="" width="200" height="40">
+            <img :src="getImgUrl(ship.img)" alt="" width="200" height="40">
         </td>
         <td>
         <label>
