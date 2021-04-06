@@ -5,6 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    user : {
+      username : String,
+      password : String,
+      email : String,
+      winNumber : String,
+      playedGameNumber : String,
+      avatar : String,
+    },
     board: [],
     ships : [
       {
@@ -61,6 +69,9 @@ export default new Vuex.Store({
     currentShip : null,
   },
   getters: {
+    getUser: (state) => {
+      return state.user;
+    },
     getCurrentShip: (state) => {
       return state.currentShip;
     },
@@ -81,6 +92,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    UPDATE_USER:(state, user) => {
+      state.user = user;
+    },
     UPDATE_CURRENT_SHIP:(state, currentShip) => {
       state.currentShip = currentShip;
     },
@@ -104,6 +118,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    updateUser: (store, user) => {
+      store.commit('UPDATE_USER', user);
+    },
     updateCurrentShip : (store, currentShip) => {
       store.commit('UPDATE_CURRENT_SHIP', currentShip);
     },

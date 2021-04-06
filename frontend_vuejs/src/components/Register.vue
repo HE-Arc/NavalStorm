@@ -29,7 +29,6 @@
                               :rules="usernameRule"></v-text-field>
                 <v-text-field
                               outline
-                              hide-details
                               label="Password (Min. 8 characters with at least one capital letter and a number)"
                               type="password"
                               v-model="password"

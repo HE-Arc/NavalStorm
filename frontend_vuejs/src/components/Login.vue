@@ -22,7 +22,6 @@
                               v-model="username"></v-text-field>
                 <v-text-field
                               outline
-                              hide-details
                               label="Password"
                               type="password"
                               v-model="password"></v-text-field>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Game1 from '../views/Game1.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,15 @@ const routes = [
     path: '/game1',
     name: 'Game1',
     component: Game1
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '*',
+    redirect: '/'
   },
 ]
 
