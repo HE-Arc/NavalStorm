@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    drawer : false,
     user : {
       username : String,
       password : String,
@@ -69,6 +70,9 @@ export default new Vuex.Store({
     currentShip : null,
   },
   getters: {
+    getDrawer: (state) => {
+      return state.drawer;
+    },
     getUser: (state) => {
       return state.user;
     },
@@ -92,6 +96,12 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    SET_DRAWER:(state, drawer) => {
+      state.drawer = drawer;
+    },
+    FLIP_DRAWER:(state) => {
+      state.drawer = !state.drawer;
+    },
     UPDATE_USER:(state, user) => {
       state.user = user;
     },
@@ -118,6 +128,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    flipDrawer: (store) => {
+      store.commit('FLIP_DRAWER');
+    },
+    updateDrawer: (store, drawer) => {
+      store.commit('SET_DRAWER', drawer);
+    },
     updateUser: (store, user) => {
       store.commit('UPDATE_USER', user);
     },

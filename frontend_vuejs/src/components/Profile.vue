@@ -91,7 +91,6 @@
   </v-app>
 </div>
 </template>
-
 <!-- SCRIPT -->
 <script>
 import Vue from "vue";

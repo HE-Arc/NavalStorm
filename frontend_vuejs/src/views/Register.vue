@@ -1,7 +1,9 @@
 <template>
+<v-container class="marginTop">
   <div>
     <Register />
   </div>
+</v-container>
 </template>
 
 <script>
