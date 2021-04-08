@@ -11,7 +11,6 @@ import json
 from django.contrib.auth.hashers import make_password
 from django.db.utils import IntegrityError
 
-@csrf_exempt
 @api_view(['GET', 'POST'])
 def register(request):
     body = json.loads(request.body)
@@ -24,5 +23,6 @@ def register(request):
     else:
         return Response("Passwords don't match", status=401)
 
-def login_request(request):
-	pass
+@api_view(['GET', 'POST'])
+def login(request):
+	body = json.loads(request.body)
