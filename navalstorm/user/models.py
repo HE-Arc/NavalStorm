@@ -1,9 +1,33 @@
+from __future__ import unicode_literals
+
 from django.db import models
-from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.utils.translation import ugettext_lazy as _
+from .managers import UserManager
 
 # Create your models here.
-class Gamer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    winNumber = models.IntegerField()
-    playedGameNumber = models.IntegerField()
-    avatar = models.ImageField(upload_to='data/avatar')
+class Gamer(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('email address'), unique=True,default ='')
+    username = models.CharField(_('username'), max_length=30, blank=False, default='')
+    password = models.CharField(_('password'), max_length=128, default='')
+
+    is_active = models.BooleanField(_('active'), default=True)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True,default='')
+    winNumber = models.IntegerField(_('winNumber'),default=0)
+    playedGameNumber = models.IntegerField(_('playedGameNumber'),default=0)
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        '''
+        Sends an email to this User.
+        '''
+        send_mail(subject, message, from_email, [self.email], **kwargs)

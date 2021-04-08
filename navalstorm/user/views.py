@@ -1,35 +1,28 @@
-from django.shortcuts import  render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login, authenticate 
-from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import generics
+from .models import Gamer
+from .serializers import GamerSerializer
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
+import json
+from django.contrib.auth.hashers import make_password
+from django.db.utils import IntegrityError
 
-def register_request(request):
-	if request.method == "POST":
-		form = NewUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user)
-			messages.success(request, "Registration successful.")
-			return redirect("navalstorm:homepage")
-		messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm
-	return render (request=request, template_name="register.html", context={"register_form":form})
+@csrf_exempt
+@api_view(['GET', 'POST'])
+def register(request):
+    body = json.loads(request.body)
+    if body['password'] == body['confirm']:
+        try:
+            Gamer.objects.create_user(username=body['username'], email=body['email'], password=make_password(body['password']))
+            return Response("Success", status=202)
+        except IntegrityError:
+            return Response("User already exists", status=401)            
+    else:
+        return Response("Passwords don't match", status=401)
 
 def login_request(request):
-	if request.method == "POST":
-		form = AuthenticationForm(request, data=request.POST)
-		if form.is_valid():
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password')
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				messages.info(request, f"You are now logged in as {username}.")
-				return redirect("navalstorm:homepage")
-			else:
-				messages.error(request,"Invalid username or password.")
-		else:
-			messages.error(request,"Invalid username or password.")
-	form = AuthenticationForm()
-	return render(request=request, template_name="login.html", context={"login_form":form})
+	pass
