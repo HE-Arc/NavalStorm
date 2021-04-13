@@ -5,7 +5,7 @@ Vue.use(Vuetify);
 
 /**
  * Export Vuetify themes
- * //merci lucas.fridez
+ * 
  */
 export default new Vuetify({
     theme: {

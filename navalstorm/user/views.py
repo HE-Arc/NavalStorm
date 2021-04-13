@@ -10,19 +10,16 @@ from django.contrib.auth.models import User
 import json
 from django.contrib.auth.hashers import make_password
 from django.db.utils import IntegrityError
+from django.contrib.auth import authenticate, login
 
 @api_view(['GET', 'POST'])
 def register(request):
-    body = json.loads(request.body)
-    if body['password'] == body['confirm']:
+        body = json.loads(request.body)
+  
         try:
             Gamer.objects.create_user(username=body['username'], email=body['email'], password=make_password(body['password']))
             return Response("Success", status=202)
         except IntegrityError:
             return Response("User already exists", status=401)            
-    else:
-        return Response("Passwords don't match", status=401)
-
-@api_view(['GET', 'POST'])
-def login(request):
-	body = json.loads(request.body)
+   
+   

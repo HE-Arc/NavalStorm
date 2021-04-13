@@ -14,7 +14,7 @@
             <v-divider></v-divider>
             <v-card-text>
               <p>Sign in with your username and password:</p>
-              <v-form>
+              <v-form ref='form'>
                 <v-text-field
                               outline
                               label="Username"
@@ -47,7 +47,6 @@
 <!-- SCRIPT -->
 <script>
 import Vue from "vue";
-import axios from "axios";
 
 export default Vue.extend({
     name: "Login",
@@ -60,15 +59,15 @@ export default Vue.extend({
     methods: {
       fnLogin () {
         if(this.$refs.form.validate()) {
-          let payload = { username: this.username, password: this.password }
-          let res = axios
-                        .post('http://localhost:8000/login', payload)
-                        .then(response => console.log(response.data))
-                        .catch(error => console.log(error))
-          let data = res.data;
-          console.log(data);
+         this.$store.dispatch('loginUser', {
+          username: this.username,
+          password: this.password
+          }).then(() => {
+          this.$router.push({ name: 'Login' })
+        })
         }
-      },
+      }
+      ,
       fnRegister () {
          this.$router.push({ name: "Register" });
       },
