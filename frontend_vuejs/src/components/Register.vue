@@ -33,13 +33,19 @@
                               type="password"
                               v-model="password"
                               :rules="[passwordRule.passwordValidation]"></v-text-field>
+                <v-text-field
+                              outline
+                              label="Conf password (Min. 8 characters with at least one capital letter and a number)"
+                              type="password"
+                              v-model="confirm"
+                              :rules="[passwordRule.passwordValidation]"></v-text-field>
               </v-form>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
             <v-btn color="error"  v-on:click="fnLogin">I have already</v-btn >
             <v-spacer></v-spacer>
-            <v-btn color="info"  v-on:click="fnRegister">Create Account</v-btn >
+            <v-btn color="info"  v-on:click="registerUser">Create Account</v-btn >
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -62,6 +68,7 @@ export default Vue.extend({
         return  { 
           email: null,
           password: null,
+          confirm: null,
           username: null,
           emailRule: [ 
                         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
@@ -92,6 +99,18 @@ export default Vue.extend({
       },
       fnLogin () {
          this.$router.push({ name: "Login" });
+      },
+      //security
+      registerUser () {
+        this.$store.dispatch('registerUser', {
+          name: this.name,
+          email: this.email,
+          username: this.username,
+          password: this.password,
+          confirm: this.confirm
+        }).then(() => {
+          this.$router.push({ name: 'login' })
+        })
       },
     },
 });
