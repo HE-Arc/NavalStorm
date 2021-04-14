@@ -1,6 +1,4 @@
 import axios from 'axios'
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'x-csrftoken'
 
 import store from '../store'
 
@@ -8,9 +6,7 @@ const APIUrl = 'http://127.0.0.1:8000'
 
 const axiosBase = axios.create({
   baseURL: APIUrl,
-  headers: { contentType: 'application/json',
-  xsrfHeaderName: "" }
-  
+  headers: { contentType: 'application/json' }
 })
 const getAPI = axios.create({
   baseURL: APIUrl

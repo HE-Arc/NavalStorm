@@ -13,8 +13,9 @@
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
-              <p>Sign in with your username and password:</p>
+              <p>Sign in with your email and password:</p>
               <v-form ref='form'>
+                <input type="hidden" name="csrf-token" v-bind:value="csrf-token">
                 <v-text-field
                               outline
                               label="Email"
@@ -46,25 +47,26 @@
 
 <!-- SCRIPT -->
 <script>
-import Vue from "vue";
 
 export default Vue.extend({
     name: "Login",
     data ()  { 
         return  { 
           password: null,
-          email: null
+          email: null,
+          csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }    
     }, 
     methods: {
       fnLogin () {
         if(this.$refs.form.validate()) {
-         this.$store.dispatch('loginUser', {
-          email: this.email,
-          password: this.password
+          this.$store.dispatch('loginUser', {
+            email: this.email,
+            password: this.password,
+            csrf: this.csrf,
           }).then(() => {
-          this.$router.push({ name: 'Register' })
-        })
+            this.$router.push({ name: 'Register' })
+          })
         }
       }
       ,

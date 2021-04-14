@@ -187,7 +187,11 @@ export default new Vuex.Store({
         {
           email: credentials.email,
           password: credentials.password
-        })
+        },{ 
+        headers: {
+          "x-csrf-token" : credentials.csrf
+        }
+      })
         // if successful update local storage:
           .then(response => {
             context.commit('updateLocalStorage', { access: response.data.access, refresh: response.data.refresh }) // store the access and refresh token in localstorage

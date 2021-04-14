@@ -17,6 +17,7 @@
     "rxjs": "^6.6.3",
     "store": "^2.0.12",
     "vue": "^2.6.11",
+    "vue-csrf": "^2.0.4",
     "vue-material": "^1.0.0-beta-15",
     "vue-router": "^3.5.1",
     "vue-rx": "^6.2.0",
