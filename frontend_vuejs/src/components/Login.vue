@@ -17,9 +17,9 @@
               <v-form ref='form'>
                 <v-text-field
                               outline
-                              label="Username"
-                              type="text"
-                              v-model="username"></v-text-field>
+                              label="Email"
+                              type="email"
+                              v-model="email"></v-text-field>
                 <v-text-field
                               outline
                               hide-details
@@ -53,17 +53,17 @@ export default Vue.extend({
     data ()  { 
         return  { 
           password: null,
-          username: null
+          email: null
         }    
     }, 
     methods: {
       fnLogin () {
         if(this.$refs.form.validate()) {
          this.$store.dispatch('loginUser', {
-          username: this.username,
+          email: this.email,
           password: this.password
           }).then(() => {
-          this.$router.push({ name: 'Login' })
+          this.$router.push({ name: 'Register' })
         })
         }
       }

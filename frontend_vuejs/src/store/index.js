@@ -164,7 +164,7 @@ export default new Vuex.Store({
     logoutUser (context) {
       if (context.getters.loggedIn) {
         return new Promise((resolve) => {
-          axiosBase.post('/api/token/logout')
+          axiosBase.post('/auth/token')
             .then(() => {
               localStorage.removeItem('access_token')
               localStorage.removeItem('refresh_token')
@@ -179,12 +179,13 @@ export default new Vuex.Store({
         })
       }
     },
+     
     loginUser (context, credentials) {
       return new Promise((resolve, reject) => {
         // send the username and password to the backend API:
-        axiosBase.post('/api/token', 
+        axiosBase.post('/auth/login/', 
         {
-          username: credentials.username,
+          email: credentials.email,
           password: credentials.password
         })
         // if successful update local storage:

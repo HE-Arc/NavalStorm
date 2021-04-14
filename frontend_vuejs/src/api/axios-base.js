@@ -1,14 +1,23 @@
 import axios from 'axios'
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'x-csrftoken'
+
 import store from '../store'
+
 const APIUrl = 'http://127.0.0.1:8000'
 
 const axiosBase = axios.create({
   baseURL: APIUrl,
-  headers: { contentType: 'application/json' }
+  headers: { contentType: 'application/json',
+  xsrfHeaderName: "" }
+  
 })
 const getAPI = axios.create({
   baseURL: APIUrl
 })
+
+
+
 getAPI.interceptors.response.use(undefined, function (err) {
   // if error response status is 401, it means the request was invalid due to expired access token
   if (err.config && err.response && err.response.status === 401) {
@@ -18,10 +27,14 @@ getAPI.interceptors.response.use(undefined, function (err) {
         axios.request({
           baseURL: APIUrl,
           method: 'get',
-          headers: { Authorization: `Bearer ${access}` }, 
+          headers: { 
+            Authorization: `Bearer ${access}`,
+            credentials: 'include',
+          },
             // the new access token is attached to the authorization header
-          url: '/api/token/refresh'
-        }).then(response => {
+          url: '/api/token/refresh'    
+          },      
+        ).then(response => {
           // if successfully received the data store it in store.state.APIData so that 'Downloads' component can grab the
           // data from it and display to the client.
           console.log('Success getting things')

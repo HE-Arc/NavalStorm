@@ -65,12 +65,21 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8000'
+    'http://localhost:8000',
+    'http://localhost:8081',
 ]
 CORS_ALLOW_HEADERS = default_headers + (
     'contenttype',
 )
 
+CSRF_TRUSTED_ORIGINS = [
+     'http://localhost:8000',
+    'http://localhost:8081',
+    "navalstorm.srvz-webapp.he-arc.ch",
+]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_NAME = "csrftoken"
 
 ROOT_URLCONF = 'navalstorm.urls'
 
@@ -93,8 +102,14 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
 }
+
+SESSION_COOKIE_DOMAIN=[".localhost:8081", ".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
+
 
 WSGI_APPLICATION = 'navalstorm.wsgi.application'
 
@@ -167,3 +182,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'user.Gamer'
+
