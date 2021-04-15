@@ -3,7 +3,11 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Game1 from '../views/Game1.vue'
+<<<<<<< HEAD
 import Logout from '../views/Logout.vue'
+=======
+import Profile from '../views/Profile.vue'
+>>>>>>> 68991ebb81afcedc8ea3696296476501e39c94d5
 
 Vue.use(VueRouter)
 
@@ -40,6 +44,7 @@ const routes = [
     }
   },
   {
+<<<<<<< HEAD
     path: '/logout',
     name: 'logout',
     component: Logout,
@@ -47,6 +52,16 @@ const routes = [
       requiresAuth: true
     },
   }
+=======
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '*',
+    redirect: '/'
+  },
+>>>>>>> 68991ebb81afcedc8ea3696296476501e39c94d5
 ]
 
 const router = new VueRouter({

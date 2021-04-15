@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 
   <div id="app">
@@ -7,15 +8,29 @@
     </div>
     <router-view/>
   </div>
+=======
+ <template>
+    <v-app>
+      <Header />
+      <v-main>
+        <Drawer />
+        <router-view></router-view>
+      </v-main>
+    </v-app>
+>>>>>>> 68991ebb81afcedc8ea3696296476501e39c94d5
 </template>
 
 <script>
 import Vue from "vue";
+import Drawer from'@/components/Drawer.vue'
+import Header from'@/components/Header.vue'
 import "@/assets/styles/main.css";
+
 export default Vue.extend({
     name: "App",
     components: { 
-      
+      Drawer,
+      Header,
     }
 });
 
@@ -23,25 +38,3 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #000000;
-    }
-  }
-}
-</style>

@@ -1,19 +1,18 @@
 <template>
 <v-container class="marginTop">
-  <div>
-    <Register />
+   <div>
+    <Profile />
   </div>
 </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import Register from '@/components/Register.vue'
+import Profile from '@/components/Profile.vue'
 
 export default {
-  name: 'RegisterView',
+  name: 'ProfileView',
   components: {
-    Register
+    Profile,
   }
 }
 </script>

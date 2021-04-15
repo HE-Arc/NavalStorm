@@ -12,6 +12,15 @@ export default new Vuex.Store({
     csrfToken: localStorage.getItem('csrf_token') || null,
      APIData: '', // received data from the backend API is stored here.
 
+    drawer : false,
+    user : {
+      username : String,
+      password : String,
+      email : String,
+      winNumber : String,
+      playedGameNumber : String,
+      avatar : String,
+    },
     board: [],
     ships : [
       {
@@ -71,6 +80,12 @@ export default new Vuex.Store({
     loggedIn (state) {
       return state.accessToken != null
     },
+    getDrawer: (state) => {
+      return state.drawer;
+    },
+    getUser: (state) => {
+      return state.user;
+    },
     getCurrentShip: (state) => {
       return state.currentShip;
     },
@@ -109,6 +124,15 @@ export default new Vuex.Store({
       state.refreshToken = null
     },
 
+    SET_DRAWER:(state, drawer) => {
+      state.drawer = drawer;
+    },
+    FLIP_DRAWER:(state) => {
+      state.drawer = !state.drawer;
+    },
+    UPDATE_USER:(state, user) => {
+      state.user = user;
+    },
     UPDATE_CURRENT_SHIP:(state, currentShip) => {
       state.currentShip = currentShip;
     },
@@ -203,6 +227,15 @@ export default new Vuex.Store({
       })
     },
 
+    flipDrawer: (store) => {
+      store.commit('FLIP_DRAWER');
+    },
+    updateDrawer: (store, drawer) => {
+      store.commit('SET_DRAWER', drawer);
+    },
+    updateUser: (store, user) => {
+      store.commit('UPDATE_USER', user);
+    },
     updateCurrentShip : (store, currentShip) => {
       store.commit('UPDATE_CURRENT_SHIP', currentShip);
     },
