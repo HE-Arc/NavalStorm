@@ -21,8 +21,3 @@ def register(request):
             return Response("Success", status=202)
         except IntegrityError:
             return Response("User already exists", status=401)             
-
-# @api_view(['GET', 'POST'])
-# def get_csrf_token(request):
-#     token = get_token(request)
-#     return Response({'csrf': token})

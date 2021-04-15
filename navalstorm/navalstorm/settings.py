@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    #'django.middleware.csrf.CsrfViewMiddleware',
     'navalstorm.middleware.DisableCSRF',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_HEADERS = default_headers + (
-    'contenttype', 'x-csrf-token'
+    'contenttype', 
 )
 
 CSRF_TRUSTED_ORIGINS = [
