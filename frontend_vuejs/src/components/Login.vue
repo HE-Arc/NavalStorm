@@ -15,7 +15,6 @@
             <v-card-text>
               <p>Sign in with your email and password:</p>
               <v-form ref='form'>
-                <input type="hidden" name="csrf-token" v-bind:value="csrf-token">
                 <v-text-field
                               outline
                               label="Email"
@@ -54,7 +53,6 @@ export default Vue.extend({
         return  { 
           password: null,
           email: null,
-          csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }    
     }, 
     methods: {
@@ -63,7 +61,6 @@ export default Vue.extend({
           this.$store.dispatch('loginUser', {
             email: this.email,
             password: this.password,
-            csrf: this.csrf,
           }).then(() => {
             this.$router.push({ name: 'Register' })
           })

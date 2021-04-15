@@ -8,9 +8,9 @@ export default new Vuex.Store({
   state: {
     accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
     // refreshing the page
-     refreshToken: localStorage.getItem('refresh_token') || null,
-     APIData: '' // received data from the backend API is stored here.
-     ,
+    refreshToken: localStorage.getItem('refresh_token') || null,
+    csrfToken: localStorage.getItem('csrf_token') || null,
+     APIData: '', // received data from the backend API is stored here.
 
     board: [],
     ships : [
@@ -100,6 +100,10 @@ export default new Vuex.Store({
     updateAccess (state, access) {
       state.accessToken = access
     },
+    updateCsrfToken (state,csrf){
+      localStorage.setItem('csrf_token', csrf)
+      state.csrfToken = csrf
+    },
     destroyToken (state) {
       state.accessToken = null
       state.refreshToken = null
@@ -181,17 +185,20 @@ export default new Vuex.Store({
     },
      
     loginUser (context, credentials) {
+      // if(!localStorage.getItem('csrfToken')){
+      //   this.dispatch('getCsrfToken',null)
+      // }
       return new Promise((resolve, reject) => {
         // send the username and password to the backend API:
         axiosBase.post('/auth/login/', 
         {
           email: credentials.email,
           password: credentials.password
-        },{ 
+        }/*,{ 
         headers: {
-          "x-csrf-token" : credentials.csrf
+          "x-csrf-token" : localStorage.getItem('csrfToken')
         }
-      })
+      }*/)
         // if successful update local storage:
           .then(response => {
             context.commit('updateLocalStorage', { access: response.data.access, refresh: response.data.refresh }) // store the access and refresh token in localstorage
@@ -202,7 +209,22 @@ export default new Vuex.Store({
           })
       })
     },
+    // getCsrfToken(context){
+    //   return new Promise((resolve, reject) => {
+    //     axiosBase.post('/csrftoken',null) 
+    //       .then(response => { // if API sends back new access and refresh token update the store
+    //         localStorage.setItem("csrfToken", response.data.csrf)
+    //         console.log('New csrfToken successfully generated')
+    //         context.commit('csrfToken', response.data.csrf)
+    //         resolve(response.data.csrf)
 
+    //       })
+    //       .catch(err => {
+    //         console.log('error in csrfToken Task')
+    //         reject(err) // error generating new csrftoken
+    //       })
+    //   })
+    // },
 
     updateCurrentShip : (store, currentShip) => {
       store.commit('UPDATE_CURRENT_SHIP', currentShip);

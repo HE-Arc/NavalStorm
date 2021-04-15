@@ -19,6 +19,7 @@ from user import views
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
+    TokenVerifyView
 )
 from django.urls import include, path
 
@@ -28,7 +29,9 @@ app_name='navalstorm'
 urlpatterns = [
     path('api/admin', admin.site.urls),
     path("api/register", views.register, name="register"),
-    path('api/auth/',(include('rest_framework.urls')) ),
+    path('api/auth/',(include('rest_framework.urls'))),
+    path('api/auth/verify', TokenVerifyView.as_view(),name="token_verify"),
     path('api/auth/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api/csrftoken',views.get_csrf_token,name="csrftoken")
 ]

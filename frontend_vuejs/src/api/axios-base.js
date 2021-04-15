@@ -5,16 +5,17 @@ import store from '../store'
 const APIUrl = 'http://127.0.0.1:8000/api'
 //change to /api on server ! ! ! ! ! 
 
-
 const axiosBase = axios.create({
   baseURL: APIUrl,
-  headers: { contentType: 'application/json' }
+  headers: { contentType: 'application/json'},
 })
+
 const getAPI = axios.create({
   baseURL: APIUrl
 })
 
-
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+axios.defaults.xsrfCookieName = 'csrftoken'
 
 getAPI.interceptors.response.use(undefined, function (err) {
   // if error response status is 401, it means the request was invalid due to expired access token

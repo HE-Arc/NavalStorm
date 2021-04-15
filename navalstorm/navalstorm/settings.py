@@ -43,37 +43,32 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
     'user',
     'crispy_forms',
-    'rest_framework_simplejwt',
-     'corsheaders',
+    'corsheaders',
 ]
 
 
 MIDDLEWARE = [
+    #'django.middleware.csrf.CsrfViewMiddleware',
+    'navalstorm.middleware.DisableCSRF',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8000',
-    'http://localhost:8081',
-]
 CORS_ALLOW_HEADERS = default_headers + (
-    'contenttype',
+    'contenttype', 'x-csrf-token'
 )
 
 CSRF_TRUSTED_ORIGINS = [
-     'http://localhost:8000',
+    'http://localhost:8000',
     'http://localhost:8081',
     "navalstorm.srvz-webapp.he-arc.ch",
 ]
@@ -99,12 +94,6 @@ TEMPLATES = [
     },
 ]
 
-REST_FRAMEWORK = {
-     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-}
-
 SESSION_COOKIE_DOMAIN=[".localhost:8081", ".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
 
 
@@ -128,16 +117,26 @@ DATABASES = {
   }
 }
 
-# DATABASES = {
-#   'default': {
-#     'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'navalstorm',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#   }
-# }
+REST_FRAMEWORK = {
+     'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissions'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+    'http://localhost:8000',
+    'http://localhost:8081',
+    'http://localhost',
+)
+
+SESSION_COOKIE_DOMAIN=[".localhost:8081", ".localhost:8080",".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
 
 
 # Password validation
