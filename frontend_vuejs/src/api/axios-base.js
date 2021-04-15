@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import store from '../store'
 
-const APIUrl = 'http://127.0.0.1:8000'
+const APIUrl = 'http://127.0.0.1:8000/api'
 
 const axiosBase = axios.create({
   baseURL: APIUrl,
@@ -28,7 +28,7 @@ getAPI.interceptors.response.use(undefined, function (err) {
             credentials: 'include',
           },
             // the new access token is attached to the authorization header
-          url: '/api/token/refresh'    
+          url: '/token/refresh'    
           },      
         ).then(response => {
           // if successfully received the data store it in store.state.APIData so that 'Downloads' component can grab the
