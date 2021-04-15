@@ -12,7 +12,8 @@ class Gamer(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True,default ='')
     username = models.CharField(_('username'), max_length=30, blank=False, default='')
     password = models.CharField(_('password'), max_length=128, default='')
-
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(_('active'), default=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True,default='')
     winNumber = models.IntegerField(_('winNumber'),default=0)
