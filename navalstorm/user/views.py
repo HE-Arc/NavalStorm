@@ -71,4 +71,4 @@ class UserViewSet(ViewsetFunctionPermissions):
     def me(self, request):   
         user = request.user.navalstromUser
         serializer = NavalStormUserSerializer(user)
-        return Response(serializer.data)   
+        return Response(serializer.data)

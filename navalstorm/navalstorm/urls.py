@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.contrib import admin
-from django.urls import path, include
+from user import views
 from django.contrib.auth import views as auth
 from rest_framework.authtoken import views as token_views
 from rest_framework import routers 
-from user import views
+
 
   
 router = routers.SimpleRouter() 
@@ -29,7 +29,7 @@ router.register(r'users', views.UserViewSet, basename='users')
 app_name='navalstorm'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/admin', admin.site.urls),
 
     #API PATHS
     path('api/', include(router.urls)), 

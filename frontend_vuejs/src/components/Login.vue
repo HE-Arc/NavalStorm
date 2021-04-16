@@ -16,16 +16,15 @@
               <p>Sign in with your email and password:</p>
               <v-form ref='form'>
                 <v-text-field
-                              outline
-                              label="Username"
-                              :disabled="loading"
-                              v-model="username"></v-text-field>
+                  outline
+                  label="Email"
+                  type="email"
+                  v-model="email"></v-text-field>
                 <v-text-field
-                              outline
-                              label="Password"
-                              type="password"
-                              :disabled="loading"
-                              v-model="password"></v-text-field>
+                  outline
+                  label="Password"
+                  type="password"
+                  v-model="password"></v-text-field>
               </v-form>
             </v-card-text>
             <v-divider></v-divider>
