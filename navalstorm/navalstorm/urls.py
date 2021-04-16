@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from user import views
+from userApp import urls
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -28,12 +28,9 @@ app_name='navalstorm'
 
 urlpatterns = [
     path('api/admin', admin.site.urls),
-    path("api/register", views.register, name="register"),
     path('api/auth/',(include('rest_framework.urls'))),
     path('api/auth/verify', TokenVerifyView.as_view(),name="token_verify"),
     path('api/auth/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/profile/userForm',views.userFormValues, name="userFormValues"),
-    path('api/profile/userFormUpdate',views.userFormUpdate, name="userFormUpdate"),
-    path('api/profile/userStats',views.userStats,name="userStats")
+    path('api/profile',urls),
 ]
