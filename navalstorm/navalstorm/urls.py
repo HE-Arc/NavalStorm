@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth
 from rest_framework.authtoken import views as token_views
 from rest_framework import routers 
 
-from navalstorm.user import UserViewSet
+from user.views import UserViewSet
 
   
 router = routers.SimpleRouter() 
@@ -35,9 +35,5 @@ urlpatterns = [
     #API PATHS
     path('api/', include(router.urls)), 
     #User PATHS
-    path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),
-    #TestingView
-    path('api/serverstate/',views.ServerState.as_view(),name='serverstate')
-
-    
+    path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),    
 ]

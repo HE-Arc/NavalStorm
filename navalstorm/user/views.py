@@ -11,13 +11,6 @@ from rest_framework.status import HTTP_422_UNPROCESSABLE_ENTITY
 import logging
 
 
-class ServerState(generics.GenericAPIView):
-    def get(self, request, *args,  **kwargs):
-        return Response({
-            "message": "Server is Rocking On !",
-        })
-
-
 logger = logging.getLogger(__name__)
 
 class ViewsetFunctionPermissions(viewsets.ModelViewSet):
