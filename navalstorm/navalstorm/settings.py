@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
    # 'navalstorm.middleware.DisableCSRF',
+#    'navalstorm.middleware.AuthRequiredMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,7 +69,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',    
+    'django.middleware.security.SecurityMiddleware',   
+     
 ]
 
 CORS_ALLOW_HEADERS = default_headers + (
@@ -103,9 +105,6 @@ TEMPLATES = [
         },
     },
 ]
-
-SESSION_COOKIE_DOMAIN=[".localhost:8082",".localhost:8081", ".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
-
 
 WSGI_APPLICATION = 'navalstorm.wsgi.application'
 
@@ -144,9 +143,6 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost',
     'http://127.0.0.1:8000',
 )
-
-SESSION_COOKIE_DOMAIN=[".localhost:8081", ".localhost:8080",".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
