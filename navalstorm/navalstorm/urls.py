@@ -19,11 +19,12 @@ from django.urls import path, include
 from django.contrib.auth import views as auth
 from rest_framework.authtoken import views as token_views
 from rest_framework import routers 
-from user import views
+
+from navalstorm.user import UserViewSet
 
   
 router = routers.SimpleRouter() 
-router.register(r'users', views.UserViewSet, basename='users')
+router.register(r'users', UserViewSet, basename='users')
 
 
 app_name='navalstorm'
