@@ -18,14 +18,12 @@
                 <v-text-field
                   outline
                   label="Username"
-                  :disabled="loading"
                   v-model="username"></v-text-field>
                 <v-text-field
                   outline
                   label="Password"
                   type="password"
-                  v-model="password"
-                  :disabled="loading"></v-text-field>
+                  v-model="password"></v-text-field>
                   
               </v-form>
             </v-card-text>

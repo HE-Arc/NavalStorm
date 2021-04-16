@@ -2,96 +2,91 @@
 <div id="app">
   <v-app>
       <!-- Profile card -->
-<v-flex sm12 md6 offset-md3>
-  <v-card class="mx-auto" max-width="450" outlined elevation="10">
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div class="overline mb-4">
-        Profile
-        </div>
-
-        <v-list-item-title class="headline mb-1">
-        Capitain Haddock
-        </v-list-item-title>
-
-        <v-list-item-subtitle>
-        #userID
-        </v-list-item-subtitle>
-      </v-list-item-content>
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="mx-auto" max-width="450" outlined elevation="10">
+        <v-list-item three-line>
+          <v-list-item-content>
+            <div class="overline mb-4">
+            Profile
+            </div>
   
-      <v-list-item-avatar
-       tile size="auto" color="grey"><img src="https://people.he-arc.ch/photos/GrunenwaldDavid.jpg" alt="">
-      </v-list-item-avatar>
-    </v-list-item>
+            <v-list-item-title class="headline mb-1" :user="user"></v-list-item-title>
 
-    <v-card-actions>
-      <v-btn  color="primary"  @click="onClickBtnStat()" :disabled="isChartDisplay">
-        <svg-icon type="mdi" :path="iconChartPath" />
-        Statistics
-      </v-btn>
-      <v-btn  color="primary" @click="onClickBtnModification()" :disabled="isModiDisplay">
-        <svg-icon type="mdi" :path="iconPenPath" />
-        Modify
-        </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-flex>
+          </v-list-item-content>
+      
+          <v-list-item-avatar
+          tile size="auto" color="grey"><img src="https://people.he-arc.ch/photos/GrunenwaldDavid.jpg" alt="">
+          </v-list-item-avatar>
+        </v-list-item>
 
- <!-- Modify -->
-<v-flex sm12 md6 offset-md3>
-  <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isModiDisplay">
-    <v-card-text>
-      <v-form>
-        <v-text-field
-            outline
-            label="Email"
-            type="text"
-            v-model="email"
-       
-            :rules="emailRule"></v-text-field>
-        <v-text-field
-            outline
-            label="Username"
-            type="text"
-            v-model="username"
-      
-            :rules="usernameRule"></v-text-field>
-        <v-text-field
-            outline
-            label="Password"
-            type="password"
-            v-model="password"
-      
-            :rules="[passwordRule.passwordValidation]"></v-text-field>
-        <v-text-field
-            outline
-            label="Confirme Password"
-            type="password"
-            v-model="new_password"
+        <v-card-actions>
+          <v-btn  color="primary"  @click="onClickBtnStat()" :disabled="isChartDisplay">
+            <svg-icon type="mdi" :path="iconChartPath" />
+            Statistics
+          </v-btn>
+          <v-btn  color="primary" @click="onClickBtnModification()" :disabled="isModiDisplay">
+            <svg-icon type="mdi" :path="iconPenPath" />
+            Modify
+            </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
+    <!-- Modify -->
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isModiDisplay">
+        <v-card-text>
+          <v-form>
+            <v-text-field
+                outline
+                label="Email"
+                type="text"
+                v-model="email"
           
-            :rules="[passwordRule.passwordValidation]"></v-text-field>
-      </v-form>
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-actions >
-      <v-btn color="error" @click="onClickBtnModification()">Hide</v-btn >
-      <v-spacer></v-spacer>
-      <v-btn color="success"  @click="onClickSave()">Save</v-btn >
-    </v-card-actions>
-  </v-card>
-</v-flex>
+                :rules="emailRule"></v-text-field>
+            <v-text-field
+                outline
+                label="Username"
+                type="text"
+                v-model="username"
+          
+                :rules="usernameRule"></v-text-field>
+            <v-text-field
+                outline
+                label="Password"
+                type="password"
+                v-model="password"
+          
+                :rules="[passwordRule.passwordValidation]"></v-text-field>
+            <v-text-field
+                outline
+                label="Confirme Password"
+                type="password"
+                v-model="new_password"
+              
+                :rules="[passwordRule.passwordValidation]"></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions >
+          <v-btn color="error" @click="onClickBtnModification()">Hide</v-btn >
+          <v-spacer></v-spacer>
+          <v-btn color="success"  @click="onClickSave()">Save</v-btn >
+        </v-card-actions>
+      </v-card>
+    </v-flex>
 
-  <!-- Donut Chart -->
-<v-flex sm12 md6 offset-md3>
-  <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isChartDisplay">
-    <DoughnutChart />
-    <v-divider></v-divider>
-    <v-card-actions >
-      <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
-        <v-spacer></v-spacer>
-      </v-card-actions>
-    </v-card>
-</v-flex>
+      <!-- Donut Chart -->
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isChartDisplay">
+        <DoughnutChart />
+        <v-divider></v-divider>
+        <v-card-actions >
+          <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+    </v-flex>
   </v-app>
 </div>
 </template>

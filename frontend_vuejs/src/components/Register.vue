@@ -20,21 +20,18 @@
                   label="Email"
                   type="text"
                   v-model="email"
-                  :disabled="loading"
                   :rules="emailRule"></v-text-field>
                 <v-text-field
                   outline
                   label="Username"
                   type="text"
                   v-model="username"
-                  :disabled="loading"
                   :rules="usernameRule"></v-text-field>
                 <v-text-field
                   outline
                   label="Password (Min. 8 characters with at least one capital letter and a number)"
                   type="password"
                   v-model="password"
-                  :disabled="loading"
                   :rules="[passwordRule.passwordValidation]"></v-text-field>
               </v-form>
             </v-card-text>
