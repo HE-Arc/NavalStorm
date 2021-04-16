@@ -30,14 +30,14 @@ router.register(r'users', UserViewSet, basename='users')
 app_name='navalstorm'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
 
     #API PATHS
     path('api/', include(router.urls)), 
     #User PATHS
     path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),
     #TestingView
-    path('serverstate/',views.ServerState.as_view(),name='serverstate')
+    path('api/serverstate/',views.ServerState.as_view(),name='serverstate')
 
     
 ]
