@@ -68,3 +68,10 @@ img {
     margin-top: 30px;
 }
 
+
+#sprite-image {
+  height: 40px;
+  width: 40px;
+  background: url("../explosions/water_splash_sprite.png") /* url("../explosions/explosion_sprite2.png")/*url("https://miro.medium.com/max/3600/1*GJ6ZL0eX8tJE54ZYFSnI9Q.png")*/
+    0px 0px;
+}
