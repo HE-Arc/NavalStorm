@@ -27,6 +27,14 @@ SECRET_KEY = config('SECURITY_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+OAUTH2_PROVIDER = {
+    "OIDC_ENABLED": True,
+    "SCOPES": {
+        "openid": "OpenID Connect scope",
+        # ... any other scopes that you use
+    },
+    # ... any other settings you want
+}
 
 ALLOWED_HOSTS = ['navalstorm.srvz-webapp.he-arc.ch','127.0.0.1']
 CORS_ORIGIN_ALLOW_ALL = True
@@ -43,23 +51,25 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'rest_framework',
+    'oauth2_provider',
     'user',
     'crispy_forms',
+    'rest_framework.authtoken',
     'corsheaders',
 ]
 
 
 MIDDLEWARE = [
-    'navalstorm.middleware.DisableCSRF',
+   # 'navalstorm.middleware.DisableCSRF',
+#    'navalstorm.middleware.AuthRequiredMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    
+    'django.middleware.security.SecurityMiddleware',   
 ]
 
 CORS_ALLOW_HEADERS = default_headers + (
@@ -69,6 +79,8 @@ CORS_ALLOW_HEADERS = default_headers + (
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://localhost:8081',
+    'http://localhost:8082',
+    '127.0.0.1:8000',
     "navalstorm.srvz-webapp.he-arc.ch",
 ]
 CORS_ALLOW_CREDENTIALS = True
@@ -93,9 +105,6 @@ TEMPLATES = [
     },
 ]
 
-SESSION_COOKIE_DOMAIN=[".localhost:8081", ".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
-
-
 WSGI_APPLICATION = 'navalstorm.wsgi.application'
 
 
@@ -117,14 +126,11 @@ DATABASES = {
 }
 
 REST_FRAMEWORK = {
-     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.DjangoModelPermissions'
-    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+                'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES':(
+                'rest_framework.permissions.IsAuthenticated',
     ),
 }
 
@@ -132,11 +138,10 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
     'http://localhost:8000',
     'http://localhost:8081',
+    'http://localhost:8082',
     'http://localhost',
+    'http://127.0.0.1:8000',
 )
-
-SESSION_COOKIE_DOMAIN=[".localhost:8081", ".localhost:8080",".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -176,5 +181,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'user.Gamer'
+# AUTH_USER_MODEL = 'user.Gamer'
 

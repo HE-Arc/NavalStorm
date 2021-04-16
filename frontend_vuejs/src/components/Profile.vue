@@ -47,24 +47,28 @@
             label="Email"
             type="text"
             v-model="email"
+       
             :rules="emailRule"></v-text-field>
         <v-text-field
             outline
             label="Username"
             type="text"
             v-model="username"
+      
             :rules="usernameRule"></v-text-field>
         <v-text-field
             outline
             label="Password"
             type="password"
             v-model="password"
+      
             :rules="[passwordRule.passwordValidation]"></v-text-field>
         <v-text-field
             outline
             label="Confirme Password"
             type="password"
-            v-model="confPassword"
+            v-model="new_password"
+          
             :rules="[passwordRule.passwordValidation]"></v-text-field>
       </v-form>
     </v-card-text>
@@ -98,6 +102,7 @@ import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiPencilOutline } from '@mdi/js'; 
 import { mdiChartLine } from '@mdi/js';
 import DoughnutChart from "./DoughnutChart.vue";
+import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
   name: "Profile",
@@ -120,7 +125,7 @@ export default Vue.extend({
                   v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
       ],
       password: null,
-      confPassword: null,
+      new_password: null,
       passwordRule : {
         required: password => !!password || "Required.",
         passwordValidation: password => {
@@ -134,8 +139,42 @@ export default Vue.extend({
     onClickBtnStat () {
       this.isChartDisplay = !this.isChartDisplay;
     },
-    onClickBtnModi () {
+    async onClickBtnModi () {
       this.isModiDisplay = !this.isModiDisplay;
+      this.loading = true;
+      this.errors["username"] = "";
+      this.errors["password"] = "";
+      try {
+        if (this.new_password) {
+          await Api.put(`users/${this.userId}/`, {
+            email: this.email,
+            username: this.username,
+            password: this.password,
+            new_password: this.new_password,
+          });
+          Api.updateUserInformations();
+          this.$router.push({ path: `/users/${this.userId}/` });
+        } else if (this.password) {
+          await Api.put(`users/${this.userId}/`, {
+            email: this.email,
+            username: this.username,
+            password: this.password,
+          });
+          Api.updateUserInformations();
+          this.$router.push({ path: `/users/${this.userId}/` });
+        }
+      } catch (e) {
+        if (e.response.data.error) {
+          if (e.response.data.error.includes("Username")) {
+            this.errors["username"] = e.response.data.error;
+          }
+          if (e.response.data.error.includes("password")) {
+            this.errors["password"] = e.response.data.error;
+          }
+        }
+      } finally {
+        this.loading = false;
+      }
     },
   },
 });

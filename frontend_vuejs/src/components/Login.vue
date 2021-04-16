@@ -17,13 +17,14 @@
               <v-form ref='form'>
                 <v-text-field
                               outline
-                              label="Email"
-                              type="email"
-                              v-model="email"></v-text-field>
+                              label="Username"
+                              :disabled="loading"
+                              v-model="username"></v-text-field>
                 <v-text-field
                               outline
                               label="Password"
                               type="password"
+                              :disabled="loading"
                               v-model="password"></v-text-field>
               </v-form>
             </v-card-text>
@@ -31,7 +32,7 @@
             <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
               <v-btn color="error"  v-on:click="fnRegister">Register</v-btn >
               <v-spacer></v-spacer>
-              <v-btn color="info"  v-on:click="fnLogin">Login</v-btn >
+              <v-btn color="info"  v-on:click="fnLogin" :disabled="loading">Login</v-btn >
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -46,26 +47,34 @@
 <!-- SCRIPT -->
 <script>
 import Vue from "vue";
+import Api from "@/api/ApiRequester";
 export default Vue.extend({
     name: "Login",
     data ()  { 
-        return  { 
+        return  {
+          loading: false, 
           password: null,
-          email: null,
+          username: null,
         }    
     }, 
     methods: {
-      fnLogin () {
-        if(this.$refs.form.validate()) {
-          this.$store.dispatch('loginUser', {
-            email: this.email,
-            password: this.password,
-          }).then(() => {
-            this.$router.push({ name: 'Register' })
-          })
-        }
+      fnLogin : async function () {
+      this.loading = true;
+      try {
+        await Api.login({
+          username: this.username,
+          password: this.password,
+        });
+        this.errorPost = "";
+
+        this.$router.push({ name: "Profile" });
+        this.loading = false;
+      } catch (e) {
+        this.errorPost = e.message;
+      } finally {
+        this.loading = false;
       }
-      ,
+    },
       fnRegister () {
          this.$router.push({ name: "Register" });
       },
