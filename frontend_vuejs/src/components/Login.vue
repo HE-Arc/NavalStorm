@@ -16,15 +16,15 @@
               <p>Sign in with your email and password:</p>
               <v-form ref='form'>
                 <v-text-field
-                              outline
-                              label="Email"
-                              type="email"
-                              v-model="email"></v-text-field>
+                  outline
+                  label="Email"
+                  type="email"
+                  v-model="email"></v-text-field>
                 <v-text-field
-                              outline
-                              label="Password"
-                              type="password"
-                              v-model="password"></v-text-field>
+                  outline
+                  label="Password"
+                  type="password"
+                  v-model="password"></v-text-field>
               </v-form>
             </v-card-text>
             <v-divider></v-divider>
@@ -61,11 +61,10 @@ export default Vue.extend({
             email: this.email,
             password: this.password,
           }).then(() => {
-            this.$router.push({ name: 'Register' })
+            this.$router.push({ name: 'Profile' })
           })
         }
-      }
-      ,
+      },
       fnRegister () {
          this.$router.push({ name: "Register" });
       },

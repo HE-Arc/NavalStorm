@@ -133,9 +133,15 @@ export default Vue.extend({
   methods: {
     onClickBtnStat () {
       this.isChartDisplay = !this.isChartDisplay;
+      this.isModiDisplay = false
+      if(this.isChartDisplay)
+        this.$store.dispatch('showUserChart',{
+          email : this.email
+        }).then()
     },
     onClickBtnModi () {
       this.isModiDisplay = !this.isModiDisplay;
+      this.isChartDisplay = false
     },
   },
 });

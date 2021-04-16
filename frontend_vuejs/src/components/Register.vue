@@ -16,23 +16,23 @@
               <p>Create a new account with your email, username and password:</p>
               <v-form ref='form'>
                   <v-text-field
-                              outline
-                              label="Email"
-                              type="text"
-                              v-model="email"
-                              :rules="emailRule"></v-text-field>
+                    outline
+                    label="Email"
+                    type="text"
+                    v-model="email"
+                    :rules="emailRule"></v-text-field>
                 <v-text-field
-                              outline
-                              label="Username"
-                              type="text"
-                              v-model="username"
-                              :rules="usernameRule"></v-text-field>
+                  outline
+                  label="Username"
+                  type="text"
+                  v-model="username"
+                  :rules="usernameRule"></v-text-field>
                 <v-text-field
-                              outline
-                              label="Password (Min. 8 characters with at least one capital letter and a number)"
-                              type="password"
-                              v-model="password"
-                              :rules="[passwordRule.passwordValidation]"></v-text-field>
+                  outline
+                  label="Password (Min. 8 characters with at least one capital letter and a number)"
+                  type="password"
+                  v-model="password"
+                  :rules="[passwordRule.passwordValidation]"></v-text-field>
               </v-form>
             </v-card-text>
             <v-divider></v-divider>
@@ -62,12 +62,8 @@ export default Vue.extend({
           email: null,
           password: null,
           username: null,
-          emailRule: [ 
-                        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
-          ],
-          usernameRule: [ 
-                        v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
-          ],
+          emailRule: [v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'],
+          usernameRule: [v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'],
           passwordRule : {
             required: password => !!password || "Required.",
             passwordValidation: password => {
@@ -80,14 +76,13 @@ export default Vue.extend({
     methods: {
       fnRegister () {
         if(this.$refs.form.validate()) {
-          
           this.$store.dispatch('registerUser', {
-          email: this.email,
-          username: this.username,
-          password: this.password
+            email: this.email,
+            username: this.username,
+            password: this.password
           }).then(() => {
-          this.$router.push({ name: 'Login' })
-        })
+            this.$router.push({ name: 'Login' })
+          })
         }
       },
       fnLogin () {

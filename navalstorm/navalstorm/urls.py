@@ -33,4 +33,7 @@ urlpatterns = [
     path('api/auth/verify', TokenVerifyView.as_view(),name="token_verify"),
     path('api/auth/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/profile/userForm',views.userFormValues, name="userFormValues"),
+    path('api/profile/userFormUpdate',views.userFormUpdate, name="userFormUpdate"),
+    path('api/profile/userStats',views.userStats,name="userStats")
 ]
