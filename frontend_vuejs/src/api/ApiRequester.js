@@ -1,9 +1,10 @@
 import store from '@/store';
-import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+// import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse }import Axios,  from "axios";
 import Message from "@/components/Message.vue"
 import router from '../router';
-import config from '../../.env.json';
+import config from '../.env.json';
 import Vue from 'vue';
+import Axios  from "axios"
 
 /**
  * API Service to link Front-End and Back-End

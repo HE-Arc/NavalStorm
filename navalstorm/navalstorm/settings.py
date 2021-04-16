@@ -78,6 +78,7 @@ CORS_ALLOW_HEADERS = default_headers + (
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://localhost:8081',
+    'http://localhost:8082',
     '127.0.0.1:8000',
     "navalstorm.srvz-webapp.he-arc.ch",
 ]
@@ -103,7 +104,7 @@ TEMPLATES = [
     },
 ]
 
-SESSION_COOKIE_DOMAIN=[".localhost:8081", ".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
+SESSION_COOKIE_DOMAIN=[".localhost:8082",".localhost:8081", ".navalstorm.srvz-webapp.he-arc.ch",".127.0.0.1:8000"]
 
 
 WSGI_APPLICATION = 'navalstorm.wsgi.application'
@@ -139,6 +140,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
     'http://localhost:8000',
     'http://localhost:8081',
+    'http://localhost:8082',
     'http://localhost',
     'http://127.0.0.1:8000',
 )
