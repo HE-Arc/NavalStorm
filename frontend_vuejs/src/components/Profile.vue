@@ -74,7 +74,7 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions >
-      <v-btn color="error" @click="onClickBtnModi()">Hide</v-btn >
+      <v-btn color="error" @click="onClickBtnModification()">Hide</v-btn >
       <v-spacer></v-spacer>
       <v-btn color="success"  @click="onClickSave()">Save</v-btn >
     </v-card-actions>
@@ -139,7 +139,7 @@ export default Vue.extend({
     onClickBtnStat () {
       this.isChartDisplay = !this.isChartDisplay;
     },
-    async onClickBtnModi () {
+    async onClickBtnModification () {
       this.isModiDisplay = !this.isModiDisplay;
       this.loading = true;
       this.errors["username"] = "";

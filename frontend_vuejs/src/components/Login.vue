@@ -13,14 +13,13 @@
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
-              <p>Sign in with your email and password:</p>
+              <p>Sign in with your username and password:</p>
               <v-form ref='form'>
                 <v-text-field
                   outline
-                  label="Email"
-                  type="email"
-                  v-model="email"
-                  :disabled="loading"></v-text-field>
+                  label="Username"
+                  :disabled="loading"
+                  v-model="username"></v-text-field>
                 <v-text-field
                   outline
                   label="Password"
