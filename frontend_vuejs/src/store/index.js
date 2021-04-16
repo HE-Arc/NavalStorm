@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { axiosBase } from '../api/axios-base'
 
 Vue.use(Vuex)
 
@@ -134,21 +133,18 @@ export default new Vuex.Store({
       state.ships.splice(oldShipIndex, 1);
       state.ships.push(newShip);
     },
-    logUser(state, token, refreshToken) {
+    LOG_USER(state, token, refreshToken) {
       state.isUserLogged = true;
       state.tokenUser = token;
       state.refreshTokenUser = refreshToken;
       return state;
     },
-    logout(state) {
+    LOGOUT(state) {
       state.isUserLogged = false;
       state.user = {};
       state.tokenUser = null;
       state.refreshTokenUser = null;
       return state;
-    },
-    updateUser(state, user) {
-      state.user = user;
     },
   },
   actions: {
@@ -157,9 +153,6 @@ export default new Vuex.Store({
     },
     updateDrawer: (store, drawer) => {
       store.commit('SET_DRAWER', drawer);
-    },
-    updateUser: (store, user) => {
-      store.commit('UPDATE_USER', user);
     },
     updateCurrentShip : (store, currentShip) => {
       store.commit('UPDATE_CURRENT_SHIP', currentShip);
@@ -178,13 +171,13 @@ export default new Vuex.Store({
     },
 
     logUser(state, token, refreshToken) {
-      state.commit('logUser', token, refreshToken);
+      state.commit('LOG_USER', token, refreshToken);
     },
     logout(state) {
-      state.commit('logout');
+      state.commit('LOGOUT');
     },
     updateUser(state, user) {
-      state.commit("updateUser", user);
+      state.commit("UPDATE_USER", user);
     },
   },
 })
