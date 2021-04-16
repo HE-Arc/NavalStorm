@@ -69,6 +69,6 @@ class UserViewSet(ViewsetFunctionPermissions):
 
     @action(detail=False)
     def me(self, request):   
-        user = request.user.bethovenUser
+        user = request.user.navalstromUser
         serializer = NavalStormUserSerializer(user)
         return Response(serializer.data)   

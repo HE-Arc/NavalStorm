@@ -4,7 +4,9 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Game1 from '../views/Game1.vue'
 import Profile from '../views/Profile.vue'
+import store from '@/store';
 
+import Api from "@/api/ApiRequester";
 Vue.use(VueRouter)
 
 const routes = [

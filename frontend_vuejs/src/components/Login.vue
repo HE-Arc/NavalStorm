@@ -67,7 +67,8 @@ export default Vue.extend({
         });
         this.errorPost = "";
 
-        this.$router.push({ name: "Home" });
+        this.$router.push({ name: "Profile" });
+        this.loading = false;
       } catch (e) {
         this.errorPost = e.message;
       } finally {
