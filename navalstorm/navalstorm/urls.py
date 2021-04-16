@@ -13,24 +13,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from user import views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView
-)
 from django.urls import include, path
+from django.contrib import admin
+from django.urls import path, include
+from django.contrib.auth import views as auth
+from rest_framework.authtoken import views as token_views
+from rest_framework import routers 
+from user import views
+
+  
+router = routers.SimpleRouter() 
+router.register(r'users', views.UserViewSet, basename='users')
 
 
 app_name='navalstorm'
 
 urlpatterns = [
-    path('api/admin', admin.site.urls),
-    path("api/register", views.register, name="register"),
-    path('api/auth/',(include('rest_framework.urls'))),
-    path('api/auth/verify', TokenVerifyView.as_view(),name="token_verify"),
-    path('api/auth/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/auth/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('admin/', admin.site.urls),
+
+    #API PATHS
+    path('api/', include(router.urls)), 
+    #User PATHS
+    path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),
+    #TestingView
+    path('serverstate/',views.ServerState.as_view(),name='serverstate')
+
+    
 ]
