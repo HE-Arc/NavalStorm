@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    'navalstorm.middleware.DisableCSRF',
+   # 'navalstorm.middleware.DisableCSRF',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
