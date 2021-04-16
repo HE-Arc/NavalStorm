@@ -138,11 +138,6 @@ export default Vue.extend({
   methods: {
     onClickBtnStat () {
       this.isChartDisplay = !this.isChartDisplay;
-      this.isModiDisplay = false
-      if(this.isChartDisplay)
-        this.$store.dispatch('showUserChart',{
-          email : this.email
-        }).then()
     },
     async onClickBtnModi () {
       this.isModiDisplay = !this.isModiDisplay;

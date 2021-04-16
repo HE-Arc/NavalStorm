@@ -19,12 +19,15 @@
                   outline
                   label="Email"
                   type="email"
-                  v-model="email"></v-text-field>
+                  v-model="email"
+                  :disabled="loading"></v-text-field>
                 <v-text-field
                   outline
                   label="Password"
                   type="password"
-                  v-model="password"></v-text-field>
+                  v-model="password"
+                  :disabled="loading"></v-text-field>
+                  
               </v-form>
             </v-card-text>
             <v-divider></v-divider>
