@@ -33,6 +33,7 @@ th {
 td {
   background-color: #ffffff00;
   border: 1px solid #cac8c8;
+  align-items: center;
 }
 
 th,
@@ -67,4 +68,3 @@ img {
 .marginTop {
     margin-top: 30px;
 }
-

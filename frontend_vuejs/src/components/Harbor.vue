@@ -60,7 +60,7 @@ export default Vue.extend({
           })
           ship.coord = []
           this.$store.dispatch('updateShipInShips', ship)
-          this.$root.$refs.Board.updateBoardHTML()
+          this.$root.$refs.BoardGame1.updateBoardHTML()
         }
       },
       onClickToggleVertical(ship){

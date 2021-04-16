@@ -4,10 +4,10 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-3">
-          <BoardGame1 />
+          <BoardGame2Owner />
         </div>
         <div class="col-xs-3">
-          <Harbor />
+          <BoardGame2Enemy />
         </div>
       </div>
     </div>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import BoardGame1 from '@/components/BoardGame1.vue'
-import Harbor from '@/components/Harbor.vue'
+import BoardGame2Owner from '@/components/BoardGame2Owner.vue'
+import BoardGame2Enemy from '@/components/BoardGame2Enemy.vue'
 
 export default {
-  name: 'Game1View',
+  name: 'Game2View',
   components: {
-    BoardGame1,
-    Harbor,
+    BoardGame2Owner,
+    BoardGame2Enemy,
   }
 }
 </script>
