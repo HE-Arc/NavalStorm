@@ -25,11 +25,11 @@
     </v-list-item>
 
     <v-card-actions>
-      <v-btn  color="primary"  @click="onClickBtnStat()" :disabled="isModiDisplay">
+      <v-btn  color="primary"  @click="onClickBtnStat()" :disabled="isChartDisplay">
         <svg-icon type="mdi" :path="iconChartPath" />
         Statistics
       </v-btn>
-      <v-btn  color="primary" @click="onClickBtnModi()" :disabled="isChartDisplay">
+      <v-btn  color="primary" @click="onClickBtnModification()" :disabled="isModiDisplay">
         <svg-icon type="mdi" :path="iconPenPath" />
         Modify
         </v-btn>
@@ -138,9 +138,13 @@ export default Vue.extend({
   methods: {
     onClickBtnStat () {
       this.isChartDisplay = !this.isChartDisplay;
+      this.isModiDisplay = false
     },
-    async onClickBtnModification () {
+    onClickBtnModification(){
       this.isModiDisplay = !this.isModiDisplay;
+      this.isChartDisplay = false;
+    },
+    async onClickSave () {
       this.loading = true;
       this.errors["username"] = "";
       this.errors["password"] = "";
