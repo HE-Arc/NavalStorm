@@ -6,12 +6,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
-    // refreshing the page
-    refreshToken: localStorage.getItem('refresh_token') || null,
-    csrfToken: localStorage.getItem('csrf_token') || null,
-     APIData: '', // received data from the backend API is stored here.
-
+    isUserLogged: false,
+    tokenUser: null,
+    refreshTokenUser: null,
     drawer : false,
     user : {
       username : String,
@@ -105,25 +102,8 @@ export default new Vuex.Store({
       return state.board.find(ar => ar.id === areaID);
     },
   },
-  mutations: {
-    updateLocalStorage (state, { access, refresh }) {
-      localStorage.setItem('access_token', access)
-      localStorage.setItem('refresh_token', refresh)
-      state.accessToken = access
-      state.refreshToken = refresh
-    },
-    updateAccess (state, access) {
-      state.accessToken = access
-    },
-    updateCsrfToken (state,csrf){
-      localStorage.setItem('csrf_token', csrf)
-      state.csrfToken = csrf
-    },
-    destroyToken (state) {
-      state.accessToken = null
-      state.refreshToken = null
-    },
 
+  mutations: {
     SET_DRAWER:(state, drawer) => {
       state.drawer = drawer;
     },
@@ -154,79 +134,24 @@ export default new Vuex.Store({
       state.ships.splice(oldShipIndex, 1);
       state.ships.push(newShip);
     },
+    logUser(state, token, refreshToken) {
+      state.isUserLogged = true;
+      state.tokenUser = token;
+      state.refreshTokenUser = refreshToken;
+      return state;
+    },
+    logout(state) {
+      state.isUserLogged = false;
+      state.user = {};
+      state.tokenUser = null;
+      state.refreshTokenUser = null;
+      return state;
+    },
+    updateUser(state, user) {
+      state.user = user;
+    },
   },
   actions: {
-     // run the below action to get a new access token on expiration
-     refreshToken (context) {
-      return new Promise((resolve, reject) => {
-        axiosBase.post('/api/token/refresh', {
-          refresh: context.state.refreshToken
-        }) // send the stored refresh token to the backend API
-          .then(response => { // if API sends back new access and refresh token update the store
-            console.log('New access successfully generated')
-            context.commit('updateAccess', response.data.access)
-            resolve(response.data.access)
-          })
-          .catch(err => {
-            console.log('error in refreshToken Task')
-            reject(err) // error generating new access and refresh token because refresh token has expired
-          })
-      })
-    },
-    registerUser (context, data) {
-      return new Promise((resolve, reject) => {
-        axiosBase.post('/register', {
-          name: data.name,
-          email: data.email,
-          username: data.username,
-          password: data.password
-        })
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    logoutUser (context) {
-      if (context.getters.loggedIn) {
-        return new Promise((resolve) => {
-          axiosBase.post('/auth/token')
-            .then(() => {
-              localStorage.removeItem('access_token')
-              localStorage.removeItem('refresh_token')
-              context.commit('destroyToken')
-            })
-            .catch(err => {
-              localStorage.removeItem('access_token')
-              localStorage.removeItem('refresh_token')
-              context.commit('destroyToken')
-              resolve(err)
-            })
-        })
-      }
-    },
-     
-    loginUser (context, credentials) {
-      return new Promise((resolve, reject) => {
-        // send the username and password to the backend API:
-        axiosBase.post('/auth/login/', 
-        {
-          email: credentials.email,
-          password: credentials.password
-        })
-        // if successful update local storage:
-          .then(response => {
-            context.commit('updateLocalStorage', { access: response.data.access, refresh: response.data.refresh }) // store the access and refresh token in localstorage
-            resolve()
-          })
-          .catch(err => {
-            reject(err)
-          })
-      })
-    },
-
     flipDrawer: (store) => {
       store.commit('FLIP_DRAWER');
     },
@@ -250,6 +175,16 @@ export default new Vuex.Store({
     },
     updateShipInShips : (store, ship) => {
       store.commit('UPDATE_SHIPS_SHIP', ship);
+    },
+
+    logUser(state, token, refreshToken) {
+      state.commit('logUser', token, refreshToken);
+    },
+    logout(state) {
+      state.commit('logout');
+    },
+    updateUser(state, user) {
+      state.commit("updateUser", user);
     },
   },
 })

@@ -56,4 +56,46 @@ const router = new VueRouter({
   routes
 })
 
+function loadSessionFromStorage() {
+  if (window.sessionStorage.getItem("token") != null) {
+    Api.updateStore(JSON.parse(window.sessionStorage.getItem("user")), window.sessionStorage.getItem("token"), window.sessionStorage.getItem("refresh_token"));
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+function isLogged() {
+  // Not connected by login action
+  if (!store.state.isUserLogged) {
+    if (loadSessionFromStorage()) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((route) => route.meta.onlyLogged)) {
+    if (!isLogged()) {
+      next({ name: "Login" });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((route) => route.meta.onlyUnlogged)) {
+    if (isLogged()) {
+      next({ name: "Home" });
+    } else {
+      next();
+    }
+  } else {
+    loadSessionFromStorage();
+    next();
+  }
+});
+
+
 export default router
