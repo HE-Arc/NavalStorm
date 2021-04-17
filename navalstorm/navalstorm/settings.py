@@ -82,6 +82,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8082',
     '127.0.0.1:8000',
     "navalstorm.srvz-webapp.he-arc.ch",
+    "https://navalstorm.srvz-webapp.he-arc.ch",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_HTTPONLY = True
@@ -141,6 +142,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8082',
     'http://localhost',
     'http://127.0.0.1:8000',
+    "https://navalstorm.srvz-webapp.he-arc.ch",
 )
 
 # Password validation
