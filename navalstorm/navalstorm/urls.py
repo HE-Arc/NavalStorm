@@ -35,8 +35,4 @@ urlpatterns = [
     path('api/', include(router.urls)), 
     #User PATHS
     path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),
-    #TestingView
-    path('serverstate/',views.ServerState.as_view(),name='serverstate')
-
-    
 ]

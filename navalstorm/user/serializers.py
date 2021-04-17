@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
 from .exception import UserUpdateError
 
-###     USER SERIALIZERS    ###
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -27,10 +26,9 @@ class NavalStormUserSerializer(serializers.ModelSerializer):
 
 class NavalStormUpdateSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
-    email = serializers.CharField()
+    email = serializers.CharField(required=False) #required=false because we can update without email
     password = serializers.CharField()
-    #Not mandatory to change the password at every update, still a possibility
-    new_password = serializers.CharField(required=False, default=None)
+    new_password = serializers.CharField(required=False, default=None) #required=false because we can update without new password
     user = serializers.CharField(required=False,default=None)
 
     class Meta:

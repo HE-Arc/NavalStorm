@@ -16,7 +16,7 @@ class NavalStormUser(models.Model):
 
     @classmethod
     def create_navalstorm_user(cls, username, email, password):
-        navalstromUser = cls()
-        navalstromUser.user = User.objects.create_user(username=username, email=email,password=password)
-        navalstromUser.save()
-        return navalstromUser
+        navalstormUser = cls()
+        navalstormUser.user = User.objects.create_user(username=username, email=email,password=password)
+        navalstormUser.save()
+        return navalstormUser
