@@ -19,7 +19,7 @@ export default {
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             ],
-            data: [parseInt(this.$store.state.user.winNumber), parseInt(this.$store.state.playedGameNumber) - parseInt(this.$store.state.user.winNumber)], //value to bind
+            data: [parseInt(this.$store.state.user.playedGameNumber) - parseInt(this.$store.state.user.winNumber),parseInt(this.$store.state.user.winNumber)],
           }],
       },
       options: {
@@ -56,6 +56,7 @@ export default {
           var textX = Math.round((width - ctx.measureText(text).width) / 2);
           var textY = height / 2;
 
+          ctx.fillStyle = '#FF0000'
           ctx.fillText(text, textX, textY);
           ctx.save();
         }

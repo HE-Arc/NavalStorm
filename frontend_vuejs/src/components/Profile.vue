@@ -82,7 +82,7 @@
         <div v-if="this.$store.state.user.playedGameNumber > 0 " >
           <DoughnutChart />
         </div>
-        <p v-else>You must play at least one game to get Statistics</p>
+        <p class="display-1" v-else>You must play at least one game to get Statistics</p>
         <v-divider></v-divider>
         <v-card-actions >
           <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
