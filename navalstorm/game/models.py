@@ -3,21 +3,17 @@ import json
 
 # Create your models here.
 
-class Area(models.Model):
-        # JSON format
-        #      id : 'H1',
-        #     isTouch : false,
-        #     isBusy : false,
-        #     whoIsThere : null,
-    id=models.CharField()
-    isTouch=models.BooleanField(default=False)
-    isBusy=models.BooleanField(default=False)
-    whoIsThere = models.IntegerField()
-
 class Board(models.Model):
-    board=models.CharField()
+    data=models.CharField()
 
     def setBoard(self, x):
-        self.board=json.dumps(x)
+        self.data=json.dumps(x)
     def getBoard(self):
-        return json.loads(self.board)
+        return json.loads(self.data)
+
+    @classmethod
+    def create_board(cls,data):
+        board=cls()
+        board=Board.objects.create(board=json.dumps(data))
+        board.save()
+        return board
