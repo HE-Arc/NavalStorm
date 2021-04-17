@@ -19,7 +19,7 @@ export default {
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             ],
-            data: [123, 456,], //value to bind
+            data: [parseInt(this.$store.state.user.winNumber), parseInt(this.$store.state.playedGameNumber) - parseInt(this.$store.state.user.winNumber)], //value to bind
           }],
       },
       options: {

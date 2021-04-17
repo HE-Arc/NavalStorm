@@ -53,14 +53,14 @@
                 :rules="usernameRule"></v-text-field>
             <v-text-field
                 outline
-                label="Password"
+                label="New Password"
                 type="password"
                 v-model="password"
           
                 :rules="[passwordRule.passwordValidation]"></v-text-field>
             <v-text-field
                 outline
-                label="Confirme Password"
+                label="Confirm New Password"
                 type="password"
                 v-model="new_password"
               
@@ -79,7 +79,10 @@
       <!-- Donut Chart -->
     <v-flex sm12 md6 offset-md3>
       <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isChartDisplay">
-        <DoughnutChart />
+        <div v-if="this.$store.state.user.playedGameNumber > 0 " >
+          <DoughnutChart />
+        </div>
+        <p v-else>You must play at least one game to get Statistics</p>
         <v-divider></v-divider>
         <v-card-actions >
           <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
@@ -119,13 +122,12 @@ export default Vue.extend({
       usernameRule: [ 
         v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
       ],
-      password: null,
       new_password: null,
+      confirm_new_password: null,
       passwordRule : {
-        required: password => !!password || "Required.",
-        passwordValidation: password => {
+        passwordValidation: new_password => {
         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/
-        return (pattern.test(password) || "Min. 8 characters with at least one capital letter and a number.")
+        return (pattern.test(new_password) || "Min. 8 characters with at least one capital letter and a number.")
         },
       }
     } 
@@ -145,19 +147,22 @@ export default Vue.extend({
       this.errors["password"] = "";
       try {
         if (this.new_password) {
+          if(this.new_password==this.confirm_new_password){
+            await Api.put(`users/${this.userId}/`, {
+              email: this.email,
+              username: this.username,
+              password: this.password,
+              new_password: this.new_password,
+            });
+            Api.updateUserInformations();
+            this.$router.push({ path: `/users/${this.userId}/` });
+          } else {
+            this.errors["password"] = "Password and confirmation are not the same"
+          }
+        } else {
           await Api.put(`users/${this.userId}/`, {
             email: this.email,
             username: this.username,
-            password: this.password,
-            new_password: this.new_password,
-          });
-          Api.updateUserInformations();
-          this.$router.push({ path: `/users/${this.userId}/` });
-        } else if (this.password) {
-          await Api.put(`users/${this.userId}/`, {
-            email: this.email,
-            username: this.username,
-            password: this.password,
           });
           Api.updateUserInformations();
           this.$router.push({ path: `/users/${this.userId}/` });
