@@ -1,12 +1,12 @@
-from ..user.views import ViewsetFunctionPermissions
+from user.views import ViewsetFunctionPermissions
 from .serializers import *
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets, status, filters
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from ..user.permission import isSelfUser
-from ..user.exception import *
+from user.permission import isSelfUser
+from user.exception import *
 from rest_framework.status import HTTP_422_UNPROCESSABLE_ENTITY
 import logging
 

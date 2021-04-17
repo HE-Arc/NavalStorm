@@ -4,7 +4,7 @@ import json
 # Create your models here.
 
 class Board(models.Model):
-    data=models.CharField()
+    data=models.TextField()
 
     def setBoard(self, x):
         self.data=json.dumps(x)

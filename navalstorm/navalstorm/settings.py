@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'oauth2_provider',
     'user',
+    'game',
     'crispy_forms',
     'rest_framework.authtoken',
     'corsheaders',
