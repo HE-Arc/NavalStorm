@@ -18,6 +18,7 @@ export default new Vuex.Store({
       avatar : String,
     },
     board: [],
+    //todo put in backend the ships
     ships : [
       {
         id : 1,
