@@ -30,4 +30,21 @@ class Boat:
         return json.loads(self.coord)
 
 
+class Area:
+        # JSON format
+        #      id : 'H1',
+        #     isTouch : false,
+        #     isBusy : false,
+        #     whoIsThere : null,
+    id=models.CharField()
+    isTouch=models.BooleanField(default=False)
+    isBusy=models.BooleanField(default=False)
+    whoIsThere = models.IntegerField(default= None)
 
+class Board:
+    board=models.CharField()
+
+    def setBoard(self, x):
+        self.board=json.dumps(x)
+    def getBoard(self):
+        return json.loads(self.board)
