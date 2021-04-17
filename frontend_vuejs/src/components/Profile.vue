@@ -55,14 +55,14 @@
                 outline
                 label="New Password"
                 type="password"
-                v-model="password"
+                v-model="new_password"
           
                 :rules="[passwordRule.passwordValidation]"></v-text-field>
             <v-text-field
                 outline
                 label="Confirm New Password"
                 type="password"
-                v-model="new_password"
+                v-model="confirm_new_password"
               
                 :rules="[passwordRule.passwordValidation]"></v-text-field>
           </v-form>
@@ -143,29 +143,28 @@ export default Vue.extend({
     },
     async onClickSave () {
       this.loading = true;
-      this.errors["username"] = "";
-      this.errors["password"] = "";
       try {
         if (this.new_password) {
           if(this.new_password==this.confirm_new_password){
-            await Api.put(`users/${this.userId}/`, {
+            console.log("password change")
+            await Api.put(`users/${this.$store.state.user.id}/`, {
               email: this.email,
               username: this.username,
-              password: this.password,
-              new_password: this.new_password,
+              password: this.new_password,
             });
             Api.updateUserInformations();
-            this.$router.push({ path: `/users/${this.userId}/` });
+            this.$router.push({path: `/users/${this.$store.state.user.id}/` });
           } else {
-            this.errors["password"] = "Password and confirmation are not the same"
+            //TODO display error "Password and confirmation are not the same"
           }
         } else {
-          await Api.put(`users/${this.userId}/`, {
+          console.log("no password change")
+          await Api.put(`users/${this.$store.state.user.id}/`, {
             email: this.email,
             username: this.username,
           });
           Api.updateUserInformations();
-          this.$router.push({ path: `/users/${this.userId}/` });
+          this.$router.push({ path: `/users/${this.$store.state.user.id}/` });
         }
       } catch (e) {
         if (e.response.data.error) {
