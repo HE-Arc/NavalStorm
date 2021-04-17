@@ -3,8 +3,7 @@ import json
 
 # Create your models here.
 
-
-class Boat:
+class Boat(models.Model):
     # Json data format :  
         # id : 1,
         # isPlaced : false,
@@ -14,8 +13,6 @@ class Boat:
         # coord : ['H1', 'H2', 'H3', 'H4', 'H5'],
         # img : "ships/carrier/Carrier.png",
         # color : "Coral",
-
-    id = models.IntegerField()
     isPlaced = models.BooleanField(default=False)
     isVertical = models.BooleanField(default=False)
     type = models.CharField()
@@ -29,8 +26,14 @@ class Boat:
     def getCoord(self):
         return json.loads(self.coord)
 
+    @classmethod
+    def create_boat(cls,type,length,coord,color):
+        boat=cls()
+        boat=Boat.objects.create(type=type,length=length,coord=json.dumps(coord),color=color)
+        boat.save()
+        return boat
 
-class Area:
+class Area(models.Model):
         # JSON format
         #      id : 'H1',
         #     isTouch : false,
@@ -39,9 +42,9 @@ class Area:
     id=models.CharField()
     isTouch=models.BooleanField(default=False)
     isBusy=models.BooleanField(default=False)
-    whoIsThere = models.IntegerField(default= None)
+    whoIsThere = models.OneToOneField(Boat.id,on_delete=models.CASCADE)
 
-class Board:
+class Board(models.Model):
     board=models.CharField()
 
     def setBoard(self, x):
