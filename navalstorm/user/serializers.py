@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
 from .exception import UserUpdateError
 
-###     USER SERIALIZERS    ###
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -27,27 +26,22 @@ class NavalStormUserSerializer(serializers.ModelSerializer):
 
 class NavalStormUpdateSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
-    email = serializers.CharField()
-    password = serializers.CharField()
-    #Not mandatory to change the password at every update, still a possibility
-    new_password = serializers.CharField(required=False, default=None)
-    user = serializers.CharField(required=False,default=None)
+    email = serializers.CharField(required=False) #required=false because we can update without email
+    password = serializers.CharField(required=False, default=None) #required=false because we can update without new password
 
     class Meta:
         model = NavalStormUser
-        fields = '__all__'
+        fields = ['username','email','password']
 
     def update(self, instance, validated_data):
-        if not instance.user.check_password(validated_data["password"]) :
-            raise  UserUpdateError("Your password must be the same")
         user = instance.user
         user.email = validated_data["email"]
         user.username = validated_data["username"]
 
         if user.username != validated_data["user"] and User.objects.filter(username=user.username).exists():
             raise UserUpdateError(f'Username {user.username} is not available.')
-        if validated_data["new_password"]:
-            user.set_password(validated_data["new_password"])
+        if validated_data["password"]:
+            user.set_password(validated_data["password"])
         user.save()
         return instance.user
         

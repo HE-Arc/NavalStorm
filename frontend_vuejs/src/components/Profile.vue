@@ -2,96 +2,94 @@
 <div id="app">
   <v-app>
       <!-- Profile card -->
-<v-flex sm12 md6 offset-md3>
-  <v-card class="mx-auto" max-width="450" outlined elevation="10">
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div class="overline mb-4">
-        Profile
-        </div>
-
-        <v-list-item-title class="headline mb-1">
-        Capitain Haddock
-        </v-list-item-title>
-
-        <v-list-item-subtitle>
-        #userID
-        </v-list-item-subtitle>
-      </v-list-item-content>
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="mx-auto" max-width="450" outlined elevation="10">
+        <v-list-item three-line>
+          <v-list-item-content>
+            <div class="overline mb-4">
+            Profile
+            </div>
   
-      <v-list-item-avatar
-       tile size="auto" color="grey"><img src="https://people.he-arc.ch/photos/GrunenwaldDavid.jpg" alt="">
-      </v-list-item-avatar>
-    </v-list-item>
+            <v-list-item-title class="headline mb-1" :user="user"></v-list-item-title>
 
-    <v-card-actions>
-      <v-btn  color="primary"  @click="onClickBtnStat()" :disabled="isModiDisplay">
-        <svg-icon type="mdi" :path="iconChartPath" />
-        Statistics
-      </v-btn>
-      <v-btn  color="primary" @click="onClickBtnModi()" :disabled="isChartDisplay">
-        <svg-icon type="mdi" :path="iconPenPath" />
-        Modify
-        </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-flex>
+          </v-list-item-content>
+      
+          <v-list-item-avatar
+          tile size="auto" color="grey"><img src="https://people.he-arc.ch/photos/GrunenwaldDavid.jpg" alt="">
+          </v-list-item-avatar>
+        </v-list-item>
 
- <!-- Modify -->
-<v-flex sm12 md6 offset-md3>
-  <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isModiDisplay">
-    <v-card-text>
-      <v-form>
-        <v-text-field
-            outline
-            label="Email"
-            type="text"
-            v-model="email"
-       
-            :rules="emailRule"></v-text-field>
-        <v-text-field
-            outline
-            label="Username"
-            type="text"
-            v-model="username"
-      
-            :rules="usernameRule"></v-text-field>
-        <v-text-field
-            outline
-            label="Password"
-            type="password"
-            v-model="password"
-      
-            :rules="[passwordRule.passwordValidation]"></v-text-field>
-        <v-text-field
-            outline
-            label="Confirme Password"
-            type="password"
-            v-model="new_password"
+        <v-card-actions>
+          <v-btn  color="primary"  @click="onClickBtnStat()" :disabled="isChartDisplay">
+            <svg-icon type="mdi" :path="iconChartPath" />
+            Statistics
+          </v-btn>
+          <v-btn  color="primary" @click="onClickBtnModification()" :disabled="isModiDisplay">
+            <svg-icon type="mdi" :path="iconPenPath" />
+            Modify
+            </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
+    <!-- Modify -->
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isModiDisplay">
+        <v-card-text>
+          <v-form>
+            <v-text-field
+                outline
+                label="Email"
+                type="text"
+                v-model="email"
           
-            :rules="[passwordRule.passwordValidation]"></v-text-field>
-      </v-form>
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-actions >
-      <v-btn color="error" @click="onClickBtnModi()">Hide</v-btn >
-      <v-spacer></v-spacer>
-      <v-btn color="success"  @click="onClickSave()">Save</v-btn >
-    </v-card-actions>
-  </v-card>
-</v-flex>
+                :rules="emailRule"></v-text-field>
+            <v-text-field
+                outline
+                label="Username"
+                type="text"
+                v-model="username"
+          
+                :rules="usernameRule"></v-text-field>
+            <v-text-field
+                outline
+                label="New Password"
+                type="password"
+                v-model="new_password"
+          
+                :rules="[passwordRule.passwordValidation]"></v-text-field>
+            <v-text-field
+                outline
+                label="Confirm New Password"
+                type="password"
+                v-model="confirm_new_password"
+              
+                :rules="[passwordRule.passwordValidation]"></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions >
+          <v-btn color="error" @click="onClickBtnModification()">Hide</v-btn >
+          <v-spacer></v-spacer>
+          <v-btn color="success"  @click="onClickSave()">Save</v-btn >
+        </v-card-actions>
+      </v-card>
+    </v-flex>
 
-  <!-- Donut Chart -->
-<v-flex sm12 md6 offset-md3>
-  <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isChartDisplay">
-    <DoughnutChart />
-    <v-divider></v-divider>
-    <v-card-actions >
-      <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
-        <v-spacer></v-spacer>
-      </v-card-actions>
-    </v-card>
-</v-flex>
+      <!-- Donut Chart -->
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isChartDisplay">
+        <div v-if="this.$store.state.user.playedGameNumber > 0 " >
+          <DoughnutChart />
+        </div>
+        <p class="display-1" v-else>You must play at least one game to get Statistics</p>
+        <v-divider></v-divider>
+        <v-card-actions >
+          <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+    </v-flex>
   </v-app>
 </div>
 </template>
@@ -116,21 +114,20 @@ export default Vue.extend({
       iconChartPath: mdiChartLine,
       isChartDisplay: false,
       isModiDisplay: false,
-      email: null,
+      email: this.$store.state.user.email,
       emailRule: [ 
-                  v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
       ],
-      username: null,
+      username: this.$store.state.user.username,
       usernameRule: [ 
-                  v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
+        v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
       ],
-      password: null,
       new_password: null,
+      confirm_new_password: null,
       passwordRule : {
-        required: password => !!password || "Required.",
-        passwordValidation: password => {
+        passwordValidation: new_password => {
         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/
-        return (pattern.test(password) || "Min. 8 characters with at least one capital letter and a number.")
+        return (pattern.test(new_password) || "Min. 8 characters with at least one capital letter and a number.")
         },
       }
     } 
@@ -138,30 +135,36 @@ export default Vue.extend({
   methods: {
     onClickBtnStat () {
       this.isChartDisplay = !this.isChartDisplay;
+      this.isModiDisplay = false
     },
-    async onClickBtnModi () {
+    onClickBtnModification(){
       this.isModiDisplay = !this.isModiDisplay;
+      this.isChartDisplay = false;
+    },
+    async onClickSave () {
       this.loading = true;
-      this.errors["username"] = "";
-      this.errors["password"] = "";
       try {
         if (this.new_password) {
-          await Api.put(`users/${this.userId}/`, {
+          if(this.new_password==this.confirm_new_password){
+            console.log("password change")
+            await Api.put(`users/${this.$store.state.user.id}/`, {
+              email: this.email,
+              username: this.username,
+              password: this.new_password,
+            });
+            Api.updateUserInformations();
+            this.$router.push({path: `/users/${this.$store.state.user.id}/` });
+          } else {
+            //TODO display error "Password and confirmation are not the same"
+          }
+        } else {
+          console.log("no password change")
+          await Api.put(`users/${this.$store.state.user.id}/`, {
             email: this.email,
             username: this.username,
-            password: this.password,
-            new_password: this.new_password,
           });
           Api.updateUserInformations();
-          this.$router.push({ path: `/users/${this.userId}/` });
-        } else if (this.password) {
-          await Api.put(`users/${this.userId}/`, {
-            email: this.email,
-            username: this.username,
-            password: this.password,
-          });
-          Api.updateUserInformations();
-          this.$router.push({ path: `/users/${this.userId}/` });
+          this.$router.push({ path: `/users/${this.$store.state.user.id}/` });
         }
       } catch (e) {
         if (e.response.data.error) {

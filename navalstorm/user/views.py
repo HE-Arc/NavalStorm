@@ -10,7 +10,6 @@ from .exception import UserUpdateError
 from rest_framework.status import HTTP_422_UNPROCESSABLE_ENTITY
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 class ViewsetFunctionPermissions(viewsets.ModelViewSet):
@@ -39,29 +38,25 @@ class UserViewSet(ViewsetFunctionPermissions):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             return Response({
-                "user": NavalStormUserSerializer(user).data,
-                "success": "User Created Successfully !",
+                "user": NavalStormUserSerializer(user).data
             })
 
     def destroy(self, request, *args, **kwargs):
-        _user = self.get_object()
-        _user.user.delete()
-        return Response({
-                "success": "User deleted succesfully",
-            })
+        user = self.get_object()
+        user.user.delete()
+        return Response()
 
     def update(self, request, *args, **kwargs):
         serializer = NavalStormUpdateSerializer(self.get_object(), data=request.data)
         try:
             if serializer.is_valid():
                 serializer.save(user=request.user.username)
-                return Response({"success":1, "message": "User updated succesfully",})
+                return Response({"success":1})
         except UserUpdateError as e :
             return Response({"error": str(e)}, status = HTTP_422_UNPROCESSABLE_ENTITY)
 
-
     @action(detail=False)
     def me(self, request):   
-        user = request.user.navalstromUser
+        user = request.user.navalstormUser
         serializer = NavalStormUserSerializer(user)
-        return Response(serializer.data)   
+        return Response(serializer.data)
