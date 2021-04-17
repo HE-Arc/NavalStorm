@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('user', '0001_initial'),
@@ -20,7 +19,7 @@ class Migration(migrations.Migration):
                 ('avatar', models.ImageField(blank=True, default='', null=True, upload_to='avatars/')),
                 ('winNumber', models.IntegerField(default=0, verbose_name='winNumber')),
                 ('playedGameNumber', models.IntegerField(default=0, verbose_name='playedGameNumber')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='navalstromUser', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='navalstormUser', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.DeleteModel(

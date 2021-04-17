@@ -15,24 +15,25 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.contrib import admin
-from user import views
+from django.urls import path, include
 from django.contrib.auth import views as auth
 from rest_framework.authtoken import views as token_views
 from rest_framework import routers 
 
+from user.views import UserViewSet
 
   
 router = routers.SimpleRouter() 
-router.register(r'users', views.UserViewSet, basename='users')
+router.register(r'users', UserViewSet, basename='users')
 
 
 app_name='navalstorm'
 
 urlpatterns = [
-    path('api/admin', admin.site.urls),
+    path('api/admin/', admin.site.urls),
 
     #API PATHS
     path('api/', include(router.urls)), 
     #User PATHS
-    path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('api/login/',include('oauth2_provider.urls', namespace='oauth2_provider')),    
 ]

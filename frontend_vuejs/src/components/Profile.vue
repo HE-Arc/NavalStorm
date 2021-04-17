@@ -111,13 +111,13 @@ export default Vue.extend({
       iconChartPath: mdiChartLine,
       isChartDisplay: false,
       isModiDisplay: false,
-      email: null,
+      email: this.$store.state.user.email,
       emailRule: [ 
-                  v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
       ],
-      username: null,
+      username: this.$store.state.user.username,
       usernameRule: [ 
-                  v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
+        v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
       ],
       password: null,
       new_password: null,
