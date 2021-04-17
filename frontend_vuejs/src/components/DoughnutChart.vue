@@ -46,7 +46,8 @@ export default {
           var width = chart.chart.width;
           var height = chart.chart.height;
           var ctx = chart.chart.ctx;
-
+          
+          ctx.clearRect(0, 0, width, height);
           ctx.restore();
           var fontSize = (height / 300).toFixed(2);
           ctx.font = fontSize + "em arial";
