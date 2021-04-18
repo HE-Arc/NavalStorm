@@ -13,44 +13,42 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
         fields = ['first_player','name','password']
 
     def create(self, validated_data):
+        """Connexion"""
         try:
-            
-        except:
-
-        player_id = validated_data['first_player']
+            player = NavalStormUser.objects.get(id=validated_data['first_player'])
+        except Exception as e:
+            print(e) #TODO CHECK ERROR
+            return
         password = validated_data['password']
         name = validated_data['name']
-        return Servers.create_navalstorm_server(player_id,name,password)
-
-    def connect(self, validated_data):
-        if not validated_data['name']:
-            server = 0 #GET SERVER WITHOUT SECOND PLAYER AND PASSWORD
-            pass #random connexion without password 
-
+        try : 
+            server = Servers.objects.get(name=name)
+            if server.check_password(password):
+                return server.addPlayer(player)
+            else :
+                pass #TODO FAIL PASSWORD
+        except :
+            print("no password")
+            return Servers.create_navalstorm_server(player,name,password)
+    
+    def update(self,validated_data):
+        """Connexion Random"""
         try:
-            server = Servers.objects.get(name=validated_data['name'])
-        except Servers.DoesNotExist:
-            pass #TODO RESPONSE = NO SERVER OF THIS NAME
+            player = NavalStormUser.objects.get(id=validated_data['first_player'])
+        except Exception as e:
+            print(e) #TODO CHECK ERROR
+            return e
+        
+        try:
+            serverOk = Servers.objects.filter(password="None",second_player=None)[:1]
+            serverOk.addPLayer(player)
+            return #TODO RETURN SUCCESS
+        except:
+            Servers.create_navalstorm_server(player,player.username,"None") #TODO VERIFY IF THERE IS NO SERVER WITH THIS NAME
+            return #TODO RETURN SUCCESS
 
-        if server.isFull():
-            try:
-                player_id = validated_data['first_player']
-            except  NavalStormUser.DoesNotExist:
-                pass #TODO handle the case when the user does not exist.
-            if server.checkPlayers(player_id):
-                return #TODO RESPONSE = CONNEXION -> REDIRECTION
-            return #TODO RESPONSE = IS FULL
 
-        if server.check_password(validated_data['password']) :
-            try:
-                player_id = validated_data['first_player']
-            except  NavalStormUser.DoesNotExist:
-                pass #TODO handle the case when the user does not exist.
-            server.addPlayer(player_id)
-        else :
-            pass #TODO RESPONSE to say password isn't good
-
-class ServerSerializer(serializers.Serializer):   
+class ServerSerializer(serializers.Serializer):  
     class Meta:
         model = Servers
-        fields = '__all__'
+        fields = ['name','password']

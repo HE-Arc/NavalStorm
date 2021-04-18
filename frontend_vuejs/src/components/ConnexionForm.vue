@@ -19,7 +19,8 @@
                                     <v-text-field
                                     outline
                                     label="Name"
-                                    v-model="name"></v-text-field>
+                                    v-model="name"
+                                    :rules="[() => name.length > 0 || 'Required field']"></v-text-field>
                                     <v-text-field
                                     outline
                                     label="Password"
@@ -60,21 +61,27 @@ export default Vue.extend({
     methods: {
         randomConnexion : async function(){
             try {
-                const response = await Api.connectRandom();
-                this.$router.push({name:"Game1/"+response.url}) //TODO REDIRECT TO THE GOOD GAME
+                const response = await Api.connectRandom({
+                    id: this.userId,
+                });
+                this.$router.push({name:"Game1/"+response}) //TODO REDIRECT TO THE GOOD GAME
             } catch (error) {
                 console.log(error.message)
             }
         },
         normalConnexion : async function(){
             try{
-                console.log("normalConnexion")
+                if(this.name==""||this.name==undefined){
+                    this.name="e";this.name="";
+                    return;
+                }
                 const response = await Api.connect({
                     id: this.userId,
                     name: this.name,
                     password: this.password?this.password:'',
                 });
-                this.$router.push({name:"Game/"+response.url}) //TODO REDIRECT TO THE GOOD GAME
+                console.log(response)
+                this.$router.push({name:"Game1/"+response}) //TODO REDIRECT TO THE GOOD GAME
             } catch(error){
                 console.log(error.message)
             }

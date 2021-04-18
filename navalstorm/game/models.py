@@ -26,6 +26,3 @@ class Servers(models.Model):
         self.second_player = player
         self.save()
         return self
-
-    def isFull(self):
-        return self.first_player and self.second_player

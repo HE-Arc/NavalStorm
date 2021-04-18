@@ -22,12 +22,22 @@ class ServerViewSet(ViewsetFunctionPermissions):
     queryset = Servers.objects.all()
     serializer_class = ServerSerializer
 
-    permission_classes_by_action = {'create': [AllowAny]}
+    permission_classes_by_action = {'create': [AllowAny],
+                                    'update': [AllowAny]}
     
     def create(self, request):
         serializer = ServerConnecterSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
-            user = serializer.save()
+            server = serializer.save()
+            print(ServerSerializer(server).data)
             return Response({
-                "server": ServerConnecterSerializer(user).data
+                "server": ServerSerializer(server).data
+            })
+
+    def update(self, request):
+        serializer = ServerConnecterSerializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            server = serializer.save()
+            return Response({
+                "server": ServerSerializer(server).data
             })

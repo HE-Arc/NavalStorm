@@ -113,11 +113,11 @@ class ApiRequester {
         }
     }
 
-    async connectRandom(){
+    async connectRandom(data){
         try {
-            const response = await this.instanceAxios.post("servers/",{
-                "first_player": this.user.id
-            } )
+            const response = await this.instanceAxios.patch("servers/",{
+                "first_player": data.id
+            })
             return response
         } catch (error) {
             console.log(error)
@@ -125,17 +125,15 @@ class ApiRequester {
     }
 
     async connect(data){
-        console.log(data.id)
         if(data.password==undefined || data.password=="")
             data.password = "None"
         try {
             const response = await this.instanceAxios.post("servers/",{
                 "first_player":data.id,
                 "name": data.name,
-                "password":data.password
+                "password": data.password
             })
-            console.log(response)
-            return response
+            return response.data.name
         } catch (error) {
             console.log(error)
         }
