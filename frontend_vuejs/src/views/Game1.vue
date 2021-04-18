@@ -41,15 +41,6 @@ export default {
     Harbor,
   },
    methods: {
-      
-       checkBoard(){
-        var boats = this.$store.getters.getShips;
-        boats.forEach(boat => {
-          if(!boat.isPlaced)
-            return false;
-        });
-        return true;
-      },
       savePlacement : async function () {
         var status=true;
         var boats = this.$store.getters.getShips;
@@ -57,7 +48,6 @@ export default {
           if(!boat.isPlaced){
             status= false;
             }
-          console.log('tic');
         });
         
         if(status){

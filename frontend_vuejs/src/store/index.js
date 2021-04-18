@@ -132,6 +132,9 @@ export default new Vuex.Store({
     UPDATE_USER:(state, user) => {
       state.user = user;
     },
+    UPDATE_BOARD_ENNEMY:(state,board)=>{
+      state.boardEnnemy=board;
+    },
     UPDATE_CURRENT_SHIP:(state, currentShip) => {
       state.currentShip = currentShip;
     },
@@ -224,5 +227,8 @@ export default new Vuex.Store({
     updateUser(state, user) {
       state.commit("UPDATE_USER", user);
     },
+    updateBoardEnnemy(state,board){
+      state.commit("UPDATE_BOARD_ENNEMY",board);
+    }
   },
 })

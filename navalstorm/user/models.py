@@ -20,3 +20,5 @@ class NavalStormUser(models.Model):
         navalstormUser.user = User.objects.create_user(username=username, email=email,password=password)
         navalstormUser.save()
         return navalstormUser
+
+        

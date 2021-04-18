@@ -11,12 +11,12 @@ class BoardSerializer(serializers.ModelSerializer):
         return Board.create_board(str(validated_data['data']),validated_data['idUser'])
 
 class BoardUpdateSerializer(serializers.ModelSerializer):
-    data=serializers.CharField()
+    data=serializers.JSONField()
     class Meta:
         model=Board
         fields=['data']
 
     def update(self, instance, validated_data):
-        instance.data=((str(validated_data)))
+        instance.data=((str(validated_data['data'])))
         instance.save()
         return instance

@@ -24,7 +24,7 @@
 <!-- SCRIPT -->
 <script>
 import Vue from "vue";
-
+import Api from "@/api/ApiRequester";
 export default Vue.extend({
     name: "BoardGame2Enemy",
     data ()  { 
@@ -47,40 +47,76 @@ export default Vue.extend({
       //send the miss to coord 
       onClickSendMissile(event) { 
         //send missile to coord
-        //var id = event.target.id.replace(this.prefixID, ""); 
-        
+        var id = event.target.id.replace(this.prefixID, ""); 
+
         //id =  D4 par exemple
-
-
-        //refresh board ennemy
-
         //find attribut html
-        var currentId = event.target.id
-        var coordId = event.target.id.replace(this.prefixID, ""); 
+        var currentId = event.target.id //Board2EnnemyG10 en exemple
         var td = document.getElementById(currentId)
-        if (td.childElementCount != 0 && td != null) //allow attaque only if it's the first time
+
+         //allow attaque only if it's the first time
+        if (td.childElementCount != 0 && td != null)
           return;
 
+        var eBoard=this.$store.getters.getBoardEnnemy;
+        //refresh board ennemy
+        eBoard.forEach(area => {
+          if(area['id']==id){
+            area['isTouch']=true;
+          }
+        });
+
+        this.updateEnnemyBoard(eBoard);
+
+        //display
         var img = document.createElement('img');
         
-        var area = this.$store.getters.getBoardAreaById(coordId)
-        if(area.isBusy) //if something is in area ... 
-        {
-          img.src = this.getImgUrl("explosions/explosion-ico.png")
-          let ship = this.$store.getters.getShipById(area.whoIsThere)
-          td.style.backgroundColor = ship.color
-        }
-        else
-          img.src = this.getImgUrl("explosions/wather-splash-ico.png")
+        eBoard.forEach(area => {
+          if(area['isTouch']==true){
+            if(area['isBusy']==true){
+              img.src = this.getImgUrl("explosions/explosion-ico.png");
+              td.style.backgroundColor = "#990000";
+            }else{
+               img.src = this.getImgUrl("explosions/wather-splash-ico.png");
+            }
+          }
+        });         
 
         //style the img
-        img.style.height = "20px"
-        img.style.width = "20px"
-        img.style.padding = "0px"
-        img.style.margin = "0px"
-        img.style.display = "block"
+        img.style.height = "20px";
+        img.style.width = "20px";
+        img.style.paddingleft = "4px";
+        img.style.margin = "0px";
+        img.style.display = "block";
         td.insertAdjacentElement("beforeend", img);
-      }
+      },
+      updateEnnemyBoard : async function (eBoard) {
+          this.loading = true;
+          try {
+            await Api.updateBoard({
+              boardId:25,//TODO TO get right board ID
+              board:eBoard,
+              userid : this.$store.state.user.id,
+            });
+            this.errorPost = "";
+            this.loading = false;
+          } catch (e) {
+            this.errorPost = e.message;
+          } finally {
+            this.loading = false;
+            this.$fire({
+            title: "Shot Validated",
+            text: "",
+            type: "success",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(r => {
+          console.log(r.value);
+          });
+          }
+        }
+    
     },
 });
 </script>

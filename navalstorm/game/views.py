@@ -16,10 +16,10 @@ class BoardViewSet(ViewsetFunctionPermissions):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
 
-    permission_classes = [isSelfUser]
+    permission_classes = [AllowAny]
     permission_classes_by_action = {
                                     'create': [AllowAny], 
-                                    # 'update':[IsAuthenticated],
+                                    'update':[AllowAny],
                                 }
 
     def create(self,request):
@@ -38,10 +38,10 @@ class BoardViewSet(ViewsetFunctionPermissions):
         })
     
     def update(self, request, *args, **kwargs):
-        serializer = BoardUpdateSerializer(self.get_object(), data=json.dumps(request.data))
+        serializer = BoardUpdateSerializer(self.get_object(), data=(request.data))
         try:
             if serializer.is_valid():
-                serializer.save(board=request.board.id)
+                serializer.save(board=request.data['board'])
                 return Response({"success":1, "message": "Board updated succesfully",})
-        except BoardUpdateError as e :
+        except UserUpdateError as e :
             return Response({"error": str(e)}, status = HTTP_422_UNPROCESSABLE_ENTITY)

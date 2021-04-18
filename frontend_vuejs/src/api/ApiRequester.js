@@ -137,6 +137,30 @@ class ApiRequester {
     }
 
     /**
+     * Update Board
+     */
+    async updateBoard(data) {
+        try{
+
+            var bodyFormData = new FormData();
+            bodyFormData.append("data",JSON.stringify(data.board));
+            var idBoard = data.boardId;
+    
+            bodyFormData.append("board",idBoard);
+            // this.user = await this.get("users/me/");
+            // bodyFormData.append("user",this.user);
+
+            const response = await this.instanceAxios.patch("games/"+idBoard+"/", bodyFormData);  
+            console.log(response.data);//TODO TOREMOVE
+           
+            store.dispatch('updateBoardEnnemy', response.data.board);
+            return response.data;
+        } catch(error){
+            console.log("Error while updating user info " + error);
+        }
+    }
+
+    /**
      * Delete token
      */
     async logout() {
