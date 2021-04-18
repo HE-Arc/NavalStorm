@@ -77,31 +77,14 @@ class ApiRequester {
     }
 
     async gamePhase1(data){
-        console.log(data);
+        try {
         var bodyFormData = new FormData();
-            bodyFormData.append("grant_type", this.grant_type);
-            bodyFormData.append(
-                "client_id",
-                this.client_id
-            );
-            bodyFormData.append(
-                "client_secret",
-                this.client_secret
-            );
-            bodyFormData.append("username", data.username);
-            bodyFormData.append("password", data.password);
-            bodyFormData.append("data",data.board)
-
-        const response = await this.instanceAxios.post("games/", bodyFormData);
-            //todo to link to gamephase 2
-            
-            this.token = response.data.access_token;
-            this.refresh_token = response.data.refresh_token;
-            await this.updateUserInformations();
-            store.dispatch('logUser', this.token, this.refresh_token);
-            window.sessionStorage.setItem("token", this.token);
-            window.sessionStorage.setItem("refresh_token", this.refresh_token);
+            bodyFormData.append("data",JSON.stringify(data.board));
+            const response = await this.instanceAxios.post("games/", bodyFormData);      
             return response.data;
+        } catch (error) {
+            throw error.response.data;
+        }
     }
     /**
      * Log User in Application and store his token

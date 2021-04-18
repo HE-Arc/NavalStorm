@@ -18,8 +18,8 @@ class BoardViewSet(ViewsetFunctionPermissions):
 
     permission_classes = [isSelfUser]
     permission_classes_by_action = {
-                                    'create': [IsAuthenticated], 
-                                    'update':[IsAuthenticated],
+                                    'create': [AllowAny], 
+                                    # 'update':[IsAuthenticated],
                                 }
 
     def create(self,request):
@@ -27,7 +27,7 @@ class BoardViewSet(ViewsetFunctionPermissions):
         if serializer.is_valid(raise_exception=True):
             board = serializer.save()
             return Response({
-                "user": BoardSerializer(board).data,
+                "board": (BoardSerializer(board).data),
                 "success": "Board Created Successfully !",
             })
     def destroy(self, request, *args, **kwargs):
@@ -38,7 +38,7 @@ class BoardViewSet(ViewsetFunctionPermissions):
         })
     
     def update(self, request, *args, **kwargs):
-        serializer = BoardUpdateSerializer(self.get_object(), data=request.data)
+        serializer = BoardUpdateSerializer(self.get_object(), data=json.dumps(request.data))
         try:
             if serializer.is_valid():
                 serializer.save(board=request.board.id)

@@ -7,7 +7,7 @@ class BoardSerializer(serializers.ModelSerializer):
         model=Board
         fields=['data']
     def create(self, data):
-        return Board.create_board(json.loads(data))
+        return Board.create_board((str(data)))
 
 class BoardUpdateSerializer(serializers.ModelSerializer):
     data=serializers.CharField()
@@ -16,6 +16,6 @@ class BoardUpdateSerializer(serializers.ModelSerializer):
         fields=['data']
 
     def update(self, instance, validated_data):
-        instance.data=json.dumps(validated_data)
+        instance.data=((str(validated_data)))
         instance.save()
         return instance

@@ -1,19 +1,14 @@
 from django.db import models
-import json
 
+from jsonfield import JSONField
 # Create your models here.
 
 class Board(models.Model):
-    data=models.TextField()
-
-    def setBoard(self, x):
-        self.data=json.dumps(x)
-    def getBoard(self):
-        return json.loads(self.data)
+    data = JSONField()
 
     @classmethod
     def create_board(cls,data):
         board=cls()
-        board=Board.objects.create(board=json.dumps(data))
+        board.data=data
         board.save()
         return board

@@ -40,15 +40,15 @@ export default {
   },
    methods: {
       savePlacement : async function () {
+     
       this.loading = true;
       try {
         await Api.gamePhase1({
-          board: this.$store.getters.getBoard(),
-          username: this.username,
-          password: this.password,
+          board: this.$store.getters.getBoard,
+          username: this.$store.username,
+          password: this.$store.password,
         });
         this.errorPost = "";
-
         this.$router.push({ name: "Game2" });
         this.loading = false;
       } catch (e) {
