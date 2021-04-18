@@ -73,10 +73,29 @@ export default Vue.extend({
    
         this.$router.push({ name: "Profile" });
         this.loading = false;
+        this.$fire({
+            title: "You're in ! ",
+            text: "Login approuved.",
+            type: "success",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000
+          }).then(r => {
+          console.log(r.value);
+          });
       } catch (e) {
         this.errorPost = e.message;
         this.errorMsg = e.error_description;
-        this.blink()
+        this.$fire({
+            title: "Hum...Something is wrong.",
+            text: this.errorMsg,
+            type: "error",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(r => {
+          console.log(r.value);
+          });
       } finally {
         this.loading = false;
       }
@@ -84,14 +103,6 @@ export default Vue.extend({
       fnRegister () {
          this.$router.push({ name: "Register" });
       },
-      blink() {
-         let h3 = document.getElementById("1111")
-          h3.style.background = 'pink'
-          setTimeout(()=>{
-            h3.style.background = 'white'
-          },1000)
-          return null;
-      }
     },
 });
 </script>
