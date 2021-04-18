@@ -32,6 +32,8 @@ import BoardGame1 from '@/components/BoardGame1.vue'
 import Harbor from '@/components/Harbor.vue'
 import Api from "@/api/ApiRequester";
 
+
+
 export default {
   name: 'Game1View',
   components: {
@@ -39,23 +41,46 @@ export default {
     Harbor,
   },
    methods: {
-      savePlacement : async function () {
-     
-      this.loading = true;
-      try {
-        await Api.gamePhase1({
-          board: this.$store.getters.getBoard,
-          username: this.$store.username,
-          password: this.$store.password,
+      
+       checkBoard(){
+        var boats = this.$store.getters.getShips;
+        boats.forEach(boat => {
+          if(!boat.isPlaced)
+            return false;
         });
-        this.errorPost = "";
-        this.$router.push({ name: "Game2" });
-        this.loading = false;
-      } catch (e) {
-        this.errorPost = e.message;
-      } finally {
-        this.loading = false;
-      }
+        return true;
+      },
+      savePlacement : async function () {
+        var status=true;
+        var boats = this.$store.getters.getShips;
+        boats.forEach(boat => {
+          if(!boat.isPlaced){
+            status= false;
+            }
+          console.log('tic');
+        });
+        
+        if(status){
+          this.loading = true;
+          try {
+            await Api.gamePhase1({
+              board: this.$store.getters.getBoard,
+              username: this.$store.username,
+              password: this.$store.password,
+              userid : this.$store.state.user.id,
+            });
+            this.errorPost = "";
+            this.$router.push({ name: "Game2" });
+            this.loading = false;
+          } catch (e) {
+            this.errorPost = e.message;
+          } finally {
+            this.loading = false;
+          }
+        }else{
+          console.log('tic')
+          this.$alert("You need to place every ships ! ");
+        }
     },
     },
 }
