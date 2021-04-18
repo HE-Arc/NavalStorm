@@ -123,6 +123,18 @@ class ApiRequester {
         }
     }
 
+    async connect(data){
+        try {
+            const response = await this.instanceAxios.post("servers/",{
+                "first_player":data.id,
+                "name": data.name,
+                "password": data.password
+            })
+            return response.data.server.name
+        } catch (error) {
+            console.log(error)
+        }
+    }
     /**
      * Update user
      */
@@ -195,7 +207,7 @@ class ApiRequester {
                     return response.data;
                 } catch (error) {
                     this.logout();
-                    router.push({ name: "Login" });
+                    router.push({ name: "login" });
                 }
             } else {
                 throw (error);

@@ -21,6 +21,7 @@ import BoardGame2Enemy from '@/components/BoardGame2Enemy.vue'
 
 export default {
   name: 'Game2View',
+  title:'Game',
   components: {
     BoardGame2Owner,
     BoardGame2Enemy,
