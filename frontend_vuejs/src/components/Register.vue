@@ -89,7 +89,7 @@ export default Vue.extend({
             password: this.password,
             password_confirmation: this.passwordConfirmation,
           });
-          this.$router.push({ name: "Home" });
+          this.$router.push({ name: "connexion" });
       } catch (e) {
 
         if ("username" in e) {
