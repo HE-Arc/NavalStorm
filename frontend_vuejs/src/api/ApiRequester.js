@@ -1,6 +1,5 @@
 import store from '@/store';
 // import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse }import Axios,  from "axios";
-import Message from "@/components/Message.vue"
 import router from '../router';
 import config from '../.env.json';
 import Vue from 'vue';
@@ -77,6 +76,18 @@ class ApiRequester {
         store.dispatch('updateUser', this.user);
     }
 
+    async gamePhase1(data){
+        try {
+        var bodyFormData = new FormData();
+            bodyFormData.append("data",JSON.stringify(data.board));
+            bodyFormData.append("idUser",(this.user.user));
+            
+            const response = await this.instanceAxios.post("games/", bodyFormData);      
+            return response.data;
+        } catch (error) {
+            throw error.response.data;
+        }
+    }
     /**
      * Log User in Application and store his token
      */
@@ -140,7 +151,6 @@ class ApiRequester {
     }
 
     async register(account) {
-        try {
             const response = await this.instanceAxios.post("users/", {
                 "username": account.username,
                 "password": account.password,
@@ -148,10 +158,6 @@ class ApiRequester {
             });
             this.login({ "username": account.username, "password": account.password });
             return response;
-        } catch (error) {
-            this.eventBus.$emit(this.alert_name, Message.Level.Error, "Could not register user");
-            throw error;
-        }
     }
 
     getEventBus() {
@@ -179,20 +185,7 @@ class ApiRequester {
         }
         try {
             const response = await this.instanceAxios(requestConfig);
-            if (response.data != null) {
-                if (response.data.success != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Success, response.data.success);
-                }
-                if (response.data.info != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Info, response.data.info);
-                }
-                if (response.data.warning != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Warning, response.data.warning);
-                }
-                if (response.data.error != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Error, response.data.error);
-                }
-            }
+            //GLOBAL ERROR MANAGEMENT
             return response.data;
         } catch (error) {
             if (error.response.status == 401) {

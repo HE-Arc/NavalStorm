@@ -24,6 +24,7 @@ export default new Vuex.Store({
     boardSize : 10,
     boardHeader : '',
     board: [],
+    //todo put in backend the ships
     ships : [
       {
         id : 1,
