@@ -47,6 +47,7 @@ export default {
           board: this.$store.getters.getBoard,
           username: this.$store.username,
           password: this.$store.password,
+          userid :this.$store.state.user.id,
         });
         this.errorPost = "";
         this.$router.push({ name: "Game2" });
