@@ -1,6 +1,5 @@
 import store from '@/store';
 // import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse }import Axios,  from "axios";
-import Message from "@/components/Message.vue"
 import router from '../router';
 import config from '../.env.json';
 import Vue from 'vue';
@@ -77,6 +76,33 @@ class ApiRequester {
         store.dispatch('updateUser', this.user);
     }
 
+    async gamePhase1(data){
+        console.log(data);
+        var bodyFormData = new FormData();
+            bodyFormData.append("grant_type", this.grant_type);
+            bodyFormData.append(
+                "client_id",
+                this.client_id
+            );
+            bodyFormData.append(
+                "client_secret",
+                this.client_secret
+            );
+            bodyFormData.append("username", data.username);
+            bodyFormData.append("password", data.password);
+            bodyFormData.append("data",data.board)
+
+        const response = await this.instanceAxios.post("games/", bodyFormData);
+            //todo to link to gamephase 2
+            
+            this.token = response.data.access_token;
+            this.refresh_token = response.data.refresh_token;
+            await this.updateUserInformations();
+            store.dispatch('logUser', this.token, this.refresh_token);
+            window.sessionStorage.setItem("token", this.token);
+            window.sessionStorage.setItem("refresh_token", this.refresh_token);
+            return response.data;
+    }
     /**
      * Log User in Application and store his token
      *
@@ -149,7 +175,6 @@ class ApiRequester {
      * @return {*}  {Promise<AxiosResponse>} API Response
      */
     async register(account) {
-        try {
             const response = await this.instanceAxios.post("users/", {
                 "username": account.username,
                 "password": account.password,
@@ -157,10 +182,6 @@ class ApiRequester {
             });
             this.login({ "username": account.username, "password": account.password });
             return response;
-        } catch (error) {
-            this.eventBus.$emit(this.alert_name, Message.Level.Error, "Could not register user");
-            throw error;
-        }
     }
 
     /**
@@ -180,9 +201,6 @@ class ApiRequester {
         return this.eventBus;
     }
 
-    displayError(message){
-        this.eventBus.$emit(this.alert_name, Message.Level.Error, message);
-    }
 
     /**
      * Request a GET Method
@@ -216,20 +234,6 @@ class ApiRequester {
         try {
             const response = await this.instanceAxios(requestConfig);
             //GLOBAL ERROR MANAGEMENT
-            if (response.data != null) {
-                if (response.data.success != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Success, response.data.success);
-                }
-                if (response.data.info != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Info, response.data.info);
-                }
-                if (response.data.warning != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Warning, response.data.warning);
-                }
-                if (response.data.error != null) {
-                    this.eventBus.$emit(this.alert_name, Message.Level.Error, response.data.error);
-                }
-            }
             return response.data;
         } catch (error) {
             //Authentication error: try to use the refresh token

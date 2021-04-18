@@ -38,7 +38,7 @@ const routes = [
     name: 'Game1',
     component: Game1,
     meta: {
-      requiresAuth: false
+      requiresAuth: false//todo to set TRUE
     }
   },
   {

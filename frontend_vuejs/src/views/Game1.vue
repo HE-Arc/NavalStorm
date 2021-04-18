@@ -41,14 +41,18 @@ export default {
    methods: {
       savePlacement : async function () {
       this.loading = true;
+      console.log('tic');
+      console.log(this.$store.getters.getBoard);
+      console.log('tac');
       try {
-        await Api.login({
+        await Api.gamePhase1({
+          board: this.$store.getters.getBoard(),
           username: this.username,
           password: this.password,
         });
         this.errorPost = "";
 
-        this.$router.push({ name: "Profile" });
+        this.$router.push({ name: "Game2" });
         this.loading = false;
       } catch (e) {
         this.errorPost = e.message;
