@@ -72,14 +72,32 @@ export default {
             this.errorPost = "";
             this.$router.push({ name: "Game2" });
             this.loading = false;
+            this.$fire({
+            title: "Ships Placement Validated ! ",
+            text: "",
+            type: "success",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(r => {
+          console.log(r.value);
+          });
           } catch (e) {
             this.errorPost = e.message;
           } finally {
             this.loading = false;
           }
         }else{
-          console.log('tic')
-          this.$alert("You need to place every ships ! ");
+          this.$fire({
+            title: "Hum...You haven't placed every ships !",
+            text: "You need to place all of the ships.",
+            type: "error",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          }).then(r => {
+          console.log(r.value);
+          });
         }
     },
     },

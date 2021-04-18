@@ -11,37 +11,6 @@
         </div>
       </div>
     </div>
-
-     <v-dialog
-        v-model="dialog"
-        width="500"
-      >
-  <v-card>
-    <v-card-title class="headline grey lighten-2">
-      Result
-    </v-card-title>
-
-    <v-card-text>
-      {{ message }}
-    </v-card-text>
-
-    <v-divider></v-divider>
-
-    <v-card-actions>
-    <v-spacer></v-spacer>
-    <v-btn
-      color="primary"
-      text
-      @click="dialog = false"
-    >
-      Go home
-    </v-btn>
-  </v-card-actions>
-</v-card>
-
-     </v-dialog>
-
-
   </div>
 </v-container>
 </template>
@@ -57,10 +26,7 @@ export default {
     BoardGame2Enemy,
   },
   data () {
-    return {
-      dialog: true,
-      message : "you win, you are unstoppable",
-    }
+    
   },
 }
 </script>
