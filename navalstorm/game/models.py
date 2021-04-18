@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import NavalStormUser
-
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 class Servers(models.Model):
@@ -14,13 +14,12 @@ class Servers(models.Model):
         server = cls()
         server.first_player = first_player
         server.name = name
-        server.password = password
+        server.password = make_password(password)
         server.save()
         return server
 
     def check_password(self,password):
-        return True #TODO VERIFICATION OF PASSWORD
-        return password == self.password
+        return check_password(password, self.password)
     
     def addPlayer(self,player):
         self.second_player = player

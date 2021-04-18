@@ -28,7 +28,6 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
             else :
                 pass #TODO FAIL PASSWORD
         except :
-            print("no password")
             return Servers.create_navalstorm_server(player,name,password)
     
     def update(self,validated_data):
