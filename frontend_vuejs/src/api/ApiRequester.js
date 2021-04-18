@@ -133,7 +133,7 @@ class ApiRequester {
                 "name": data.name,
                 "password": data.password
             })
-            return response.data.name
+            return response.data.server.name
         } catch (error) {
             console.log(error)
         }

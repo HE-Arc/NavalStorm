@@ -42,13 +42,12 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
         try:
             serverOk = Servers.objects.filter(password="None",second_player=None)[:1]
             serverOk.addPLayer(player)
-            return #TODO RETURN SUCCESS
+            return serverOk
         except:
-            Servers.create_navalstorm_server(player,player.username,"None") #TODO VERIFY IF THERE IS NO SERVER WITH THIS NAME
-            return #TODO RETURN SUCCESS
+            return Servers.create_navalstorm_server(player,player.username,"None") #TODO VERIFY IF THERE IS NO SERVER WITH THIS NAME
 
 
-class ServerSerializer(serializers.Serializer):  
+class ServerSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Servers
-        fields = ['name','password']
+        fields = '__all__'

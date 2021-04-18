@@ -64,7 +64,7 @@ export default Vue.extend({
                 const response = await Api.connectRandom({
                     id: this.userId,
                 });
-                this.$router.push({name:"Game1/"+response}) //TODO REDIRECT TO THE GOOD GAME
+                this.$router.push("/game1/" + response) //TODO REDIRECT TO THE GOOD GAME
             } catch (error) {
                 console.log(error.message)
             }
@@ -81,7 +81,7 @@ export default Vue.extend({
                     password: this.password?this.password:'',
                 });
                 console.log(response)
-                this.$router.push({name:"Game1/"+response}) //TODO REDIRECT TO THE GOOD GAME
+                this.$router.push("/game1/" + response) //TODO REDIRECT TO THE GOOD GAME
             } catch(error){
                 console.log(error.message)
             }

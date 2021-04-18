@@ -66,13 +66,6 @@ const routes = [
       requiresLoggedIn: true
     }
   },
-  {
-    path: '*',
-    redirect: '/',
-    meta:{
-      requiresLoggedIn: true
-    }
-  },
 ]
 
 const router = new VueRouter({
