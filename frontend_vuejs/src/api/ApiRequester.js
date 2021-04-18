@@ -80,6 +80,8 @@ class ApiRequester {
         try {
         var bodyFormData = new FormData();
             bodyFormData.append("data",JSON.stringify(data.board));
+            bodyFormData.append("idUser",(this.user.user));
+            
             const response = await this.instanceAxios.post("games/", bodyFormData);      
             return response.data;
         } catch (error) {

@@ -3,11 +3,12 @@ from .models import *
 import json
 
 class BoardSerializer(serializers.ModelSerializer):
+    data=serializers.CharField()
     class Meta:
         model=Board
-        fields=['data']
-    def create(self, data):
-        return Board.create_board((str(data)))
+        fields=['data','idUser']
+    def create(self, validated_data):
+        return Board.create_board(str(validated_data['data']),validated_data['idUser'])
 
 class BoardUpdateSerializer(serializers.ModelSerializer):
     data=serializers.CharField()
