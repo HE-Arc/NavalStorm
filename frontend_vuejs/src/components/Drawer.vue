@@ -20,7 +20,7 @@
 <script>
 import Vue from "vue";
 import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiHome, mdiLogout, mdiAccount, mdiGamepadVariant, mdiInformation } from '@mdi/js';
+import { mdiLogout, mdiAccount, mdiGamepadVariant } from '@mdi/js';
 
 export default Vue.extend({
     name: "Drawer",
@@ -31,24 +31,14 @@ export default Vue.extend({
       return  {
         group: [
           {
-            icon: mdiHome,
-            text: 'Home',
-            link: '/',
+            icon: mdiGamepadVariant,
+            text: 'Game',
+            link: '/connexion',
           },
           {
             icon: mdiAccount,
             text: 'Profile',
             link: '/profile',
-          },
-          {
-            icon: mdiGamepadVariant,
-            text: 'Game',
-            link: '/game1',
-          },
-          {
-            icon: mdiInformation,
-            text: 'About',
-            link: '/About',
           },
           {
             icon: mdiLogout,

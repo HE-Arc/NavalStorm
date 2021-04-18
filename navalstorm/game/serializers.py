@@ -37,7 +37,7 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
             except  NavalStormUser.DoesNotExist:
                 pass #TODO handle the case when the user does not exist.
             if server.checkPlayers(player):
-                return #TODO RESPONSE = CONNEXION
+                return #TODO RESPONSE = CONNEXION -> REDIRECTION
             return #TODO RESPONSE = IS FULL
 
         if server.check_password(validated_data['password']) :

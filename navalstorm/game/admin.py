@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import NavalStormUser
+from user.models import NavalStormUser
 
 # Register your models here.
 
