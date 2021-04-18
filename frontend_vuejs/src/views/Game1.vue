@@ -41,9 +41,6 @@ export default {
    methods: {
       savePlacement : async function () {
       this.loading = true;
-      console.log('tic');
-      console.log(this.$store.getters.getBoard);
-      console.log('tac');
       try {
         await Api.gamePhase1({
           board: this.$store.getters.getBoard(),
