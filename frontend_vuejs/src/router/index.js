@@ -38,9 +38,12 @@ const routes = [
     path: '/game1',
     name: 'Game1',
     component: Game1,
+<<<<<<< HEAD
     meta: {
       requiresAuth: false//todo to set TRUE
     }
+=======
+>>>>>>> GamePage-3rd-phase-FrontEnd
   },
   {
     path: '/game2',

@@ -2,6 +2,9 @@
 <div id="app">
   <v-app>
     <v-container>
+      <h3 style ="text-align: center;" :id="2222"  >
+        {{ errorMsg }}
+      </h3>
       <v-layout wrap>
         <v-flex sm12 md6 offset-md3>
           <v-card elevation="4" light tag="section">
@@ -60,6 +63,7 @@ export default Vue.extend({
     name: "Register",
     data ()  { 
         return  { 
+          errorMsg: null,
           email: null,
           password: null,
           username: null,
@@ -87,10 +91,13 @@ export default Vue.extend({
           });
           this.$router.push({ name: "Home" });
       } catch (e) {
-        console.log(e);
+
         if ("username" in e) {
           this.errors["username"] = e.username[0];
         }
+        console.log(e)
+        this.errorMsg = e;
+        this.blink()
       } finally {
         this.loading = false;
       }
@@ -98,6 +105,14 @@ export default Vue.extend({
     fnLogin () {
          this.$router.push({ name: "Login" });
       },
+    blink() {
+         let h3 = document.getElementById("2222")
+          h3.style.background = 'pink'
+          setTimeout(()=>{
+            h3.style.background = 'white'
+          },1000)
+          return null;
+      }
   },
 });
 </script>

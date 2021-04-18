@@ -2,6 +2,9 @@
 <div id="app">
   <v-app>
     <v-container>
+      <h3 style ="text-align: center;" :id="1111"  >
+        {{ errorMsg }}
+      </h3>
       <v-layout wrap>
         <v-flex sm12 md6 offset-md3>
           <v-card elevation="4" light tag="section">
@@ -54,22 +57,26 @@ export default Vue.extend({
           loading: false, 
           password: null,
           username: null,
+          errorMsg: null,
         }    
     }, 
     methods: {
       fnLogin : async function () {
       this.loading = true;
+      this.errorMsg = null
       try {
         await Api.login({
           username: this.username,
           password: this.password,
         });
         this.errorPost = "";
-
+   
         this.$router.push({ name: "Profile" });
         this.loading = false;
       } catch (e) {
         this.errorPost = e.message;
+        this.errorMsg = e.error_description;
+        this.blink()
       } finally {
         this.loading = false;
       }
@@ -77,6 +84,14 @@ export default Vue.extend({
       fnRegister () {
          this.$router.push({ name: "Register" });
       },
+      blink() {
+         let h3 = document.getElementById("1111")
+          h3.style.background = 'pink'
+          setTimeout(()=>{
+            h3.style.background = 'white'
+          },1000)
+          return null;
+      }
     },
 });
 </script>
