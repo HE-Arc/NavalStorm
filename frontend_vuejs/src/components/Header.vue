@@ -8,6 +8,7 @@
       <v-toolbar-title>
         Naval Storm
       </v-toolbar-title>
+      <v-spacer></v-spacer>
       <v-switch
                 class="pull-right"
                 :label="`Dark mode : ${switchDarkmode.toString()}`"
