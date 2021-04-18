@@ -1,18 +1,16 @@
 <template>
-<v-container class="marginTop">
-    <div class="container">
-        <div class="">
-          <ConnexionForm />
+    <v-container class="marginTop">
+        <div>
+            <ConnexionForm />
         </div>
-    </div>
-</v-container>
+    </v-container>
 </template>
 
 <script>
 import ConnexionForm from '@/components/ConnexionForm.vue'
 
 export default {
-  name: 'Connexion',
+  name: 'ConnexionView',
   components: {
     ConnexionForm,
   }

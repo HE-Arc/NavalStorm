@@ -24,6 +24,7 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
 
     def connect(self, validated_data):
         if not validated_data['name']:
+            server = 0 #GET SERVER WITHOUT SECOND PLAYER AND PASSWORD
             pass #random connexion without password 
 
         try:

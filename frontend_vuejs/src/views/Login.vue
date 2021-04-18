@@ -1,9 +1,9 @@
 <template>
-<v-container class="marginTop">
-  <div>
-    <Login />
-  </div>
-</v-container>
+  <v-container class="marginTop">
+    <div>
+      <Login />
+    </div>
+  </v-container>
 </template>
 
 <script>

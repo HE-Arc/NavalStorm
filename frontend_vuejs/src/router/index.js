@@ -6,6 +6,7 @@ import Game1 from '../views/Game1.vue'
 import Game2 from '../views/Game2.vue'
 import Profile from '../views/Profile.vue'
 import store from '@/store';
+import Connexion from '../views/Connexion.vue'
 
 import Api from "@/api/ApiRequester";
 Vue.use(VueRouter)
@@ -15,10 +16,19 @@ const routes = [
     path: '/',
     redirect: '/login',
     meta: {
-      requiresLogged: true
+      requiresLogged: true,
+      requiresAuth: true
     }
   },
-   {
+  {
+    path: '/connexion',
+    name: 'Connexion',
+    component: Connexion,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login,

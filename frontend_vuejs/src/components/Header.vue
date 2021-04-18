@@ -11,7 +11,7 @@
       <v-spacer></v-spacer>
       <v-switch
                 class="pull-right"
-                :label="`Dark mode : ${switchDarkmode.toString()}`"
+                :label="`Dark mode`"
                 v-model="switchDarkmode"
                 style="float:right;"
               ></v-switch>
