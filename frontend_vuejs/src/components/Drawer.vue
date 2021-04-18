@@ -32,7 +32,7 @@ export default Vue.extend({
         group: [
           {
             icon: mdiGamepadVariant,
-            text: 'Game',
+            text: 'Connexion to Game',
             link: '/connexion',
           },
           {
