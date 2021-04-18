@@ -6,7 +6,7 @@
           <v-flex sm12 md6 offset-md3>
             <v-card elevation="4" light tag="section">
               <v-card-title class="justify-center">
-                  <h3>Naval Storm</h3>
+                  <h3>Naval Storm - Login</h3>
                   <v-flex>
                     <v-img class="ml-0" contain height="200px" position="center" src="../assets/logo-login.png"></v-img>
                   </v-flex>
@@ -63,11 +63,10 @@ export default Vue.extend({
           username: this.username,
           password: this.password,
         });
-        // this.errorPost = "";
 
         this.$router.push({ name: "Connexion" });
       } catch (e) {
-        this.errorPost = e.message;
+        console.log(e)
       }
     },
       fnRegister () {

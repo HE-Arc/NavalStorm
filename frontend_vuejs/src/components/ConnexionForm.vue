@@ -58,7 +58,7 @@ export default Vue.extend({
     methods: {
         randomConnexion : async function(){
             try {
-                await Api.connect();
+                await Api.connectRandom();
                 this.$router.push({name:"Game"}) //TODO REDIRECT TO THE GOOD GAME
             } catch (error) {
                 console.log(error.message)

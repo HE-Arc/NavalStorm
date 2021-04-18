@@ -113,6 +113,22 @@ class ApiRequester {
         }
     }
 
+    async connectRandom(){
+        try {
+            const response = await this.instanceAxios.post("connexion/", )
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async connect(data){
+        try {
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     /**
      * Update user
      */

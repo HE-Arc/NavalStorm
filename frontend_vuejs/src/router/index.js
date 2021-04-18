@@ -9,7 +9,6 @@ import Profile from '../views/Profile.vue'
 import store from '@/store';
 import Connexion from '../views/Connexion.vue'
 
-// import Api from "@/api/ApiRequester";
 Vue.use(VueRouter)
 
 const routes = [
@@ -82,29 +81,6 @@ const router = new VueRouter({
   routes
 })
 
-// function loadSessionFromStorage() {
-//   if (window.sessionStorage.getItem("token") != null) {
-//     Api.updateStore(JSON.parse(window.sessionStorage.getItem("user")), window.sessionStorage.getItem("token"), window.sessionStorage.getItem("refresh_token"));
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-
-// function isLogged() {
-
-//   // Not connected by login action
-//   if (!store.state.isUserLogged) {
-//     if (loadSessionFromStorage()) {
-//       return true;
-//     }
-//     return false;
-//   }
-//   return true;
-// }
-
-
 router.beforeEach((to, from, next) => {
   if (to.matched.some((route) => route.meta.requiresLoggedIn)) {
     if (!store.state.isUserLogged) {
@@ -113,10 +89,8 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else {
-    //loadSessionFromStorage();
     next();
   }
 });
-
 
 export default router
