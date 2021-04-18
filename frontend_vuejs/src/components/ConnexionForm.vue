@@ -82,10 +82,20 @@ export default Vue.extend({
                     name: this.name,
                     password: this.password?this.password:'None',
                 });
-               if(response!=undefined){
+                if(response!=undefined){
                    this.$router.push("/game1/" + response) 
+                } else {
+                    this.$fire({
+                        title: "Hum...Something is wrong.",
+                        text: "Password is not good",
+                        type: "error",
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(r => {
+                        console.log(r.value);
+                    });
                }
-                //TODO ERROR MESSAGE -> BAD PASSWORD
             } catch(error){
                 console.log(error.message)
             }
