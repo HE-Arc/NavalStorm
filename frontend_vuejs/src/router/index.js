@@ -14,9 +14,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/connexion',
     meta: {
-      requiresLogged: true,
       requiresAuth: true
     }
   },
@@ -30,10 +29,11 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login,
     meta: {
-      requiresLogged: true
+      requiresLogged: false,
+      requiresAuth: false
     }
   },
    {
@@ -41,7 +41,7 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      requiresLogged: true
+      requiresLogged: false
     }
   },
   {
@@ -55,12 +55,18 @@ const routes = [
   {
     path: '/game2',
     name: 'Game2',
-    component: Game2
+    component: Game2,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '*',
