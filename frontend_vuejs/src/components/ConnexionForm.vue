@@ -14,7 +14,7 @@
                             </v-card-title>
                             <v-divider></v-divider>
                             <v-card-text>
-                                <p>Create a server with a name (password optional)</p>
+                                <p>Connect to/Create a server with a name (password optional)</p>
                                 <v-form ref='form'>
                                     <v-text-field
                                     outline
@@ -25,14 +25,13 @@
                                     label="Password"
                                     type="password"
                                     v-model="password"></v-text-field>
-                                    
                                 </v-form>
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions :class="{'pa-3': $vuetify.breakpoint.smAndUp }">
-                                <v-btn color="error"  v-on:click="fnRegister">Random Connexion</v-btn >
+                                <v-btn color="info"  v-on:click="randomConnexion">Random Connexion</v-btn >
                                 <v-spacer></v-spacer>
-                                <v-btn color="info"  v-on:click="fnLogin" :disabled="loading">Connexion</v-btn >
+                                <v-btn color="success"  v-on:click="normalConnexion" :disabled="loading">Connexion</v-btn >
                             </v-card-actions>
                         </v-card>
                     </v-flex>
@@ -48,7 +47,10 @@ import Vue from "vue";
 import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
-    name: "ConnexionForm", 
+    name: "ConnexionForm",
+    created() {
+        this.userId = this.$store.state.user.id
+    },
     data(){
         return {
             name: null,
@@ -59,14 +61,16 @@ export default Vue.extend({
         randomConnexion : async function(){
             try {
                 const response = await Api.connectRandom();
-                this.$router.push({name:"Game/"+response.url}) //TODO REDIRECT TO THE GOOD GAME
+                this.$router.push({name:"Game1/"+response.url}) //TODO REDIRECT TO THE GOOD GAME
             } catch (error) {
                 console.log(error.message)
             }
         },
         normalConnexion : async function(){
             try{
+                console.log("normalConnexion")
                 const response = await Api.connect({
+                    id: this.userId,
                     name: this.name,
                     password: this.password?this.password:'',
                 });
