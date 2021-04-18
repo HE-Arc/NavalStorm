@@ -64,7 +64,7 @@ export default Vue.extend({
                 const response = await Api.connectRandom({
                     id: this.userId,
                 });
-                this.$router.push("/game1/" + response) //TODO REDIRECT TO THE GOOD GAME
+                this.$router.push("/game1/" + response)
             } catch (error) {
                 console.log(error.message)
             }
@@ -80,8 +80,10 @@ export default Vue.extend({
                     name: this.name,
                     password: this.password?this.password:'',
                 });
-                console.log(response)
-                this.$router.push("/game1/" + response) //TODO REDIRECT TO THE GOOD GAME
+               if(response!=undefined){
+                   this.$router.push("/game1/" + response) 
+               }
+                //TODO ERROR MESSAGE -> BAD PASSWORD
             } catch(error){
                 console.log(error.message)
             }

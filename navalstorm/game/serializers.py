@@ -17,26 +17,27 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
         try:
             player = NavalStormUser.objects.get(id=validated_data['first_player'])
         except Exception as e:
-            print(e) #TODO CHECK ERROR
+            print(e)
             return
         password = validated_data['password']
         name = validated_data['name']
         try : 
             server = Servers.objects.get(name=name)
-            if server.check_password(password):
-                return server.addPlayer(player)
-            else :
-                pass #TODO FAIL PASSWORD
         except :
             return Servers.create_navalstorm_server(player,name,password)
+            
+        if server.check_password(password):
+            return server.addPlayer(player)
+        else :
+            raise Exception("Bad Password")
     
     def update(self,validated_data):
         """Connexion Random"""
         try:
             player = NavalStormUser.objects.get(id=validated_data['first_player'])
         except Exception as e:
-            print(e) #TODO CHECK ERROR
-            return e
+            print(e)
+            return
         
         try:
             serverOk = Servers.objects.filter(password="None",second_player=None)[:1]
