@@ -15,7 +15,7 @@
           </v-list-item-content>
       
           <v-list-item-avatar
-          tile size="auto" color="grey"><img src="https://people.he-arc.ch/photos/GrunenwaldDavid.jpg" alt="">
+          tile size="auto" color="grey"><img src="../assets/logo-login.png" alt="">
           </v-list-item-avatar>
         </v-list-item>
 
@@ -69,7 +69,6 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions >
-          <v-btn color="error" @click="onClickBtnModification()">Hide</v-btn >
           <v-spacer></v-spacer>
           <v-btn color="success"  @click="onClickSave()">Save</v-btn >
         </v-card-actions>
@@ -79,15 +78,10 @@
       <!-- Donut Chart -->
     <v-flex sm12 md6 offset-md3>
       <v-card class="mx-auto" max-width="450" outlined elevation="10" v-if="isChartDisplay">
-        <div v-if="this.$store.state.user.playedGameNumber > 0 " >
-          <DoughnutChart />
-        </div>
-        <p class="display-1" v-else>You must play at least one game to get Statistics</p>
-        <v-divider></v-divider>
-        <v-card-actions >
-          <v-btn color="error" @click="onClickBtnStat()">Hide</v-btn >
-            <v-spacer></v-spacer>
-          </v-card-actions>
+          <div v-if="this.$store.state.user.playedGameNumber > 0 " >
+            <DoughnutChart />
+          </div>
+          <p class="display-1" v-else>You must play at least one game to get Statistics</p>
         </v-card>
     </v-flex>
   </v-app>
@@ -113,7 +107,7 @@ export default Vue.extend({
       iconPenPath: mdiPencilOutline,
       iconChartPath: mdiChartLine,
       isChartDisplay: false,
-      isModiDisplay: false,
+      isModiDisplay: true,
       email: this.$store.state.user.email,
       emailRule: [ 
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'

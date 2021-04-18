@@ -5,6 +5,7 @@
         <Drawer />
         <router-view></router-view>
       </v-main>
+      <Footer />
     </v-app>
 </template>
 
@@ -12,6 +13,7 @@
 import Vue from "vue";
 import Drawer from'@/components/Drawer.vue'
 import Header from'@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 import "@/assets/styles/main.css";
 
 export default Vue.extend({
@@ -19,6 +21,7 @@ export default Vue.extend({
     components: { 
       Drawer,
       Header,
+      Footer,
     }
 });
 

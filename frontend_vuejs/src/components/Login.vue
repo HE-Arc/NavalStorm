@@ -9,7 +9,7 @@
         <v-flex sm12 md6 offset-md3>
           <v-card elevation="4" light tag="section">
             <v-card-title class="justify-center">
-                <h3>Naval Storm</h3>
+                <h3>Naval Storm - login</h3>
                 <v-flex>
                   <v-img class="ml-0" contain height="200px" position="center" src="../assets/logo-login.png"></v-img>
                 </v-flex>
@@ -50,11 +50,11 @@
 <script>
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
+
 export default Vue.extend({
     name: "Login",
     data ()  { 
         return  {
-          loading: false, 
           password: null,
           username: null,
           errorMsg: null,
@@ -62,8 +62,8 @@ export default Vue.extend({
     }, 
     methods: {
       fnLogin : async function () {
-      this.loading = true;
-      this.errorMsg = null
+        this.loading = true;
+        this.errorMsg = null
       try {
         await Api.login({
           username: this.username,
@@ -71,7 +71,7 @@ export default Vue.extend({
         });
         this.errorPost = "";
    
-        this.$router.push({ name: "Profile" });
+        this.$router.push({ name: "Connexion" });
         this.loading = false;
         this.$fire({
             title: "You're in ! ",

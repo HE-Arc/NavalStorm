@@ -1,3 +1,8 @@
+from django.shortcuts import render
+from .models import Servers
+from rest_framework.response import Response
+from rest_framework import permissions, viewsets, status, filters
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from user.views import ViewsetFunctionPermissions
 from .serializers import *
 from rest_framework import generics
@@ -11,6 +16,22 @@ from rest_framework.status import HTTP_422_UNPROCESSABLE_ENTITY
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Create your views here.
+
+class ServerViewSet(ViewsetFunctionPermissions):
+    queryset = Servers.objects.all()
+    serializer_class = ServerSerializer
+
+    permission_classes_by_action = {'create': [AllowAny],}
+    
+    def create(self, request):
+        serializer = ServerConnecterSerializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            server = serializer.save()
+            return Response({
+                "server": ServerSerializer(server).data
+            })
 
 class BoardViewSet(ViewsetFunctionPermissions):
     queryset = Board.objects.all()

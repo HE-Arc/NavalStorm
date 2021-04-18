@@ -3,13 +3,13 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router/index'
 import store from './store/index'
-
+import titleMixIn from './titleMixIn'
 import IdleVue from 'idle-vue'
 
 import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSimpleAlert);
-
+Vue.mixin(titleMixIn);
 const eventsHub = new Vue()
 
 Vue.use(IdleVue, {

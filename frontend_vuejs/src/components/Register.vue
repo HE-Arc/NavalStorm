@@ -103,7 +103,7 @@ export default Vue.extend({
       }
     },
     fnLogin () {
-         this.$router.push({ name: "Login" });
+         this.$router.push({ name: "login" });
       },
     blink() {
          let h3 = document.getElementById("2222")
