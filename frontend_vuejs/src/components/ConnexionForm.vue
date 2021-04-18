@@ -61,8 +61,10 @@ export default Vue.extend({
     methods: {
         randomConnexion : async function(){
             try {
-                const response = await Api.connectRandom({
+                const response = await Api.connect({
                     id: this.userId,
+                    password: this.password?this.password:'None',
+                    name: this.name?this.name:'None'
                 });
                 this.$router.push("/game1/" + response)
             } catch (error) {
@@ -78,7 +80,7 @@ export default Vue.extend({
                 const response = await Api.connect({
                     id: this.userId,
                     name: this.name,
-                    password: this.password?this.password:'',
+                    password: this.password?this.password:'None',
                 });
                if(response!=undefined){
                    this.$router.push("/game1/" + response) 

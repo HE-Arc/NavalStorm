@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.response import Response
 from .models import Servers
+from django.db.models import Q
 from user.models import NavalStormUser
 
 class ServerConnecterSerializer(serializers.ModelSerializer):
@@ -21,30 +22,26 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
             return
         password = validated_data['password']
         name = validated_data['name']
+        if name=="None":
+            return self.connect(player)
         try : 
             server = Servers.objects.get(name=name)
         except :
             return Servers.create_navalstorm_server(player,name,password)
-            
+
         if server.check_password(password):
             return server.addPlayer(player)
         else :
             raise Exception("Bad Password")
     
-    def update(self,validated_data):
-        """Connexion Random"""
-        try:
-            player = NavalStormUser.objects.get(id=validated_data['first_player'])
-        except Exception as e:
-            print(e)
-            return
-        
+    def connect(self,player):
+        """Connexion Random"""        
         try:
             serverOk = Servers.objects.filter(password="None",second_player=None)[:1]
             serverOk.addPLayer(player)
             return serverOk
         except:
-            return Servers.create_navalstorm_server(player,player.username,"None") #TODO VERIFY IF THERE IS NO SERVER WITH THIS NAME
+            return Servers.create_navalstorm_server(player,player.user.username,"None") #TODO VERIFY IF THERE IS NO SERVER WITH THIS NAME
 
 
 class ServerSerializer(serializers.ModelSerializer):  

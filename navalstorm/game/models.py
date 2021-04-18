@@ -6,8 +6,8 @@ from django.contrib.auth.hashers import make_password, check_password
 class Servers(models.Model):
     name = models.CharField(blank=False, max_length=50)
     password = models.CharField(blank=True,max_length=255)
-    first_player = models.ForeignKey(NavalStormUser, on_delete = models.SET_NULL, null = True, related_name="First_player")
-    second_player = models.ForeignKey(NavalStormUser, on_delete = models.SET_NULL, null = True, related_name="Second_player")
+    first_player = models.ForeignKey(NavalStormUser, on_delete = models.SET_NULL, null = True, default=None, related_name="First_player")
+    second_player = models.ForeignKey(NavalStormUser, on_delete = models.SET_NULL, null = True, default=None, related_name="Second_player")
 
     @classmethod
     def create_navalstorm_server(cls, first_player, name, password):
