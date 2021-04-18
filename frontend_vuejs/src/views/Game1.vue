@@ -36,6 +36,7 @@ import Api from "@/api/ApiRequester";
 
 export default {
   name: 'Game1View',
+  title:'Game',
   components: {
     BoardGame1,
     Harbor,

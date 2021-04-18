@@ -11,6 +11,7 @@ import ConnexionForm from '@/components/ConnexionForm.vue'
 
 export default {
   name: 'ConnexionView',
+  title:'Connexion',
   components: {
     ConnexionForm,
   }
