@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })],
   state: {
     isUserLogged: false,
     tokenUser: null,
@@ -17,6 +21,8 @@ export default new Vuex.Store({
       playedGameNumber : String,
       avatar : String,
     },
+    boardSize : 10,
+    boardHeader : '',
     board: [],
     //todo put in backend the ships
     ships : [
@@ -95,6 +101,12 @@ export default new Vuex.Store({
     getShipById: (state) => (shipID) => {
       return state.ships.find(ship => ship.id === shipID);
     },
+    getBoardSize: (state) => {
+      return state.boardSize;
+    },
+    getBoardHeader: (state) => {
+      return state.boardHeader;
+    },
     getBoard: (state) => {
       return state.board;
     },
@@ -124,6 +136,25 @@ export default new Vuex.Store({
       const oldAreaIndex = state.board.indexOf(oldArea);
       state.board.splice(oldAreaIndex, 1);
       state.board.push(newArea);
+    },
+    INIT_BOARD:(state) => {
+      //init board
+      if(state.board.length != 0)
+        return
+
+      for (let i = 65; i < 65+state.boardSize; i++) {
+        state.boardHeader += String.fromCharCode(i); 
+
+        for (let j = 1; j <=state.boardSize; j++) {
+          let area = { 
+            id : String.fromCharCode(i) + j.toString(),
+            isTouch : false,
+            isBusy : false,
+            whoIsThere : null,
+          }
+          state.board.push(area)
+        }
+      }
     },
     PUSH_SHIPS_SHIP:(state, ship) => {
       state.ships.push(ship);
@@ -157,6 +188,9 @@ export default new Vuex.Store({
     },
     updateCurrentShip : (store, currentShip) => {
       store.commit('UPDATE_CURRENT_SHIP', currentShip);
+    },
+    initBoard : (store) => {
+      store.commit('INIT_BOARD');
     },
     pushAreaInBoard : (store, area) => {
       store.commit('PUSH_BOARD_AREA', area);

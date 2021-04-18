@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-3">
-          <Board />
+          <BoardGame1 />
         </div>
         <div class="col-xs-3">
           <Harbor />
@@ -28,14 +28,14 @@
 </template>
 
 <script>
-import Board from '@/components/Board.vue'
+import BoardGame1 from '@/components/BoardGame1.vue'
 import Harbor from '@/components/Harbor.vue'
 import Api from "@/api/ApiRequester";
 
 export default {
   name: 'Game1View',
   components: {
-    Board,
+    BoardGame1,
     Harbor,
   },
    methods: {

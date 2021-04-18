@@ -105,9 +105,6 @@ class ApiRequester {
     }
     /**
      * Log User in Application and store his token
-     *
-     * @param {ILogin} credentials credentials to log
-     * @return {*}  {Promise<IToudoumResponse>} API Response
      */
     async login(credentials) {
         try {
@@ -131,7 +128,7 @@ class ApiRequester {
             this.refresh_token = response.data.refresh_token;
             await this.updateUserInformations();
 
-            // Store user in Vuex store and sessionStorage
+            // Store user
             store.dispatch('logUser', this.token, this.refresh_token);
             window.sessionStorage.setItem("token", this.token);
             window.sessionStorage.setItem("refresh_token", this.refresh_token);
@@ -143,7 +140,7 @@ class ApiRequester {
     }
 
     /**
-     * Update user in session and store vuex
+     * Update user
      */
     async updateUserInformations() {
         try{
@@ -156,7 +153,7 @@ class ApiRequester {
     }
 
     /**
-     * Delete token from properties, sessions and store vuex
+     * Delete token
      */
     async logout() {
         store.dispatch('logout');
@@ -168,12 +165,6 @@ class ApiRequester {
         router.push({ name: "Home" });
     }
 
-    /**
-     * Register an Account
-     *
-     * @param {IRegister} account account to register
-     * @return {*}  {Promise<AxiosResponse>} API Response
-     */
     async register(account) {
             const response = await this.instanceAxios.post("users/", {
                 "username": account.username,
@@ -184,43 +175,19 @@ class ApiRequester {
             return response;
     }
 
-    /**
-     * Check if API server is UP
-     *
-     * @return {*}  {Promise<AxiosResponse>} API Response
-     */
-    getStateServer() {
-        return this.instanceAxios.get("state");
-    }
-
-    /**
-     * Get the event bus associated with the APIrequester
-     * @returns the event bus
-     */
     getEventBus() {
         return this.eventBus;
     }
 
-
     /**
-     * Request a GET Method
-     *
-     * @template T type to cast the data got from API
-     * @param {string} url url to request 
-     * @return {*}  {Promise<T>} Promise of type T
+     * GET Method
      */
     async get(url) {
         return this.request("GET", url);
     }
 
     /**
-     * Request the API
-     *
-     * @private
-     * @param {("GET" | "POST" | "PUT" | "DELETE" | "PATCH")} method string method to use
-     * @param {string} url url to request
-     * @param {*} [body] body to add in request
-     * @return {*}  {Promise<IToudoumResponse>} Api Response
+     * Request to the API
      */
     async request(method, url, body = null) {
         const requestConfig = {
@@ -236,16 +203,13 @@ class ApiRequester {
             //GLOBAL ERROR MANAGEMENT
             return response.data;
         } catch (error) {
-            //Authentication error: try to use the refresh token
             if (error.response.status == 401) {
                 try {
-                    //try once
                     await this.refresh();
                     requestConfig.headers = { Authorization: `Bearer ${this.token}`, }
                     const response = await this.instanceAxios(requestConfig);
                     return response.data;
                 } catch (error) {
-                    //if the refresh token is not good, need to login again
                     this.logout();
                     router.push({ name: "Login" });
                 }
@@ -278,50 +242,34 @@ class ApiRequester {
         this.token = response.data.access_token;
         this.refresh_token = response.data.refresh_token;
 
-        // Store user in Vuex store and sessionStorage
         store.dispatch('logUser', this.token, this.refresh_token);
         window.sessionStorage.setItem("token", this.token);
         window.sessionStorage.setItem("refresh_token", this.refresh_token);
     }
 
     /**
-     * POST data to API
-     *
-     * @param {string} url url to request
-     * @param {*} body body to post
-     * @return {*}  {Promise<IToudoumResponse>} API Response
+     * POST Method
      */
     async post(url, body) {
         return this.request("POST", url, body);
     }
 
     /**
-     * PUT data to API
-     *
-     * @param {string} url url to request
-     * @param {*} body body to put
-     * @return {*}  {Promise<IToudoumResponse>} API Response
+     * PUT Method
      */
     async put(url, body) {
         return this.request("PUT", url, body);
     }
 
     /**
-     * DELETE method to API
-     *
-     * @param {string} url url to request
-     * @return {*}  {Promise<IToudoumResponse>} API Response
+     * DELETE method
      */
     delete(url) {
         return this.request("DELETE", url);
     }
 
     /**
-     * PATCH method to API
-     *
-     * @param {string} url url to request
-     * @param {*} body body to PATCH
-     * @return {*}  {Promise<IToudoumResponse>} API Response
+     * PATCH method
      */
     async patch(url, body) {
         return this.request("PATCH", url, body);

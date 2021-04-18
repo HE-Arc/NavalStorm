@@ -9,12 +9,12 @@
       <td rowspan="2"></td>
     </tr>
     <tr>
-      <th v-for="y in boardHeader" :key="y">{{y}}</th>
+      <th v-for="y in $store.getters.getBoardHeader" :key="y">{{y}}</th>
     </tr>
     <!-- BATTLEFIELD board -->
-    <tr  v-for="x in boardSize" :key="x" >
+    <tr  v-for="x in $store.getters.getBoardSize" :key="x" >
       <th>{{x}}</th>
-      <td v-for="y in boardHeader" :key="y" :id="y+x" @click="putShipInBattleField($event)" @mouseleave="onAreaMouseLeave($event)" @mouseover="onAreaMouseOver($event)"></td>
+      <td v-for="y in $store.getters.getBoardHeader" :key="y" :id="y+x" @click="putShipInBattleField($event)" @mouseleave="onAreaMouseLeave($event)" @mouseover="onAreaMouseOver($event)"></td>
     </tr>
   </table>
 </v-app>
@@ -26,31 +26,17 @@
 import Vue from "vue";
 
 export default Vue.extend({
-    name: "Board",
+    name: "BoardGame1",
     data ()  { 
     return  {
-        boardSize : 10,
-        boardHeader : "",
       }    
     },
     created() {
-        this.$root.$refs.Board = this;
+      this.$store.dispatch('initBoard')
+      this.$root.$refs.BoardGame1 = this;
     },
     mounted(){
-      //init board
-      for (let i = 65; i < 65+this.boardSize; i++) {
-        this.boardHeader += String.fromCharCode(i); 
-
-        for (let j = 1; j <=this.boardSize; j++) {
-          let area = { 
-            id : String.fromCharCode(i) + j.toString(),
-            isTouch : false,
-            isBusy : false,
-            whoIsThere : null,
-          }
-          this.$store.dispatch('pushAreaInBoard', area);
-        }
-      }
+     this.updateBoardHTML()
     },
     methods: {
       //webpack don't interpret images correctly without going through this solution
@@ -171,7 +157,7 @@ export default Vue.extend({
         var l = parseInt(this.$store.getters.getCurrentShip.length)
         if(this.$store.getters.getCurrentShip.isVertical){ 
           var n = parseInt(numbs)
-          if((l + n) > (this.boardSize+1))
+          if((l + n) > (this.$store.getters.getBoardSize+1))
             return null;
          
           for (let i = n; i < (n + l); i++) {
@@ -182,7 +168,7 @@ export default Vue.extend({
         }
         else{
           var c = chars.charCodeAt(0)
-          if((c-65 +1 +l) > (this.boardSize +1))
+          if((c-65 +1 +l) > (this.$store.getters.getBoardSize +1))
             return null;
 
           for (let i = c; i < (c + l); i++) {

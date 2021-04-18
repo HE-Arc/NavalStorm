@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Game1 from '../views/Game1.vue'
+import Game2 from '../views/Game2.vue'
 import Profile from '../views/Profile.vue'
 import store from '@/store';
 
@@ -40,6 +41,11 @@ const routes = [
     meta: {
       requiresAuth: false//todo to set TRUE
     }
+  },
+  {
+    path: '/game2',
+    name: 'Game2',
+    component: Game2
   },
   {
     path: '/profile',

@@ -9,14 +9,14 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class NavalStormUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="navalstromUser")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="navalstormUser")
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True,default='')
     winNumber = models.IntegerField(_('winNumber'),default=0)
     playedGameNumber = models.IntegerField(_('playedGameNumber'),default=0)
 
     @classmethod
     def create_navalstorm_user(cls, username, email, password):
-        navalstromUser = cls()
-        navalstromUser.user = User.objects.create_user(username=username, email=email,password=password)
-        navalstromUser.save()
-        return navalstromUser
+        navalstormUser = cls()
+        navalstormUser.user = User.objects.create_user(username=username, email=email,password=password)
+        navalstormUser.save()
+        return navalstormUser

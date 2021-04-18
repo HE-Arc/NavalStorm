@@ -19,7 +19,7 @@ export default {
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             ],
-            data: [123, 456,], //value to bind
+            data: [parseInt(this.$store.state.user.playedGameNumber) - parseInt(this.$store.state.user.winNumber),parseInt(this.$store.state.user.winNumber)],
           }],
       },
       options: {
@@ -46,7 +46,8 @@ export default {
           var width = chart.chart.width;
           var height = chart.chart.height;
           var ctx = chart.chart.ctx;
-
+          
+          ctx.clearRect(0, 0, width, height);
           ctx.restore();
           var fontSize = (height / 300).toFixed(2);
           ctx.font = fontSize + "em arial";
@@ -56,6 +57,7 @@ export default {
           var textX = Math.round((width - ctx.measureText(text).width) / 2);
           var textY = height / 2;
 
+          ctx.fillStyle = '#FF0000'
           ctx.fillText(text, textX, textY);
           ctx.save();
         }
