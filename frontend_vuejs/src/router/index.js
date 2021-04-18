@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import Game1 from '../views/Game1.vue'
 import Game2 from '../views/Game2.vue'
@@ -8,69 +9,70 @@ import Profile from '../views/Profile.vue'
 import store from '@/store';
 import Connexion from '../views/Connexion.vue'
 
-import Api from "@/api/ApiRequester";
+// import Api from "@/api/ApiRequester";
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     redirect: '/connexion',
-    meta: {
-      requiresAuth: true
+    meta:{
+      requiresLoggedIn: true
     }
   },
   {
     path: '/connexion',
     name: 'Connexion',
     component: Connexion,
-    meta: {
-      requiresAuth: true
+    meta:{
+      requiresLoggedIn: true
     }
   },
   {
     path: '/login',
     name: 'login',
     component: Login,
-    meta: {
-      requiresLogged: false,
-      requiresAuth: false
-    }
   },
-   {
+  {
+    path: '/logout',
+    name: 'logout',
+    component: Logout,
+  },
+  {
     path: '/register',
     name: 'Register',
     component: Register,
-    meta: {
-      requiresLogged: false
-    }
   },
   {
     path: '/game1',
     name: 'Game1',
     component: Game1,
-    meta: {
-      requiresAuth: true
+    meta:{
+      requiresLoggedIn: true
     }
   },
   {
     path: '/game2',
     name: 'Game2',
     component: Game2,
-    meta: {
-      requiresAuth: true
+    meta:{
+      requiresLoggedIn: true
     }
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
-    meta: {
-      requiresAuth: true
+    meta:{
+      requiresLoggedIn: true
     }
   },
   {
     path: '*',
-    redirect: '/'
+    redirect: '/',
+    meta:{
+      requiresLoggedIn: true
+    }
   },
 ]
 
@@ -80,43 +82,38 @@ const router = new VueRouter({
   routes
 })
 
-function loadSessionFromStorage() {
-  if (window.sessionStorage.getItem("token") != null) {
-    Api.updateStore(JSON.parse(window.sessionStorage.getItem("user")), window.sessionStorage.getItem("token"), window.sessionStorage.getItem("refresh_token"));
-    return true;
-  } else {
-    return false;
-  }
-}
+// function loadSessionFromStorage() {
+//   if (window.sessionStorage.getItem("token") != null) {
+//     Api.updateStore(JSON.parse(window.sessionStorage.getItem("user")), window.sessionStorage.getItem("token"), window.sessionStorage.getItem("refresh_token"));
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
 
-function isLogged() {
-  // Not connected by login action
-  if (!store.state.isUserLogged) {
-    if (loadSessionFromStorage()) {
-      return true;
-    }
-    return false;
-  }
-  return true;
-}
+// function isLogged() {
+
+//   // Not connected by login action
+//   if (!store.state.isUserLogged) {
+//     if (loadSessionFromStorage()) {
+//       return true;
+//     }
+//     return false;
+//   }
+//   return true;
+// }
 
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((route) => route.meta.onlyLogged)) {
-    if (!isLogged()) {
-      next({ name: "Login" });
-    } else {
-      next();
-    }
-  } else if (to.matched.some((route) => route.meta.onlyUnlogged)) {
-    if (isLogged()) {
-      next({ name: "Home" });
+  if (to.matched.some((route) => route.meta.requiresLoggedIn)) {
+    if (!store.state.isUserLogged) {
+      next({ name: "login" });
     } else {
       next();
     }
   } else {
-    loadSessionFromStorage();
+    //loadSessionFromStorage();
     next();
   }
 });

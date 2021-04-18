@@ -65,7 +65,7 @@ export default Vue.extend({
         });
         // this.errorPost = "";
 
-        this.$router.push({ name: "Profile" });
+        this.$router.push({ name: "Connexion" });
       } catch (e) {
         this.errorPost = e.message;
       }

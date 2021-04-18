@@ -203,7 +203,7 @@ class ApiRequester {
                     return response.data;
                 } catch (error) {
                     this.logout();
-                    router.push({ name: "Login" });
+                    router.push({ name: "login" });
                 }
             } else {
                 throw (error);

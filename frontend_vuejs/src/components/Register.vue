@@ -96,7 +96,7 @@ export default Vue.extend({
       }
     },
     fnLogin () {
-         this.$router.push({ name: "Login" });
+         this.$router.push({ name: "login" });
       },
   },
 });
