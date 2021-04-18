@@ -58,19 +58,19 @@ export default Vue.extend({
     methods: {
         randomConnexion : async function(){
             try {
-                await Api.connectRandom();
-                this.$router.push({name:"Game"}) //TODO REDIRECT TO THE GOOD GAME
+                const response = await Api.connectRandom();
+                this.$router.push({name:"Game/"+response.url}) //TODO REDIRECT TO THE GOOD GAME
             } catch (error) {
                 console.log(error.message)
             }
         },
         normalConnexion : async function(){
             try{
-                await Api.connect({
+                const response = await Api.connect({
                     name: this.name,
                     password: this.password?this.password:'',
                 });
-                this.$router.push({name:"Game"}) //TODO REDIRECT TO THE GOOD GAME
+                this.$router.push({name:"Game/"+response.url}) //TODO REDIRECT TO THE GOOD GAME
             } catch(error){
                 console.log(error.message)
             }

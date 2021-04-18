@@ -21,11 +21,11 @@ from rest_framework.authtoken import views as token_views
 from rest_framework import routers 
 
 from user.views import UserViewSet
-
+from game.views import ServerViewSet
   
 router = routers.SimpleRouter() 
 router.register(r'users', UserViewSet, basename='users')
-
+router.register(r'servers',ServerViewSet, basename='servers')
 
 app_name='navalstorm'
 

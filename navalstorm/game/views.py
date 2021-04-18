@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Servers
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets, status, filters
 from .serializers import ServerConnecterSerializer,ServerSerializer

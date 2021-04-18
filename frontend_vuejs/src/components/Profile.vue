@@ -15,7 +15,7 @@
           </v-list-item-content>
       
           <v-list-item-avatar
-          tile size="auto" color="grey"><img src="https://people.he-arc.ch/photos/GrunenwaldDavid.jpg" alt="">
+          tile size="auto" color="grey"><img src="../assets/logo-login.png" alt="">
           </v-list-item-avatar>
         </v-list-item>
 

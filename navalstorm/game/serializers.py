@@ -4,8 +4,8 @@ from .models import Servers
 from user.models import NavalStormUser
 
 class ServerConnecterSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(Required=False)
-    password = serializers.CharField(Required=False)
+    name = serializers.CharField(required=False)
+    password = serializers.CharField(required=False)
     player_id = serializers.IntegerField() #required
     
     class Meta:

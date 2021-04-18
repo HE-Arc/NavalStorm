@@ -115,8 +115,10 @@ class ApiRequester {
 
     async connectRandom(){
         try {
-            const response = await this.instanceAxios.post("connexion/", )
-            console.log(response)
+            const response = await this.instanceAxios.post("connexion/",{
+                "player_id": this.store.state.user.id
+            } )
+            return response
         } catch (error) {
             console.log(error)
         }
@@ -124,7 +126,12 @@ class ApiRequester {
 
     async connect(data){
         try {
-            console.log(data)
+            const response = await this.instanceAxios.post("connexion/",{
+                "player_id": this.store.state.user.id,
+                "name": data.name,
+                "password":data.password
+            })
+            return response
         } catch (error) {
             console.log(error)
         }
