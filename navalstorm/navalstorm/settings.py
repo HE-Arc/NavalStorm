@@ -39,7 +39,6 @@ OAUTH2_PROVIDER = {
 ALLOWED_HOSTS = ['navalstorm.srvz-webapp.he-arc.ch','127.0.0.1']
 CORS_ORIGIN_ALLOW_ALL = True
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,8 +60,6 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-   # 'navalstorm.middleware.DisableCSRF',
-#    'navalstorm.middleware.AuthRequiredMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,6 +1,8 @@
 from django.db import models
 from user.models import NavalStormUser
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import User
+from jsonfield import JSONField
 
 # Create your models here.
 class Servers(models.Model):
@@ -25,3 +27,14 @@ class Servers(models.Model):
         self.second_player = player
         self.save()
         return self
+
+class Board(models.Model):
+    data = JSONField()
+    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    @classmethod
+    def create_board(cls,data,idUser):
+        board=cls()
+        board.idUser=idUser
+        board.data=data
+        board.save()
+        return board

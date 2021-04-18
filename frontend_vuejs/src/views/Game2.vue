@@ -24,6 +24,9 @@ export default {
   components: {
     BoardGame2Owner,
     BoardGame2Enemy,
-  }
+  },
+  data () {
+    
+  },
 }
 </script>

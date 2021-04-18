@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.response import Response
-from .models import Servers
+from .models import Servers, Board
+import json
 from django.db.models import Q
 from user.models import NavalStormUser
 
@@ -48,3 +49,22 @@ class ServerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Servers
         fields = '__all__'
+
+class BoardSerializer(serializers.ModelSerializer):
+    data=serializers.CharField()
+    class Meta:
+        model=Board
+        fields=['data','idUser']
+    def create(self, validated_data):
+        return Board.create_board(str(validated_data['data']),validated_data['idUser'])
+
+class BoardUpdateSerializer(serializers.ModelSerializer):
+    data=serializers.CharField()
+    class Meta:
+        model=Board
+        fields=['data']
+
+    def update(self, instance, validated_data):
+        instance.data=((str(validated_data)))
+        instance.save()
+        return instance

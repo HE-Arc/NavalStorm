@@ -44,6 +44,7 @@ itemadapter==0.2.0
 itemloaders==1.0.4
 jmespath==0.10.0
 joblib==1.0.1
+jsonfield==3.1.0
 jwcrypto==0.8
 lxml==4.6.3
 mysqlclient==2.0.3

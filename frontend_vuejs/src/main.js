@@ -6,6 +6,10 @@ import store from './store/index'
 
 import IdleVue from 'idle-vue'
 
+import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueSimpleAlert);
+
 const eventsHub = new Vue()
 
 Vue.use(IdleVue, {
