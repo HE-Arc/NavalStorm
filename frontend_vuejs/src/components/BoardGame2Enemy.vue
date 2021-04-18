@@ -47,10 +47,10 @@ export default Vue.extend({
       //send the miss to coord 
       onClickSendMissile(event) { 
         //send missile to coord
-        /* debut. ces lignes ci dessous sont juste pour faire une action sur le tableau à coté c'est pas comment ça qu'il faut faire */
-        var id = event.target.id.replace(this.prefixID, ""); 
-        this.$root.$refs.BoardGame2Owner.attaque(id) 
-        /* fin */
+        //var id = event.target.id.replace(this.prefixID, ""); 
+        
+        //id =  D4 par exemple
+
 
         //refresh board ennemy
 

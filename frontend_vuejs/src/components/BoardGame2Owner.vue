@@ -46,7 +46,9 @@ export default Vue.extend({
       getImgUrl(img) {
         return require(`../assets/${img}`) 
       },
-      attaque(id) {console.log(id)
+      attaque(id) {
+        console.log("toto")
+        console.log(id)
         //refresh board
         var currentId = this.prefixID+id
         var coordId = id 
