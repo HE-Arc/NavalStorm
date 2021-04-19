@@ -249,4 +249,4 @@ export default new Vuex.Store({
     updateBoardEnnemy(state,board){
       state.commit("UPDATE_BOARD_ENNEMY",board);
     },
-})
+}})
