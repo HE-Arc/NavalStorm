@@ -130,7 +130,7 @@ class ApiRequester {
                 "name": data.name,
                 "password": data.password
             })
-            store.dispatch('updateServer', this.response.data.server);
+            store.dispatch('updateServer', response.data.server);
             window.sessionStorage.setItem("server",JSON.stringify(response.data.server))
             return response
         } catch (error) {
@@ -151,10 +151,28 @@ class ApiRequester {
         }
     }
 
+    async updateUserInformationsWinLoose(bool){
+    
+            try{
+                if(bool){
+                    var win=parseInt(this.user.winNumber)
+                    this.user.winNumber = win++;
+                }
+                var nb=parseInt(this.user.playedGameNumber)
+                this.user.playedGameNumber = nb++;
+                store.dispatch('updateUser', this.user);
+                window.sessionStorage.setItem("user", JSON.stringify(this.user));
+            } catch(error){
+                console.log("Error while updating user info " + error);
+            
+            }
+    }
+
     async getBoardEnemy(){
         try{
             this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
-            store.dispatch('getBoardEnemy',this.boardEnemy.data);
+            store.dispatch('updateBoardEnnemy',this.boardEnemy.data);
+            store.dispatch('updateKeyBoardEnnemy',this.boardEnemy.id);
             window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy.data));
         }catch(error){
             console.log(error)

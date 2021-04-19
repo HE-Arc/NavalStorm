@@ -58,7 +58,7 @@ export default Vue.extend({
         if (td.childElementCount != 0 && td != null)
           return;
 
-        var eBoard=this.$store.getters.getBoard;
+        var eBoard=this.$store.getters.getBoardEnnemy;
         //refresh board ennemy
         eBoard.forEach(area => {
           if(area['id']==id){
@@ -96,9 +96,8 @@ export default Vue.extend({
           this.loading = true;
           try {
             await Api.updateEnnemyBoard({
-              boardId:1,//TODO TO get right board ID !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              boardId:this.$store.getters.getBoardEnnemyID,
               board:eBoard,
-            
             });
             this.errorPost = "";
             this.loading = false;

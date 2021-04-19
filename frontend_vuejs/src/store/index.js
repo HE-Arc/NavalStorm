@@ -25,6 +25,7 @@ export default new Vuex.Store({
     boardHeader : '',
     board: [],
     boardEnnemy : [],
+    boardEnnemyId: null,
     //todo put in backend the ships
     ships : [
       {
@@ -117,6 +118,10 @@ export default new Vuex.Store({
     getBoardEnnemy:(state)=>{
       return state.boardEnnemy;
     }
+    ,
+    getBoardEnnemyID:(state)=>{
+      return state.boardEnnemyId;
+    }
   },
 
   mutations: {
@@ -191,12 +196,12 @@ export default new Vuex.Store({
       state.refreshTokenUser = null;
       return state;
     },
-    UPDATE_BOARD_ENEMY(state,board){
-      state.boardEnemy = board;
-    },
     UPDATE_BOARD(state,board){
       state.board = board;
-    }
+    },
+    UPDATE_KEY_BOARDENNEMY(state, key){
+      state.boardEnnemyId=key;
+    },
   },
   actions: {
     setEnnemyBoard:(store,board)=>{
@@ -236,7 +241,9 @@ export default new Vuex.Store({
     updateUser(state, user) {
       state.commit('UPDATE_USER', user);
     },
-
+    updateKeyBoardEnnemy(state,key){
+      state.commit('UPDATE_KEY_BOARDENNEMY',key);
+    },
     updateEnemyUser(state,user){
       state.commit('UPDATE_ENEMY_USER',user);
     },

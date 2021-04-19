@@ -11,11 +11,12 @@ class Board(models.Model):
     def create_board(cls,data,idUser):
         server = None
         try: 
-            server = Servers.objects.get(first_player=idUser)
+            server = Servers.objects.get(first_player = NavalStormUser.objects.get(id=idUser.id))
         except:
             try:
-                server = Servers.objects.get(second_player=idUser)
-            except:
+                server = Servers.objects.get(second_player = NavalStormUser.objects.get(id=idUser.id))
+            except Exception as e:
+                print(e)
                 raise Exception("No User Ready To play")
         board=cls()
         board.idUser=idUser
