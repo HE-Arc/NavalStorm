@@ -98,7 +98,7 @@ export default Vue.extend({
             await Api.updateEnnemyBoard({
               boardId:1,//TODO TO get right board ID !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               board:eBoard,
-              userid : this.$store.state.user.id,
+            
             });
             this.errorPost = "";
             this.loading = false;
