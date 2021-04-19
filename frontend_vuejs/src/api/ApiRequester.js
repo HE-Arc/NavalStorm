@@ -182,7 +182,7 @@ class ApiRequester {
         window.sessionStorage.removeItem("refresh_token");
         this.token = null;
         this.refresh_token = null;
-        router.push({ name: "Home" });
+        router.push({ name: "login" });
     }
 
     async register(account) {
