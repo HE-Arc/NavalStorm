@@ -42,6 +42,7 @@ class BoardViewSet(ViewsetFunctionPermissions):
     permission_classes = [isSelfUser]
     permission_classes_by_action = {
                                     'create': [AllowAny], 
+                                    'getBoard':[AllowAny]
                                 }
 
     def create(self,request):
@@ -69,7 +70,7 @@ class BoardViewSet(ViewsetFunctionPermissions):
             return Response({"error": str(e)}, status = HTTP_422_UNPROCESSABLE_ENTITY)
 
     @action(detail=False)
-    def boardEnemy(self,request):
+    def getBoard(self,request):
         user = request.id
         board = Board.objects.get(idUser=user)
         serializer = BoardSerializer(board)

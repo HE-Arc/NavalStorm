@@ -150,16 +150,26 @@ class ApiRequester {
             console.log("Error while updating user info " + error);
         }
     }
-    async updateBoardEnemy(){
+    
+    async getBoardEnemy(){
         try{
-            this.boardEnemy = await this.get("board/boardEnemy/");
-            store.dispatch('updateBoardEnemy',this.boardEnemy);
-            window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy));
+            this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
+            store.dispatch('getBoardEnemy',this.boardEnemy.data);
+            window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy.data));
         }catch(error){
-            console.log()
+            console.log(error)
         }
     }
 
+    async getBoard(){
+        try{
+            this.board = await this.get("/games/getBoard/",{"id": store.state.user.id});
+            store.dispatch('getBoard',this.board.data);
+            window.sessionStorage.setItem("board", JSON.stringify(this.board.data));
+        }catch(error){
+            console.log(error)
+        }
+    }
     /**
      * Delete token
      */
