@@ -77,9 +77,9 @@ export default {
               var response = await Api.getEnemyUser();
               console.log(response)
               if(response == true){
-                clearInterval(interval);
                 this.$router.push({ name: "Game2" });
               }
+              clearInterval(interval);
           }.bind(this), 3000)
           } catch (e) {
             this.errorPost = e.message;

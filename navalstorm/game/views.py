@@ -70,10 +70,10 @@ class BoardViewSet(ViewsetFunctionPermissions):
         except UserUpdateError as e :
             return Response({"error": str(e)}, status = HTTP_422_UNPROCESSABLE_ENTITY)
 
-    @action(detail=False)
+    @action(methods=['get'],detail=True)
     def getBoard(self,request):
-        user = request.id
-        board = Board.objects.get(idUser=user)
+        user = NavalStormUser.objects.get(id=request['id'])
+        board = Board.objects.get(idUser=user.id)
         serializer = BoardSerializer(board)
         return Response(serializer.data)
 
