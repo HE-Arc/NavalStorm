@@ -6,9 +6,9 @@
 <script>
   export default {
     created () {
-      this.$store.dispatch('logoutUser')
+      this.$store.dispatch('logout')
         .then(() => {
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'login' })
         })
     }
   }

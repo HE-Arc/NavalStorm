@@ -1,9 +1,9 @@
 <template>
-<v-container class="marginTop">
-  <div>
-    <Login />
-  </div>
-</v-container>
+  <v-container class="marginTop">
+    <div>
+      <Login />
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -12,6 +12,7 @@ import Login from '@/components/Login.vue'
 
 export default {
   name: 'LoginView',
+  title:"Login",
   components: {
     Login
   }

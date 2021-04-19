@@ -1,13 +1,22 @@
 <!-- TEMPLATE -->
 <template>
 <v-app-bar color="primary">
+  
     <v-app-bar-nav-icon @click="onClickDrawer()">
         <svg-icon type="mdi" :path="iconMenuPath" />
     </v-app-bar-nav-icon>
-    <v-toolbar-title>
-      Naval Storm
-    </v-toolbar-title>
+      <v-toolbar-title>
+        Naval Storm
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-switch
+                class="pull-right"
+                :label="`Dark mode`"
+                v-model="switchDarkmode"
+                style="float:right;"
+              ></v-switch>
 </v-app-bar>
+
 </template>
 
 <!-- SCRIPT -->
@@ -25,11 +34,17 @@ export default Vue.extend({
       return  {
         drawer: false,
         iconMenuPath: mdiMenu,
+        switchDarkmode: this.$vuetify.theme.dark,
       }
     },
     methods: {
       onClickDrawer() {
         this.$store.dispatch('flipDrawer');
+      }
+    },
+    watch: {
+      switchDarkmode(switched) {
+        this.$vuetify.theme.dark = switched;
       }
     },
 });

@@ -8,9 +8,9 @@
 
 <script>
 import Profile from '@/components/Profile.vue'
-
 export default {
   name: 'ProfileView',
+  title:"Profile",
   components: {
     Profile,
   }

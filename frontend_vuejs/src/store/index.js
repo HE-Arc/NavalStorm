@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { axiosBase } from '../api/axios-base'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })],
   state: {
-    accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
-    // refreshing the page
-    refreshToken: localStorage.getItem('refresh_token') || null,
-    csrfToken: localStorage.getItem('csrf_token') || null,
-     APIData: '', // received data from the backend API is stored here.
-
+    isUserLogged: false,
+    tokenUser: null,
+    refreshTokenUser: null,
     drawer : false,
     user : {
       username : String,
@@ -21,7 +21,12 @@ export default new Vuex.Store({
       playedGameNumber : String,
       avatar : String,
     },
+    boardSize : 10,
+    boardHeader : '',
     board: [],
+    boardEnnemy : [],
+    boardEnnemyId: null,
+    //todo put in backend the ships
     ships : [
       {
         id : 1,
@@ -98,32 +103,31 @@ export default new Vuex.Store({
     getShipById: (state) => (shipID) => {
       return state.ships.find(ship => ship.id === shipID);
     },
+    getBoardSize: (state) => {
+      return state.boardSize;
+    },
+    getBoardHeader: (state) => {
+      return state.boardHeader;
+    },
     getBoard: (state) => {
       return state.board;
     },
     getBoardAreaById: (state) => (areaID) => {
       return state.board.find(ar => ar.id === areaID);
     },
+    getBoardEnnemy:(state)=>{
+      return state.boardEnnemy;
+    }
+    ,
+    getBoardEnnemyID:(state)=>{
+      return state.boardEnnemyId;
+    }
   },
-  mutations: {
-    updateLocalStorage (state, { access, refresh }) {
-      localStorage.setItem('access_token', access)
-      localStorage.setItem('refresh_token', refresh)
-      state.accessToken = access
-      state.refreshToken = refresh
-    },
-    updateAccess (state, access) {
-      state.accessToken = access
-    },
-    updateCsrfToken (state,csrf){
-      localStorage.setItem('csrf_token', csrf)
-      state.csrfToken = csrf
-    },
-    destroyToken (state) {
-      state.accessToken = null
-      state.refreshToken = null
-    },
 
+  mutations: {
+    SET_ENNEMY_BOARD:(state,board) => {
+      state.boardEnnemy=board;
+    },
     SET_DRAWER:(state, drawer) => {
       state.drawer = drawer;
     },
@@ -132,6 +136,12 @@ export default new Vuex.Store({
     },
     UPDATE_USER:(state, user) => {
       state.user = user;
+    },
+    UPDATE_ENEMY_USER:(state,user) =>{
+      state.enemyUser = user;
+      },
+    UPDATE_BOARD_ENNEMY:(state,board)=>{
+      state.boardEnnemy=board;
     },
     UPDATE_CURRENT_SHIP:(state, currentShip) => {
       state.currentShip = currentShip;
@@ -145,6 +155,25 @@ export default new Vuex.Store({
       state.board.splice(oldAreaIndex, 1);
       state.board.push(newArea);
     },
+    INIT_BOARD:(state) => {
+      //init board
+      if(state.board.length != 0)
+        return
+
+      for (let i = 65; i < 65+state.boardSize; i++) {
+        state.boardHeader += String.fromCharCode(i); 
+
+        for (let j = 1; j <=state.boardSize; j++) {
+          let area = { 
+            id : String.fromCharCode(i) + j.toString(),
+            isTouch : false,
+            isBusy : false,
+            whoIsThere : null,
+          }
+          state.board.push(area)
+        }
+      }
+    },
     PUSH_SHIPS_SHIP:(state, ship) => {
       state.ships.push(ship);
     },
@@ -154,90 +183,41 @@ export default new Vuex.Store({
       state.ships.splice(oldShipIndex, 1);
       state.ships.push(newShip);
     },
+    LOG_USER(state, token, refreshToken) {
+      state.isUserLogged = true;
+      state.tokenUser = token;
+      state.refreshTokenUser = refreshToken;
+      return state;
+    },
+    LOGOUT(state) {
+      state.isUserLogged = false;
+      state.user = {};
+      state.tokenUser = null;
+      state.refreshTokenUser = null;
+      return state;
+    },
+    UPDATE_BOARD(state,board){
+      state.board = board;
+    },
+    UPDATE_KEY_BOARDENNEMY(state, key){
+      state.boardEnnemyId=key;
+    },
   },
   actions: {
-     // run the below action to get a new access token on expiration
-     refreshToken (context) {
-      return new Promise((resolve, reject) => {
-        axiosBase.post('/api/token/refresh', {
-          refresh: context.state.refreshToken
-        }) // send the stored refresh token to the backend API
-          .then(response => { // if API sends back new access and refresh token update the store
-            console.log('New access successfully generated')
-            context.commit('updateAccess', response.data.access)
-            resolve(response.data.access)
-          })
-          .catch(err => {
-            console.log('error in refreshToken Task')
-            reject(err) // error generating new access and refresh token because refresh token has expired
-          })
-      })
+    setEnnemyBoard:(store,board)=>{
+      store.commit('SET_ENNEMY_BOARD',board);
     },
-    registerUser (context, data) {
-      return new Promise((resolve, reject) => {
-        axiosBase.post('/register', {
-          name: data.name,
-          email: data.email,
-          username: data.username,
-          password: data.password
-        })
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    logoutUser (context) {
-      if (context.getters.loggedIn) {
-        return new Promise((resolve) => {
-          axiosBase.post('/auth/token')
-            .then(() => {
-              localStorage.removeItem('access_token')
-              localStorage.removeItem('refresh_token')
-              context.commit('destroyToken')
-            })
-            .catch(err => {
-              localStorage.removeItem('access_token')
-              localStorage.removeItem('refresh_token')
-              context.commit('destroyToken')
-              resolve(err)
-            })
-        })
-      }
-    },
-     
-    loginUser (context, credentials) {
-      return new Promise((resolve, reject) => {
-        // send the username and password to the backend API:
-        axiosBase.post('/auth/login/', 
-        {
-          email: credentials.email,
-          password: credentials.password
-        })
-        // if successful update local storage:
-          .then(response => {
-            context.commit('updateLocalStorage', { access: response.data.access, refresh: response.data.refresh }) // store the access and refresh token in localstorage
-            resolve()
-          })
-          .catch(err => {
-            reject(err)
-          })
-      })
-    },
-
     flipDrawer: (store) => {
       store.commit('FLIP_DRAWER');
     },
     updateDrawer: (store, drawer) => {
       store.commit('SET_DRAWER', drawer);
     },
-    updateUser: (store, user) => {
-      store.commit('UPDATE_USER', user);
-    },
     updateCurrentShip : (store, currentShip) => {
       store.commit('UPDATE_CURRENT_SHIP', currentShip);
+    },
+    initBoard : (store) => {
+      store.commit('INIT_BOARD');
     },
     pushAreaInBoard : (store, area) => {
       store.commit('PUSH_BOARD_AREA', area);
@@ -251,5 +231,29 @@ export default new Vuex.Store({
     updateShipInShips : (store, ship) => {
       store.commit('UPDATE_SHIPS_SHIP', ship);
     },
-  },
-})
+
+    logUser(state, token, refreshToken) {
+      state.commit('LOG_USER', token, refreshToken);
+    },
+    logout(state) {
+      state.commit('LOGOUT');
+    },
+    updateUser(state, user) {
+      state.commit('UPDATE_USER', user);
+    },
+    updateKeyBoardEnnemy(state,key){
+      state.commit('UPDATE_KEY_BOARDENNEMY',key);
+    },
+    updateEnemyUser(state,user){
+      state.commit('UPDATE_ENEMY_USER',user);
+    },
+    getBoardEnemy(state,board){
+      state.commit('GET_BOARD_ENEMY',board);
+    },
+    getBoard(state,board){
+      state.commit('GET_BOARD',board);
+    },
+    updateBoardEnnemy(state,board){
+      state.commit("UPDATE_BOARD_ENNEMY",board);
+    },
+}})

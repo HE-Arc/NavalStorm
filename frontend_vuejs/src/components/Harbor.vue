@@ -3,7 +3,7 @@
 <div id="app">
 <v-app>
     <h3 v-if="this.$store.getters.getCurrentShip === null">
-        Please Selecte a ship
+        Please Select a ship
     </h3>
     <h3 v-else>
         Selected: {{ this.$store.getters.getCurrentShip.type }} 
@@ -16,13 +16,13 @@
             <img :src="getImgUrl(ship.img)" alt="" width="200" height="40">
         </td>
         <td>
-        <label>
+        <label style="color:black;">
             <input type="checkbox" v-if="ship.isPlaced" disabled="true"/>
             <input type="checkbox" v-else @click="onClickToggleVertical(ship)" v-model="ship.isVertical"/>
             Vertical
         </label>
         <td :id="ship.id">
-            <label>
+            <label style="color:black;">
             <input type="checkbox" v-if="!ship.isPlaced" disabled="true" />
             <input type="checkbox" v-else @click="onClickTogglePlaced(ship)" v-model="ship.isPlaced"/>
             Placed
@@ -60,7 +60,7 @@ export default Vue.extend({
           })
           ship.coord = []
           this.$store.dispatch('updateShipInShips', ship)
-          this.$root.$refs.Board.updateBoardHTML()
+          this.$root.$refs.BoardGame1.updateBoardHTML()
         }
       },
       onClickToggleVertical(ship){

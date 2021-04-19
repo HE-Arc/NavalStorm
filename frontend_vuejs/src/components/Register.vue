@@ -2,6 +2,9 @@
 <div id="app">
   <v-app>
     <v-container>
+      <h3 style ="text-align: center;" :id="2222"  >
+        {{ errorMsg }}
+      </h3>
       <v-layout wrap>
         <v-flex sm12 md6 offset-md3>
           <v-card elevation="4" light tag="section">
@@ -15,31 +18,31 @@
             <v-card-text>
               <p>Create a new account with your email, username and password:</p>
               <v-form ref='form'>
-                  <v-text-field
-                              outline
-                              label="Email"
-                              type="text"
-                              v-model="email"
-                              :rules="emailRule"></v-text-field>
                 <v-text-field
-                              outline
-                              label="Username"
-                              type="text"
-                              v-model="username"
-                              :rules="usernameRule"></v-text-field>
+                  outline
+                  label="Email"
+                  type="text"
+                  v-model="email"
+                  :rules="emailRule"></v-text-field>
                 <v-text-field
-                              outline
-                              label="Password (Min. 8 characters with at least one capital letter and a number)"
-                              type="password"
-                              v-model="password"
-                              :rules="[passwordRule.passwordValidation]"></v-text-field>
+                  outline
+                  label="Username"
+                  type="text"
+                  v-model="username"
+                  :rules="usernameRule"></v-text-field>
+                <v-text-field
+                  outline
+                  label="Password (Min. 8 characters with at least one capital letter and a number)"
+                  type="password"
+                  v-model="password"
+                  :rules="[passwordRule.passwordValidation]"></v-text-field>
               </v-form>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
             <v-btn color="error"  v-on:click="fnLogin">I have already</v-btn >
             <v-spacer></v-spacer>
-            <v-btn color="info"  v-on:click="fnRegister">Create Account</v-btn >
+            <v-btn color="info"  v-on:click="fnRegister"   :loading="loading">Create Account</v-btn >
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -54,20 +57,18 @@
 <!-- SCRIPT -->
 <script>
 import Vue from "vue";
+import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
     name: "Register",
     data ()  { 
         return  { 
+          errorMsg: null,
           email: null,
           password: null,
           username: null,
-          emailRule: [ 
-                        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'
-          ],
-          usernameRule: [ 
-                        v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'
-          ],
+          emailRule: [v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email not valid'],
+          usernameRule: [v => /^[a-zA-Z0-9]+$/.test(v) || 'Username not valid'],
           passwordRule : {
             required: password => !!password || "Required.",
             passwordValidation: password => {
@@ -78,21 +79,41 @@ export default Vue.extend({
         }
     }, 
     methods: {
-      fnRegister () {
-        if(this.$refs.form.validate()) {
-          
-          this.$store.dispatch('registerUser', {
-          email: this.email,
-          username: this.username,
-          password: this.password
-          }).then(() => {
-          this.$router.push({ name: 'Login' })
-        })
+    fnRegister: async function () {
+      this.loading = true;
+      try {
+      
+          await Api.register({
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.passwordConfirmation,
+          });
+          this.$router.push({ name: "connexion" });
+      } catch (e) {
+
+        if ("username" in e) {
+          this.errors["username"] = e.username[0];
         }
-      },
-      fnLogin () {
-         this.$router.push({ name: "Login" });
-      },
+        console.log(e)
+        this.errorMsg = e;
+        this.blink()
+      } finally {
+        this.loading = false;
+      }
     },
+    fnLogin () {
+         this.$router.push({ name: "login" });
+      },
+    blink() {
+         let h3 = document.getElementById("2222")
+          h3.style.background = 'pink'
+          setTimeout(()=>{
+            h3.style.background = 'white'
+          },1000)
+          return null;
+      }
+  },
 });
 </script>
+
