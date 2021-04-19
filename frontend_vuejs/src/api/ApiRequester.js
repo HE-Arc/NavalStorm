@@ -130,11 +130,14 @@ class ApiRequester {
                 "name": data.name,
                 "password": data.password
             })
-            return response.data.server.name
+            store.dispatch('updateServer', this.response.data.server);
+            window.sessionStorage.setItem("server",JSON.stringify(response.data.server))
+            return response
         } catch (error) {
             console.log(error)
         }
     }
+    
     /**
      * Update user
      */
@@ -148,6 +151,30 @@ class ApiRequester {
         }
     }
 
+    async getBoardEnemy(){
+        try{
+            this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
+            store.dispatch('getBoardEnemy',this.boardEnemy.data);
+            window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy.data));
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    async getBoard(){
+        try{
+            this.board = await this.get("/games/getBoard/",{"id": store.state.user.id});
+            store.dispatch('getBoard',this.board.data);
+            window.sessionStorage.setItem("board", JSON.stringify(this.board.data));
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    async getEnemyUser(){
+        //TODO
+    }
+    
     /**
      * Delete token
      */
