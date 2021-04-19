@@ -150,7 +150,7 @@ class ApiRequester {
             console.log("Error while updating user info " + error);
         }
     }
-    
+
     async getBoardEnemy(){
         try{
             this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
@@ -170,6 +170,11 @@ class ApiRequester {
             console.log(error)
         }
     }
+
+    async getEnemyUser(){
+        //TODO
+    }
+    
     /**
      * Delete token
      */
