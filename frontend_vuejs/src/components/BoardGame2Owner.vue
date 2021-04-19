@@ -47,7 +47,7 @@ export default Vue.extend({
         return require(`../assets/${img}`) 
       },
       updateBoardHTML() {
-        var currentBoard = this.$store.getters.getBoardEnnemy//TODO TO CHANGE to getBoard 
+        var currentBoard = this.$store.getters.getBoard
         for (var i = 0; i < currentBoard.length; i++) {
           var currentArea = currentBoard[i]
           var el = document.getElementById(this.prefixID+currentArea.id)

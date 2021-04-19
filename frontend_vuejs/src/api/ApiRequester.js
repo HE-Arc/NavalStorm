@@ -154,7 +154,8 @@ class ApiRequester {
     async getBoardEnemy(){
         try{
             this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
-            store.dispatch('getBoardEnemy',this.boardEnemy.data);
+            store.dispatch('updateBoardEnnemy',this.boardEnemy.data);
+            store.dispatch('updateKeyBoardEnnemy',this.boardEnemy.id);
             window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy.data));
         }catch(error){
             console.log(error)

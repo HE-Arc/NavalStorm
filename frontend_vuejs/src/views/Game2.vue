@@ -18,6 +18,9 @@
 <script>
 import BoardGame2Owner from '@/components/BoardGame2Owner.vue'
 import BoardGame2Enemy from '@/components/BoardGame2Enemy.vue'
+import Api from "@/api/ApiRequester";
+
+
 
 export default {
   name: 'Game2View',
@@ -25,6 +28,15 @@ export default {
   components: {
     BoardGame2Owner,
     BoardGame2Enemy,
+  },
+  created(){
+    (function () {
+    setInterval(function () {
+          Api.getBoardEnemy();
+          Api.getBoard();
+          console.log('tic')
+        }); 
+    }, 1000); // milliseconds
   },
   data () {
     
