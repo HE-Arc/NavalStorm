@@ -130,7 +130,7 @@ class ApiRequester {
                 "name": data.name,
                 "password": data.password
             })
-            store.dispatch('updateServer', response.data.server);
+            //store.dispatch('updateServer', response.data.server);
             window.sessionStorage.setItem("server",JSON.stringify(response.data.server))
             return response
         } catch (error) {
@@ -195,7 +195,17 @@ class ApiRequester {
     }
 
     async getEnemyUser(){
-        //TODO
+        try {
+            const response = await this.instanceAxios.post("servers/",{
+                "first_player":store.state.user.id,
+                "name": JSON.parse(window.sessionStorage.getItem("server")).name,
+                "password": JSON.parse(window.sessionStorage.getItem("server")).password
+            })
+            window.sessionStorage.setItem("server",JSON.stringify(response.data.server))
+        } catch (error) {
+            console.log(error)
+        }
+        return JSON.parse(window.sessionStorage.getItem("server")).second_player != undefined
     }
     
     /**
