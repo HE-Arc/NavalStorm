@@ -138,7 +138,8 @@ export default new Vuex.Store({
       state.user = user;
     },
     UPDATE_ENEMY_USER:(state,user) =>{
-      state.enemyUser = user;},
+      state.enemyUser = user;
+      },
     UPDATE_BOARD_ENNEMY:(state,board)=>{
       state.boardEnnemy=board;
     },
@@ -246,10 +247,13 @@ export default new Vuex.Store({
     updateEnemyUser(state,user){
       state.commit('UPDATE_ENEMY_USER',user);
     },
-    updateBoardEnnemy(state,board){
-      state.commit("UPDATE_BOARD_ENNEMY",board);},
+    getBoardEnemy(state,board){
+      state.commit('GET_BOARD_ENEMY',board);
+    },
     getBoard(state,board){
       state.commit('GET_BOARD',board);
     },
-  },
-})
+    updateBoardEnnemy(state,board){
+      state.commit("UPDATE_BOARD_ENNEMY",board);
+    },
+}})
