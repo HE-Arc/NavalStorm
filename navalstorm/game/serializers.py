@@ -42,7 +42,7 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
             serverOk.addPLayer(player)
             return serverOk
         except:
-            return Servers.create_navalstorm_server(player,player.user.username,"None") #TODO VERIFY IF THERE IS NO SERVER WITH THIS NAME
+            return Servers.create_navalstorm_server(player,player.user.username,"None") 
 
 
 class ServerSerializer(serializers.ModelSerializer):  

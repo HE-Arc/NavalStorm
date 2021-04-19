@@ -4,12 +4,25 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
 from jsonfield import JSONField
 
+class Board(models.Model):
+    data = JSONField()
+    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    @classmethod
+    def create_board(cls,data,idUser):
+        board=cls()
+        board.idUser=idUser
+        board.data=data
+        board.save()
+        return board
+
 # Create your models here.
 class Servers(models.Model):
-    name = models.CharField(blank=False, max_length=50)
+    name = models.CharField(blank=False, max_length=50, unique=True)
     password = models.CharField(blank=True,max_length=255)
     first_player = models.ForeignKey(NavalStormUser, on_delete = models.SET_NULL, null = True, default=None, related_name="First_player")
     second_player = models.ForeignKey(NavalStormUser, on_delete = models.SET_NULL, null = True, default=None, related_name="Second_player")
+    first_board = models.ForeignKey(Board, null=True,default=None,on_delete=models.CASCADE, related_name="First_Board")
+    second_board = models.ForeignKey(Board, null=True,default=None,on_delete=models.CASCADE, related_name="Second_Board")
 
     @classmethod
     def create_navalstorm_server(cls, first_player, name, password):
@@ -27,14 +40,3 @@ class Servers(models.Model):
         self.second_player = player
         self.save()
         return self
-
-class Board(models.Model):
-    data = JSONField()
-    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    @classmethod
-    def create_board(cls,data,idUser):
-        board=cls()
-        board.idUser=idUser
-        board.data=data
-        board.save()
-        return board
