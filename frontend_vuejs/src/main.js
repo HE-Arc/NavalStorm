@@ -9,7 +9,7 @@ import IdleVue from 'idle-vue'
 import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSimpleAlert);
-Vue.mixin(titleMixIn);
+Vue.mixin(titleMixIn);  //useful for the titles
 const eventsHub = new Vue()
 
 Vue.use(IdleVue, {

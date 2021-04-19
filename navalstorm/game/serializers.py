@@ -15,7 +15,7 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
         fields = ['first_player','name','password']
 
     def create(self, validated_data):
-        """Connexion"""
+        """Connection"""
         try:
             player = NavalStormUser.objects.get(id=validated_data['first_player'])
         except Exception as e:
@@ -48,7 +48,7 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
             raise Exception("Bad Password")
     
     def connect(self,player):
-        """Connexion Random"""        
+        """Connection Random"""        
         try:
             serverOk = Servers.objects.filter(password="None",second_player=None)[:1]
             serverOk.addPLayer(player)

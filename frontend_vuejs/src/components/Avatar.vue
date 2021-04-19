@@ -1,17 +1,6 @@
 <template>
   <div style="width:60%;height:auto;">
-    <!--- all random :) ---->
     <avataaars></avataaars>
-    
-    <!-- - with some props --
-    <avataaars
-      :clotheType="'GraphicShirt'"
-      :eyebrowType="'Angry'"
-      :eyeType="'Cry'"
-      :mouthType="'Eating'"
-      :facialHairColor="'Blonde'"
-      :graphicType="'Cumbia'">
-    </avataaars> -->
   </div>
 </template>
 
