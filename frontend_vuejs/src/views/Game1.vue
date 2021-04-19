@@ -41,7 +41,7 @@ export default {
     BoardGame1,
     Harbor,
   },
-   methods: {
+  methods: {
       savePlacement : async function () {
         var status=true;
         var boats = this.$store.getters.getShips;
@@ -61,21 +61,29 @@ export default {
               userid : this.$store.state.user.id,
             });
             this.errorPost = "";
-            this.$router.push({ name: "Game2" });
+            
             this.loading = false;
+            const response = await Api.getEnemyUser();
+            var text = response == true?"":"You will wait until a second player join"
             this.$fire({
-            title: "Ships Placement Validated ! ",
-            text: "",
-            type: "success",
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500
+              title: "Ships Placement Validated ! ",
+              text: text,
+              type: "success",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: text==""?1500:5000
           }).then();
+           var interval = setInterval(async function (){
+              var response = await Api.getEnemyUser();
+              console.log(response)
+              if(response == true){
+                clearInterval(interval);
+                this.$router.push({ name: "Game2" });
+              }
+          }.bind(this), 3000)
           } catch (e) {
             this.errorPost = e.message;
-          } finally {
-            this.loading = false;
-          }
+          } 
         }else{
           this.$fire({
             title: "Hum...You haven't placed every ships !",

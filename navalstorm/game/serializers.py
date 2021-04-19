@@ -27,7 +27,7 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
                 return server
         except : 
             try:
-                server =Servers.objects.get(second_player=player)
+                server = Servers.objects.get(second_player=player)
                 if server :
                     return server
             except: 
@@ -38,7 +38,8 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
             return self.connect(player)
         try : 
             server = Servers.objects.get(name=name)
-        except :
+        except Exception as e:
+            print(e)
             return Servers.create_navalstorm_server(player,name,password)
 
         if server.check_password(password):
