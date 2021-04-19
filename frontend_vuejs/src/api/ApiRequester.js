@@ -150,6 +150,15 @@ class ApiRequester {
             console.log("Error while updating user info " + error);
         }
     }
+    async updateBoardEnemy(){
+        try{
+            this.boardEnemy = await this.get("board/boardEnemy/");
+            store.dispatch('updateBoardEnemy',this.boardEnemy);
+            window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy));
+        }catch(error){
+            console.log()
+        }
+    }
 
     /**
      * Delete token

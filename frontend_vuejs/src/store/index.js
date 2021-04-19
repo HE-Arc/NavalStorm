@@ -126,7 +126,7 @@ export default new Vuex.Store({
       state.user = user;
     },
     UPDATE_SERVER:(state,server) =>{
-      state.server = server
+      state.server = server;
     },
     UPDATE_CURRENT_SHIP:(state, currentShip) => {
       state.currentShip = currentShip;
@@ -181,6 +181,9 @@ export default new Vuex.Store({
       state.refreshTokenUser = null;
       return state;
     },
+    UPDATE_BOARD_ENEMY(state,board){
+      state.boardEnemy = board;
+    }
   },
   actions: {
     flipDrawer: (store) => {
@@ -215,10 +218,14 @@ export default new Vuex.Store({
       state.commit('LOGOUT');
     },
     updateUser(state, user) {
-      state.commit("UPDATE_USER", user);
+      state.commit('UPDATE_USER', user);
     },
+
     updateServer(state,server){
       state.commit('UPDATE_SERVER',server);
+    },
+    updateBoardEnemy(state,board){
+      state.commit('UPDATE_BOARD_ENEMY',board);
     }
   },
 })
