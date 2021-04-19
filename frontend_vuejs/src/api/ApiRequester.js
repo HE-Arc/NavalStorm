@@ -175,7 +175,8 @@ class ApiRequester {
 
     async getBoardEnemy(){
         try{
-            this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
+            console.log("ENEMY : "+ store.state.enemyUser)
+            this.boardEnemy = await this.get("/games/getBoard/",store.state.enemyUser);
             store.dispatch('updateBoardEnnemy',this.boardEnemy.data);
             store.dispatch('updateKeyBoardEnnemy',this.boardEnemy.id);
             window.sessionStorage.setItem("boardEnemy", JSON.stringify(this.boardEnemy.data));
@@ -186,7 +187,8 @@ class ApiRequester {
 
     async getBoard(){
         try{
-            this.board = await this.get("/games/getBoard/",{"id": store.state.user.id});
+            console.log(store.state.user.id)
+            this.board = await this.get("/games/getBoard/",store.state.user.id);
             store.dispatch('getBoard',this.board.data);
             window.sessionStorage.setItem("board", JSON.stringify(this.board.data));
         }catch(error){
@@ -205,7 +207,11 @@ class ApiRequester {
         } catch (error) {
             console.log(error)
         }
-        return JSON.parse(window.sessionStorage.getItem("server")).second_player != undefined
+        if(JSON.parse(window.sessionStorage.getItem("server")).second_player != undefined){
+            store.dispatch('updateEnemyUser',JSON.parse(window.sessionStorage.getItem("server")).second_player)
+            return true
+        } 
+        return false
     }
     
     /**

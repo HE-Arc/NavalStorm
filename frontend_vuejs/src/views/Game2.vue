@@ -88,7 +88,7 @@ export default {
               clearInterval(this.interval);
             }
         }
-    }.bind(this),1000); 
+    }.bind(this),5000); 
   },
   data () {
     
