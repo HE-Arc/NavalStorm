@@ -35,8 +35,8 @@ export default {
           Api.getBoardEnemy();
           Api.getBoard();
           console.log('tic')
-        }); 
-    }, 1000); // milliseconds
+        },3000); 
+    }) // milliseconds
   },
   data () {
     
