@@ -149,13 +149,13 @@ export default Vue.extend({
             Api.updateUserInformations();
             this.$router.push({path: `/users/${this.$store.state.user.id}/` });
             this.$fire({
-            title: "Settings Updated",
-            text: "Password has been updated.",
-            type: "success",
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500
-          }).then();
+              title: "Settings Updated",
+              text: "Password has been updated.",
+              type: "success",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500
+            }).then();
 
           } else {
             

@@ -132,6 +132,8 @@ export default new Vuex.Store({
     UPDATE_USER:(state, user) => {
       state.user = user;
     },
+    UPDATE_ENEMY_USER:(state,user) =>{
+      state.enemyUser = user;},
     UPDATE_BOARD_ENNEMY:(state,board)=>{
       state.boardEnnemy=board;
     },
@@ -188,6 +190,12 @@ export default new Vuex.Store({
       state.refreshTokenUser = null;
       return state;
     },
+    UPDATE_BOARD_ENEMY(state,board){
+      state.boardEnemy = board;
+    },
+    UPDATE_BOARD(state,board){
+      state.board = board;
+    }
   },
   actions: {
     setEnnemyBoard:(store,board)=>{
@@ -225,10 +233,19 @@ export default new Vuex.Store({
       state.commit('LOGOUT');
     },
     updateUser(state, user) {
-      state.commit("UPDATE_USER", user);
+      state.commit('UPDATE_USER', user);
+    },
+
+    updateEnemyUser(state,user){
+      state.commit('UPDATE_ENEMY_USER',user);
+    },
+    getBoardEnemy(state,board){
+      state.commit('GET_BOARD_ENEMY',board);
     },
     updateBoardEnnemy(state,board){
-      state.commit("UPDATE_BOARD_ENNEMY",board);
+      state.commit("UPDATE_BOARD_ENNEMY",board);},
+    getBoard(state,board){
+      state.commit('GET_BOARD',board);
     }
   },
 })
