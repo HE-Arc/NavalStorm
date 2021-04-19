@@ -7,16 +7,14 @@
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">
-            Profile
+              Profile
+              <v-list-item-avatar tile size="auto" >
+                <Avataaars/>
+              </v-list-item-avatar>
             </div>
-  
             <v-list-item-title class="headline mb-1" :user="user"></v-list-item-title>
-
           </v-list-item-content>
       
-          <v-list-item-avatar
-          tile size="auto" color="grey"><img src="../assets/logo-login.png" alt="">
-          </v-list-item-avatar>
         </v-list-item>
 
         <v-card-actions>
@@ -95,12 +93,14 @@ import { mdiPencilOutline } from '@mdi/js';
 import { mdiChartLine } from '@mdi/js';
 import DoughnutChart from "./DoughnutChart.vue";
 import Api from "@/api/ApiRequester";
+import Avataaars from './Avatar.vue'
 
 export default Vue.extend({
   name: "Profile",
   components: {
     SvgIcon,
     DoughnutChart,
+    Avataaars,
   },
   data ()  { 
     return  {
