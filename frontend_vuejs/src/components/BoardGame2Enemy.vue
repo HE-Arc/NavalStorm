@@ -49,12 +49,12 @@ export default Vue.extend({
         //send missile to coord
         var id = event.target.id.replace(this.prefixID, ""); 
 
-        //id =  D4 par exemple
+        //id =  D4 as example
         //find attribut html
-        var currentId = event.target.id //Board2EnnemyG10 en exemple
+        var currentId = event.target.id //Board2EnnemyG10 
         var td = document.getElementById(currentId)
 
-         //allow attaque only if it's the first time
+         //allow attack only if it's the first time
         if (td.childElementCount != 0 && td != null)
           return;
 

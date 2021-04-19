@@ -76,6 +76,11 @@ class ApiRequester {
         store.dispatch('updateUser', this.user);
     }
 
+    /**
+     * Post the boards to the backend after phase1
+     * @param {*} data 
+     * @returns 
+     */
     async gamePhase1(data){
         try {
         var bodyFormData = new FormData();
@@ -123,6 +128,11 @@ class ApiRequester {
         }
     }
 
+    /**
+     * Connect to server
+     * @param {*} data 
+     * @returns 
+     */
     async connect(data){
         try {
             const response = await this.instanceAxios.post("servers/",{
@@ -151,6 +161,10 @@ class ApiRequester {
         }
     }
 
+    /**
+     * Upate user's informations when lose/win
+     * @param {} bool 
+     */
     async updateUserInformationsWinLoose(bool){
             console.log(this.$store.state.user)
             try{
@@ -173,6 +187,9 @@ class ApiRequester {
             }
     }
 
+    /**
+     * return the opponent board
+     */
     async getBoardEnemy(){
         try{
             console.log("ENEMY : "+ store.state.enemyUser)
@@ -185,6 +202,9 @@ class ApiRequester {
         }
     }
 
+    /**
+     * return own board
+     */
     async getBoard(){
         try{
             console.log(store.state.user.id)
@@ -196,6 +216,10 @@ class ApiRequester {
         }
     }
 
+    /**
+     * return opponent user
+     * @returns 
+     */
     async getEnemyUser(){
         try {
             const response = await this.instanceAxios.post("servers/",{
@@ -247,6 +271,11 @@ class ApiRequester {
         router.push({ name: "login" });
     }
 
+    /**
+     * register an account
+     * @param {account to register} account 
+     * @returns 
+     */
     async register(account) {
             const response = await this.instanceAxios.post("users/", {
                 "username": account.username,
@@ -256,11 +285,6 @@ class ApiRequester {
             this.login({ "username": account.username, "password": account.password });
             return response;
     }
-
-    getEventBus() {
-        return this.eventBus;
-    }
-
     /**
      * GET Method
      */
@@ -269,7 +293,7 @@ class ApiRequester {
     }
 
     /**
-     * Request to the API
+     * Generic Request to  API
      */
     async request(method, url, body = null) {
         const requestConfig = {
@@ -282,7 +306,6 @@ class ApiRequester {
         }
         try {
             const response = await this.instanceAxios(requestConfig);
-            //GLOBAL ERROR MANAGEMENT
             return response.data;
         } catch (error) {
             if (error.response.status == 401) {
