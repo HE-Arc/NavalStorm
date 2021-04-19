@@ -160,12 +160,12 @@ export default Vue.extend({
           } else {
             
             this.$fire({
-            title: "Hum...Something is not good : ",
-            text: "Password & Confirmation are not the same",
-            type: "error",
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
+              title: "Hum...Something is not good : ",
+              text: "Password & Confirmation are not the same",
+              type: "error",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
           }).then();
             
           }
