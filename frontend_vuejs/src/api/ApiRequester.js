@@ -151,6 +151,23 @@ class ApiRequester {
         }
     }
 
+    async updateUserInformationsWinLoose(bool){
+    
+            try{
+                if(bool){
+                    var win=parseInt(this.user.winNumber)
+                    this.user.winNumber = win++;
+                }
+                var nb=parseInt(this.user.playedGameNumber)
+                this.user.playedGameNumber = nb++;
+                store.dispatch('updateUser', this.user);
+                window.sessionStorage.setItem("user", JSON.stringify(this.user));
+            } catch(error){
+                console.log("Error while updating user info " + error);
+            
+            }
+    }
+
     async getBoardEnemy(){
         try{
             this.boardEnemy = await this.get("/games/getBoard/",{"id": store.state.enemyUser.id});
