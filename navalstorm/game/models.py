@@ -9,10 +9,19 @@ class Board(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
     @classmethod
     def create_board(cls,data,idUser):
+        server = None
+        try: 
+            server = Servers.objects.get(first_player=idUser)
+        except:
+            try:
+                server = Servers.objects.get(second_player=idUser)
+            except:
+                raise Exception("No User Ready To play")
         board=cls()
         board.idUser=idUser
         board.data=data
         board.save()
+        server.addBoard(board)
         return board
 
 # Create your models here.
@@ -40,3 +49,11 @@ class Servers(models.Model):
         self.second_player = player
         self.save()
         return self
+
+    def addBoard(self,board):
+        if self.first_board == None :
+            self.first_board = board
+        elif self.second_board == None:
+            self.second_board = board
+        else:
+            raise Exception("No Place for another board")

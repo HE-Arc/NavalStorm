@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Servers
+from .models import Servers, Board
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets, status, filters
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
@@ -33,6 +34,7 @@ class ServerViewSet(ViewsetFunctionPermissions):
                 "server": ServerSerializer(server).data
             })
 
+
 class BoardViewSet(ViewsetFunctionPermissions):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
@@ -65,3 +67,11 @@ class BoardViewSet(ViewsetFunctionPermissions):
                 return Response({"success":1, "message": "Board updated succesfully",})
         except BoardUpdateError as e :
             return Response({"error": str(e)}, status = HTTP_422_UNPROCESSABLE_ENTITY)
+
+    @action(detail=False)
+    def boardEnemy(self,request):
+        user = request.id
+        board = Board.objects.get(idUser=user)
+        serializer = BoardSerializer(board)
+        return Response(serializer.data)
+

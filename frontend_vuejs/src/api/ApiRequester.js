@@ -130,11 +130,14 @@ class ApiRequester {
                 "name": data.name,
                 "password": data.password
             })
-            return response.data.server.name
+            store.dispatch('updateServer', this.response.data.server);
+            window.sessionStorage.setItem("server",JSON.stringify(response.data.server))
+            return response
         } catch (error) {
             console.log(error)
         }
     }
+    
     /**
      * Update user
      */

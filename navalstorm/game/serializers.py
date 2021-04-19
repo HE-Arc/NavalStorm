@@ -44,7 +44,6 @@ class ServerConnecterSerializer(serializers.ModelSerializer):
         except:
             return Servers.create_navalstorm_server(player,player.user.username,"None") 
 
-
 class ServerSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Servers
@@ -55,6 +54,7 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model=Board
         fields=['data','idUser']
+        
     def create(self, validated_data):
         return Board.create_board(str(validated_data['data']),validated_data['idUser'])
 
