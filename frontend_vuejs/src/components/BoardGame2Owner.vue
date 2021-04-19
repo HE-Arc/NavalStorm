@@ -46,45 +46,35 @@ export default Vue.extend({
       getImgUrl(img) {
         return require(`../assets/${img}`) 
       },
-      attaque(id) {
-        console.log("toto")
-        console.log(id)
-        //refresh board
-        var currentId = this.prefixID+id
-        var coordId = id 
-        console.log(currentId)
-        var td = document.getElementById(currentId)
-        if (td.childElementCount != 0 && td != null) //allow attaque only if it's the first time
-          return;
-
-        var img = document.createElement('img');
-        var area = this.$store.getters.getBoardAreaById(coordId)
-        if(area.isBusy)
-          img.src = this.getImgUrl("explosions/explosion-ico.png")
-        else
-          img.src = this.getImgUrl("explosions/wather-splash-ico.png")
-
-        area.isTouch = true
-        this.$store.dispatch('updateAreaInBoard', area);
-
-        //style the img
-        img.style.height = "20px"
-        img.style.width = "20px"
-        img.style.padding = "0px"
-        img.style.margin = "0px"
-        img.style.display = "block"
-        td.insertAdjacentElement("beforeend", img);
-
-      },
       updateBoardHTML() {
-        var currentBoard = this.$store.getters.getBoard
+        var currentBoard = this.$store.getters.getBoardEnnemy//TODO TO CHANGE to getBoard 
         for (var i = 0; i < currentBoard.length; i++) {
           var currentArea = currentBoard[i]
           var el = document.getElementById(this.prefixID+currentArea.id)
-
+          var img;
           if(currentArea.isBusy){ 
             let ship = this.$store.getters.getShipById(currentArea.whoIsThere)
             el.style.backgroundColor = ship.color
+            if(currentArea.isTouch){//busy & hit ! 
+              img = document.createElement('img');
+              img.src = this.getImgUrl("explosions/explosion-ico.png")
+              img.style.height = "2em";
+              img.style.width = "2em";
+              img.style.paddingLeft = "0.5em";
+              img.style.margin = "0px";
+              img.style.display = "block";
+              el.insertAdjacentElement("beforeend", img);
+            }
+          }
+          else if(currentArea.isTouch){//not busy
+              img = document.createElement('img');
+              img.src = this.getImgUrl("explosions/wather-splash-ico.png")
+              img.style.height = "2em";
+              img.style.width = "2em";
+              img.style.paddingLeft = "0.5em";
+              img.style.margin = "0px";
+              img.style.display = "block";
+              el.insertAdjacentElement("beforeend", img);
           }
           else{
             el.style.backgroundColor = "#1e8fff21"
