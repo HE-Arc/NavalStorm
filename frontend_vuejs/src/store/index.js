@@ -24,6 +24,7 @@ export default new Vuex.Store({
     boardSize : 10,
     boardHeader : '',
     board: [],
+    boardEnnemy : [],
     //todo put in backend the ships
     ships : [
       {
@@ -113,9 +114,15 @@ export default new Vuex.Store({
     getBoardAreaById: (state) => (areaID) => {
       return state.board.find(ar => ar.id === areaID);
     },
+    getBoardEnnemy:(state)=>{
+      return state.boardEnnemy;
+    }
   },
 
   mutations: {
+    SET_ENNEMY_BOARD:(state,board) => {
+      state.boardEnnemy=board;
+    },
     SET_DRAWER:(state, drawer) => {
       state.drawer = drawer;
     },
@@ -127,6 +134,9 @@ export default new Vuex.Store({
     },
     UPDATE_ENEMY_USER:(state,user) =>{
       state.enemyUser = user;
+      },
+    UPDATE_BOARD_ENNEMY:(state,board)=>{
+      state.boardEnnemy=board;
     },
     UPDATE_CURRENT_SHIP:(state, currentShip) => {
       state.currentShip = currentShip;
@@ -189,6 +199,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setEnnemyBoard:(store,board)=>{
+      store.commit('SET_ENNEMY_BOARD',board);
+    },
     flipDrawer: (store) => {
       store.commit('FLIP_DRAWER');
     },
@@ -232,6 +245,8 @@ export default new Vuex.Store({
     },
     getBoard(state,board){
       state.commit('GET_BOARD',board);
-    }
-  },
-})
+    },
+    updateBoardEnnemy(state,board){
+      state.commit("UPDATE_BOARD_ENNEMY",board);
+    },
+}})

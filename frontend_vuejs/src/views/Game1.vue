@@ -42,15 +42,6 @@ export default {
     Harbor,
   },
    methods: {
-      
-       checkBoard(){
-        var boats = this.$store.getters.getShips;
-        boats.forEach(boat => {
-          if(!boat.isPlaced)
-            return false;
-        });
-        return true;
-      },
       savePlacement : async function () {
         var status=true;
         var boats = this.$store.getters.getShips;
@@ -58,7 +49,6 @@ export default {
           if(!boat.isPlaced){
             status= false;
             }
-          console.log('tic');
         });
         
         if(status){
@@ -80,9 +70,7 @@ export default {
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
           } catch (e) {
             this.errorPost = e.message;
           } finally {
@@ -96,9 +84,7 @@ export default {
             position: 'top-end',
             showConfirmButton: false,
             timer: 3000
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
         }
     },
     },

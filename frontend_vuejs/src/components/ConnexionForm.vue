@@ -92,9 +92,7 @@ export default Vue.extend({
                         position: 'top-end',
                         showConfirmButton: false,
                         timer: 1500
-                    }).then(r => {
-                        console.log(r.value);
-                    });
+                    }).then();
                }
             } catch(error){
                 console.log(error.message)

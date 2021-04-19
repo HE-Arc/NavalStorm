@@ -7,16 +7,14 @@
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">
-            Profile
+              Profile
+              <v-list-item-avatar tile size="auto" >
+                <Avataaars/>
+              </v-list-item-avatar>
             </div>
-  
             <v-list-item-title class="headline mb-1" :user="user"></v-list-item-title>
-
           </v-list-item-content>
       
-          <v-list-item-avatar
-          tile size="auto" color="grey"><img src="../assets/logo-login.png" alt="">
-          </v-list-item-avatar>
         </v-list-item>
 
         <v-card-actions>
@@ -95,12 +93,14 @@ import { mdiPencilOutline } from '@mdi/js';
 import { mdiChartLine } from '@mdi/js';
 import DoughnutChart from "./DoughnutChart.vue";
 import Api from "@/api/ApiRequester";
+import Avataaars from './Avatar.vue'
 
 export default Vue.extend({
   name: "Profile",
   components: {
     SvgIcon,
     DoughnutChart,
+    Avataaars,
   },
   data ()  { 
     return  {
@@ -149,28 +149,24 @@ export default Vue.extend({
             Api.updateUserInformations();
             this.$router.push({path: `/users/${this.$store.state.user.id}/` });
             this.$fire({
-              title: "Settings Updated",
-              text: "Password has been updated.",
-              type: "success",
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 1500
-            }).then(r => {
-              console.log(r.value);
-            });
+            title: "Settings Updated",
+            text: "Password has been updated.",
+            type: "success",
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500
+          }).then();
 
           } else {
             
             this.$fire({
-            title: "Hum...Something is not good : ",
-            text: "Password & Confirmation are not the same",
-            type: "error",
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-          }).then(r => {
-          console.log(r.value);
-          });
+              title: "Hum...Something is not good : ",
+              text: "Password & Confirmation are not the same",
+              type: "error",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
+          }).then();
             
           }
         } else {
@@ -188,10 +184,9 @@ export default Vue.extend({
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-          }).then(r => {
-            console.log(r.value);
-          });
+          }).then();
         }
+         this.$router.push({ name: "Profile" });
       } catch (e) {
         if (e.response.data.error) {
           if (e.response.data.error.includes("Username")) {

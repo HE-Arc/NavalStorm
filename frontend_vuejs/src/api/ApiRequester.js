@@ -176,6 +176,26 @@ class ApiRequester {
     }
     
     /**
+     * Update Board
+     */
+    async updateEnnemyBoard(data) {
+        try{
+
+            var bodyFormData = new FormData();
+            bodyFormData.append("data",JSON.stringify(data.board));
+            var idBoard = data.boardId;
+    
+            bodyFormData.append("board",idBoard);
+
+            const response = await this.instanceAxios.patch("games/"+idBoard+"/", bodyFormData);  
+            store.dispatch('updateBoardEnnemy', data.board);
+            return response.data;
+        } catch(error){
+            console.log("Error while updating user info " + error);
+        }
+    }
+
+    /**
      * Delete token
      */
     async logout() {
