@@ -152,16 +152,21 @@ class ApiRequester {
     }
 
     async updateUserInformationsWinLoose(bool){
-    
+            console.log(this.$store.state.user)
             try{
                 if(bool){
                     var win=parseInt(this.user.winNumber)
-                    this.user.winNumber = win++;
+                    this.$store.state.user.winNumber = win++;
                 }
                 var nb=parseInt(this.user.playedGameNumber)
-                this.user.playedGameNumber = nb++;
+                this.$store.state.user.playedGameNumber = nb++;
                 store.dispatch('updateUser', this.user);
                 window.sessionStorage.setItem("user", JSON.stringify(this.user));
+                await this.put(`users/${this.$store.state.user.id}/`, {
+                    id:this.userid,
+                    playedGameNumber:this.$store.state.user.playedGameNumber,
+                    winNumber:this.$store.state.user.winNumber,
+                });
             } catch(error){
                 console.log("Error while updating user info " + error);
             
