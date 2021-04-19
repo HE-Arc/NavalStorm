@@ -58,43 +58,45 @@ export default Vue.extend({
         if (td.childElementCount != 0 && td != null)
           return;
 
-        var eBoard=this.$store.getters.getBoardEnnemy;
+        var eBoard=this.$store.getters.getBoard;
         //refresh board ennemy
         eBoard.forEach(area => {
           if(area['id']==id){
             area['isTouch']=true;
           }
         });
-
-        this.updateEnnemyBoard(eBoard);
+        
 
         //display
         var img = document.createElement('img');
         
         eBoard.forEach(area => {
-          if(area['isTouch']==true){
-            if(area['isBusy']==true){
-              img.src = this.getImgUrl("explosions/explosion-ico.png");
-              td.style.backgroundColor = "#990000";
-            }else{
-               img.src = this.getImgUrl("explosions/wather-splash-ico.png");
+          if(area['id']==id){
+            if(area['isTouch']==true){
+              if(area['isBusy']==true){
+                img.src = this.getImgUrl("explosions/explosion-ico.png");
+              }else{
+                img.src = this.getImgUrl("explosions/wather-splash-ico.png");
+              }
+                //style the img
+              img.style.height = "2em";
+              img.style.width = "2em";
+              img.style.paddingLeft = "0.5em";
+              img.style.margin = "0px";
+              img.style.display = "block";
+              td.insertAdjacentElement("beforeend", img);
+              td.style.backgroundColor="Grey";
             }
           }
         });         
 
-        //style the img
-        img.style.height = "20px";
-        img.style.width = "20px";
-        img.style.paddingleft = "4px";
-        img.style.margin = "0px";
-        img.style.display = "block";
-        td.insertAdjacentElement("beforeend", img);
+       this.updateEnnemyBoard(eBoard);
       },
       updateEnnemyBoard : async function (eBoard) {
           this.loading = true;
           try {
-            await Api.updateBoard({
-              boardId:25,//TODO TO get right board ID
+            await Api.updateEnnemyBoard({
+              boardId:1,//TODO TO get right board ID !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               board:eBoard,
               userid : this.$store.state.user.id,
             });
@@ -110,10 +112,8 @@ export default Vue.extend({
             type: "success",
             position: 'top-end',
             showConfirmButton: false,
-            timer: 1500
-          }).then(r => {
-          console.log(r.value);
-          });
+            timer: 1000
+          }).then();
           }
         }
     

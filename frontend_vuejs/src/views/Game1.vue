@@ -70,9 +70,7 @@ export default {
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
           } catch (e) {
             this.errorPost = e.message;
           } finally {
@@ -86,9 +84,7 @@ export default {
             position: 'top-end',
             showConfirmButton: false,
             timer: 3000
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
         }
     },
     },

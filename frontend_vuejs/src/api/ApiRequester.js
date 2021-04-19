@@ -151,7 +151,7 @@ class ApiRequester {
     /**
      * Update Board
      */
-    async updateBoard(data) {
+    async updateEnnemyBoard(data) {
         try{
 
             var bodyFormData = new FormData();
@@ -159,13 +159,9 @@ class ApiRequester {
             var idBoard = data.boardId;
     
             bodyFormData.append("board",idBoard);
-            // this.user = await this.get("users/me/");
-            // bodyFormData.append("user",this.user);
 
             const response = await this.instanceAxios.patch("games/"+idBoard+"/", bodyFormData);  
-            console.log(response.data);//TODO TOREMOVE
-           
-            store.dispatch('updateBoardEnnemy', response.data.board);
+            store.dispatch('updateBoardEnnemy', data.board);
             return response.data;
         } catch(error){
             console.log("Error while updating user info " + error);

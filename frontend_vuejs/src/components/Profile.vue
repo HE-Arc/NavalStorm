@@ -155,9 +155,7 @@ export default Vue.extend({
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
 
           } else {
             
@@ -168,9 +166,7 @@ export default Vue.extend({
             position: 'top-end',
             showConfirmButton: false,
             timer: 3000
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
             
           }
         } else {
@@ -188,10 +184,9 @@ export default Vue.extend({
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
         }
+         this.$router.push({ name: "Profile" });
       } catch (e) {
         if (e.response.data.error) {
           if (e.response.data.error.includes("Username")) {

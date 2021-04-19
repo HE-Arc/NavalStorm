@@ -80,9 +80,7 @@ export default Vue.extend({
             position: 'top-end',
             showConfirmButton: false,
             timer: 1000
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
       } catch (e) {
         this.errorPost = e.message;
         this.errorMsg = e.error_description;
@@ -93,9 +91,7 @@ export default Vue.extend({
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-          }).then(r => {
-          console.log(r.value);
-          });
+          }).then();
       } finally {
         this.loading = false;
       }
